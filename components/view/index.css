@@ -1,0 +1,61 @@
+@import "../base";
+
+/* @define View */
+.View {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: rgb(var(--document-background));
+}
+
+/**
+ * Header
+ */
+
+.View-header {
+  position: relative;
+  z-index: 5;
+}
+
+.View-header--appear {
+  opacity: 0;
+  will-change: opacity;
+  animation: View-header--appearing 600ms 100ms var(--ease) forwards;
+}
+
+@keyframes View-header--appearing {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    will-change: unset;
+  }
+}
+
+/**
+ * Main content area
+ */
+
+.View-main {
+  flex-grow: 1;
+}
+
+/**
+ * Footer
+ */
+
+.View-footer::before {
+  content: "";
+  height: 13vh;
+  display: block;
+  max-height: 7rem;
+}
+
+@media (min-width: 1000px) {
+  .View-footer::before {
+    max-height: none;
+    min-height: 8rem;
+  }
+}

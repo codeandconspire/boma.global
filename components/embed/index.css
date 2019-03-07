@@ -1,0 +1,97 @@
+@import "../base";
+
+/* @defind Embed */
+.Embed {
+  width: 100%;
+  position: relative;
+  color: #fff;
+  user-select: none;
+}
+
+.Embed-link {
+  display: block;
+  width: 0;
+  height: 0;
+  cursor: default;
+}
+
+.Embed-link::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Embed-play {
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: transform 140ms var(--ease);
+  will-change: transform;
+  background-color: rgba(var(--current-color));
+  background-image: url("./icon.svg");
+  background-size: 100% 100%;
+  border-radius: 100%;
+  box-shadow: 0 0 2rem 1px rgba(0, 0, 0, 0.15);
+}
+
+.Embed:hover .Embed-play {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.Embed--hidden::after {
+  content: none;
+}
+
+@media (min-width: 600px) {
+  .Embed .Embed-play {
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translate(-50%, -60%);
+  }
+
+  .Embed:hover .Embed-play {
+    transform: translate(-50%, -60%) scale(1.08);
+  }
+}
+
+.Embed-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@supports (object-fit: cover) {
+  .Embed .Embed-image {
+    min-height: 40vh;
+    object-fit: cover;
+  }
+}
+
+.Embed-iframe {
+  height: 0;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-bottom: calc(100% * (9 / 16));
+
+  background-color: #000;
+  box-shadow: 0 0 10rem rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.Embed-iframe iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

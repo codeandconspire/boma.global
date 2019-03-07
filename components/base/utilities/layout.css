@@ -1,0 +1,106 @@
+@import "../global";
+
+/* @define utilities */
+.u-hidden {
+  display: none !important;
+}
+
+.u-hiddenVisually {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+}
+
+@media print {
+  .u-printHidden {
+    display: none !important;
+  }
+}
+
+/**
+ * Display
+ */
+
+.u-block { display: block !important; }
+.u-inlineBlock { display: inline-block !important; }
+.u-inline { display: inline !important; }
+.u-flex { display: flex !important; }
+
+/**
+ * Centered page container
+ */
+
+.u-container,
+.u-md-container,
+.u-lg-container,
+.u-xl-container {
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--document-margin) !important;
+  padding-right: var(--document-margin) !important;
+  max-width: calc(var(--container-width) + (var(--document-margin) * 2)) !important
+}
+
+.u-wide {
+  max-width: var(--container-wide-width);
+}
+
+.u-narrow {
+  max-width: var(--container-narrow-width);
+}
+
+@media (min-width: 600px) {
+  .u-wide {
+    margin: 7rem auto 4rem;
+  }
+
+  .u-narrow {
+    margin: 5.5rem auto 4rem;
+  }
+}
+
+ @supports (padding-left: constant(safe-area-inset-left)) {
+  .u-container,
+  .u-md-container,
+  .u-lg-container,
+  .u-xl-container {
+    padding-left: calc(var(--document-margin) + constant(safe-area-inset-left)) !important;
+    padding-right: calc(var(--document-margin) + constant(safe-area-inset-right)) !important;
+  }
+ }
+
+@supports (padding-left: env(safe-area-inset-left)) {
+  .u-container,
+  .u-md-container,
+  .u-lg-container,
+  .u-xl-container {
+    padding-left: calc(var(--document-margin) + env(safe-area-inset-left)) !important;
+    padding-right: calc(var(--document-margin) + env(safe-area-inset-right)) !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .u-md-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .u-lg-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .u-xl-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

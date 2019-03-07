@@ -1,0 +1,8 @@
+{
+  "name": "Boma Global",
+  "short_name": "Boma",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#ffffff",
+  "theme_color": "#ff8200"
+}

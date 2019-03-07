@@ -1,0 +1,13 @@
+@import "../global";
+
+.u-loading,
+.u-loadingLight {
+  background: rgba(var(--loading-color)) !important;
+  display: inline !important;
+  color: transparent !important;
+  user-select: none !important;
+}
+
+.u-loadingLight {
+  background: rgba(var(--loading-color-light)) !important;
+}
