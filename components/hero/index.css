@@ -1,0 +1,78 @@
+.Hero {
+  position: relative;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  width: 100%;
+}
+
+.Hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 20vh 0;
+}
+
+.Hero-title {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  max-width: 800px;
+}
+
+@media (min-width: 700px) {
+  .Hero-title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-height: 500px) and (min-width: 1000px) {
+  .Hero-title {
+    font-size: 4rem;
+  }
+}
+
+.Hero-rotateWrap {
+  position: relative;
+  display: block;
+  height: 1.2em;
+  color: orange;
+}
+
+@media (min-width: 500px) {
+  .Hero-rotateWrap {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.Hero-rotateText {
+  position: absolute;
+  display: inline-block;
+  white-space: nowrap;
+  transform: translateY(50px);
+  transition: transform 500ms ease, opacity 500ms ease;
+  opacity: 0;
+}
+
+.Hero-rotateText.out {
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+.Hero-rotateText.in {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.Hero-image {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: block;
+}
