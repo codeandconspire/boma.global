@@ -3,11 +3,11 @@
 
   --color-link: blue;
 
-  --document-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --document-font-family: "Gilroy", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --document-font-size: 1rem;
   --document-line-height: 1.5;
 
-  --heading-font-family: "Something", var(--document-font-family);
+  --heading-font-family: var(--document-font-family);
   --heading-line-height: 1;
 
   --document-background: 250, 250, 250;
