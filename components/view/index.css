@@ -42,6 +42,26 @@
   flex-grow: 1;
 }
 
+
+.View-section::before {
+  content: "";
+  height: 13vh;
+  display: block;
+  max-height: 7rem;
+}
+
+.View-section::after {
+  content: "";
+  height: 13vh;
+  display: block;
+  max-height: 7rem;
+}
+
+.View-section--grayToWhite {
+  background: linear-gradient(#f3f3f6 70%, #fff);
+}
+
+
 /**
  * Footer
  */
