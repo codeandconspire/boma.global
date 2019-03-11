@@ -50,7 +50,7 @@ function card (props = {}) {
               ${props.date.text}
             </time>
           ` : null}
-          <h3 class="Card-title u-textBold">
+          <h3 class="Card-title">
             ${props.title}
           </h3>
           ${body}
@@ -64,7 +64,7 @@ function card (props = {}) {
           ` : null}
 
           ${props.link && props.link.title && (
-            html`<div class="Card-action u-textBold">${props.link.title}</div>`
+            html`<div class="Card-action">${props.link.title}</div>`
           )}
         </div>
 

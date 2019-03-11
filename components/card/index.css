@@ -82,6 +82,7 @@
 
 .Card-title {
   font-size: 1.5rem;
+  font-weight: 600;
   line-height: 1.1;
   font-family: var(--heading-font-family);
   max-width: 22rem;
@@ -99,6 +100,7 @@
   display: inline-block;
   margin: 0.5rem 0 0;
   border-bottom: 2px solid orange;
+  font-weight: 600;
 }
 
 /**

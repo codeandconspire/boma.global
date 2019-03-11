@@ -42,11 +42,11 @@ function event (props = {}, slot) {
       <div class="Event-content">
         <div class="Event-body">
           ${props.date && props.date.text ? html`
-            <time class="Event-meta u-textBold" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
+            <time class="Event-meta" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
               ${props.date.text}
             </time>
           ` : null}
-          <h3 class="Event-title u-textBold">
+          <h3 class="Event-title">
             ${props.title}
           </h3>
           ${body}

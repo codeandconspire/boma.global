@@ -52,17 +52,15 @@ function home (state, emit) {
 
             <section class="View-section">
               <div class="u-container">
-
                 <header class="View-sectionHead">
-                  <h2 class="u-textBold">Upcoming events</h2>
-                  <a class="u-textBold" href="#/">
+                  <h2>Upcoming events</h2>
+                  <a href="#/">
                     <span>Show more</span>
                     <svg class="" width="7" height="11" version="1" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 9l4-4-4-4" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                   </a>
                 </header>
-
                 ${grid({
                   size: {
                     md: '1of2'
