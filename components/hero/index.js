@@ -73,7 +73,7 @@ module.exports = class hero extends Component {
             </h2>
           </div>
         </div>
-        <img class="Hero-image" src="/hero.png" alt="">
+        <img class="Hero-image" src="https://via.placeholder.com/2600x1000/0000FF/808080" alt="">
       </div>
     `
   }
