@@ -2,5 +2,27 @@
 
 /* @define Header */
 .Header {
-  
+  padding: 1.4rem 0;
+}
+
+.Header-home {
+  display: inline-block;
+}
+
+@media (min-width: 600px) {
+  .Header-home {
+    font-size: 1.15rem;
+  }
+}
+
+.Header-logo {
+  width: 4.37em;
+  float: left;
+  margin: 0.20em 0.5em 0 0;
+  color: rgb(var(--color-orange));
+}
+
+.Header-logotype {
+  width: 5.27em;
+  position: relative;
 }
