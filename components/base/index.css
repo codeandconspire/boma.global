@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Vollkorn");
 @import "normalize.css";
 @import "./global";
+@import "./utilities/colors";
 @import "./utilities/layout";
 @import "./utilities/loading";
 @import "./utilities/size";

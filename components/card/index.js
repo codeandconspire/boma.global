@@ -10,7 +10,7 @@ function card (props = {}) {
   var body = props.body
   if (body) {
     if (typeof window === 'undefined') {
-      if (Array.isArray(body) || body[0] === '<') html`<div class="Card-text">${body}</div>`
+      if (Array.isArray(body) || body[0] === '<') body = html`<div class="Card-text">${body}</div>`
       else body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
     } else if (Array.isArray(body) || body instanceof window.Element) {
       body = html`<div class="Card-text">${body}</div>`
@@ -27,22 +27,22 @@ function card (props = {}) {
     class: className('Card', {
       'Card--interactive': props.link,
       'Card--image': props.image,
-      'Card--video': props.video
+      'Card--video': props.video,
+      'Card--background': props.background
     })
   }
 
-  if (props.video) {
+  if (props.video && props.image) {
     props.image.icon = html`<svg class="Card-figureIcon" width="67" height="67" xmlns="http://www.w3.org/2000/svg"><g transform="translate(1 1)" fill="none" fill-rule="evenodd"><circle stroke="#FFF" fill="#FFF" cx="32.5" cy="32.5" r="32.5"/><path fill="#201745" d="M41 33l-14 8V25z"/></g></svg>`
   }
 
-  var cover = null
-  if (props.image) {
-    cover = figure(props.image)
-  }
+  var image = props.image || props.background || null
+  if (typeof image === 'function') image = image()
+  else if (image) image = figure(image)
 
   return html`
     <article ${attrs}>
-      ${cover}
+      ${image}
       <div class="Card-content">
         <div class="Card-body">
           ${props.date && props.date.text ? html`
@@ -62,12 +62,10 @@ function card (props = {}) {
               ${props.location}
             </div>
           ` : null}
-
           ${props.link && props.link.title && (
             html`<div class="Card-action">${props.link.title}</div>`
           )}
         </div>
-
         ${props.link ? link(Object.assign({ inherit: props.background }, props.link)) : null}
       </div>
     </article>
@@ -75,14 +73,16 @@ function card (props = {}) {
 }
 
 function loading (props = {}) {
+  var hasBody = !('body' in props) || props.body
   return html`
-    <article class="Card">
+    <article class="${className('Card', { 'Card--background': props.background })}">
       ${figure.loading()}
       <div class="Card-content">
         <div class="Card-body">
-          ${props.date ? html`<time class="Card-meta">${loader(8)}</time>` : null}
+          ${props.date ? html`<time class="Card-meta">${loader(6)}</time>` : null}
           <h3 class="Card-title">${loader(8)}</h3>
-          <p class="Card-text">${loader(24)}</p>
+          ${hasBody ? html`<p class="Card-text">${loader(24)}</p>` : null}
+          ${props.location ? html`<time class="Card-meta">${loader(8)}</time>` : null}
         </div>
         ${props.link && props.link.title && (
           html`<div class="Card-action">${loader(4)}</div>`

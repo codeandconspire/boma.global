@@ -31,6 +31,51 @@
 .u-flex { display: flex !important; }
 
 /**
+ * Position
+ */
+
+.u-posStatic { position: static !important; }
+.u-posRelative { position: relative !important; }
+.u-posAbsolute { position: absolute !important; }
+.u-posFixed { position: fixed !important; }
+
+/**
+ * Flex
+ */
+
+.u-flexWrap { flex-Wrap: wrap !important; }
+.u-alignCenter { align-items: center !important; }
+.u-alignStart { align-items: flex-start !important; }
+.u-alignEnd { align-items: flex-end !important; }
+.u-justifyCenter { justify-content: center !important; }
+.u-justifySpaceBetween { justify-content: space-between !important; }
+
+/**
+ * Aspect ratio
+ */
+
+.u-aspect1-1,
+.u-aspect4-3,
+.u-aspect16-9,
+.u-aspectPoster {
+  position: relative !important;
+}
+
+.u-aspect1-1::before,
+.u-aspect4-3::before,
+.u-aspect16-9::before,
+.u-aspectPoster::before {
+  content: "" !important;
+  display: block !important;
+  height: 0 !important;
+}
+
+.u-aspect1-1::before { padding-top: 100% !important; }
+.u-aspect4-3::before { padding-top: calc(100% * 3 / 4) !important; }
+.u-aspect16-9::before { padding-top: calc(100% * 9 / 16) !important; }
+.u-aspectPoster::before { padding-top: calc(100% * 278/195) !important; }
+
+/**
  * Centered page container
  */
 

@@ -1,5 +1,8 @@
 var html = require('choo/html')
+var parse = require('date-fns/parse')
+var format = require('date-fns/format')
 var asElement = require('prismic-element')
+var isSameMonth = require('date-fns/is_same_month')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
@@ -9,7 +12,9 @@ var glocal = require('../components/glocal')
 var compass = require('../components/compass')
 var Quotes = require('../components/quotes')
 var serialize = require('../components/text/serialize')
-var { asText, resolve, loader, srcset, HTTPError } = require('../components/base')
+var { i18n, asText, resolve, loader, srcset, HTTPError } = require('../components/base')
+
+var text = i18n()
 
 module.exports = view(home, meta)
 
@@ -74,6 +79,75 @@ function home (state, emit) {
                   </div>
                 `)}
               </div>
+            </div>
+
+            <div class="u-container">
+              ${state.prismic.getSingle('events', function (err, doc) {
+                if (err) return null
+
+                var items = []
+                if (!doc) {
+                  let opts = { background: true, location: true, date: true, body: false }
+                  for (let i = 0; i < 4; i++) items.push(card.loading(opts))
+                } else {
+                  let events = doc.data.events
+                    .filter((item) => item.start && item.link.url)
+                    .map(function (item) {
+                      return Object.assign({}, item, { start: parse(item.start) })
+                    })
+                    .sort((a, b) => a.start < b.start ? -1 : 1)
+
+                  items = events.slice(0, 4).map(function (item) {
+                    var sources = item.image.url ? srcset(
+                      item.image.url,
+                      [400, [800, 'q_70'], [1200, 'q_50']],
+                      { aspect: 9 / 16, transforms: 'c_thumb' }
+                    ) : null
+
+                    var date
+                    if (item.end) {
+                      let end = parse(item.end)
+                      if (isSameMonth(item.start, end)) {
+                        date = `${item.start.getDate()} – ${format(end, 'D MMMM')}`
+                      } else {
+                        date = `${format(item.start, 'D MMMM')} – ${format(end, 'D MMMM')}`
+                      }
+                    } else {
+                      date = format(item.start, 'D MMMM')
+                    }
+
+                    return card({
+                      background: item.image.url ? {
+                        srcset: sources,
+                        sizes: '(min-midth: 900px) 50vw, 100vw',
+                        alt: item.image.alt || '',
+                        src: sources.split(' ')[0]
+                      } : () => html`
+                        <div class="u-aspect16-9 u-bgOrange"></div>
+                      `,
+                      title: asText(item.title),
+                      date: {
+                        datetime: item.start,
+                        text: html`<span class="u-textBold u-textUppercase">${date}</span>`
+                      },
+                      location: [item.city, item.country].filter(Boolean).join(', '),
+                      link: {
+                        href: item.link.url
+                      }
+                    })
+                  })
+                }
+
+                return html`
+                  <section class="View-section">
+                    <div class="Text u-sizeFull u-flex u-justifySpaceBetween u-spaceB4">
+                      <h2 class="Text-h4">${text`Upcoming events`}</h2>
+                      ${doc ? html`<a class="Text-h4" href="${resolve(doc)}">${text`Show more`}</a>` : null}
+                    </div>
+                    ${grid({ size: { md: '1of2' } }, items)}
+                  </section>
+                `
+              })}
             </div>
 
             <section class="View-section">

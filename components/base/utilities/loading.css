@@ -6,6 +6,7 @@
   display: inline !important;
   color: transparent !important;
   user-select: none !important;
+  line-height: 1.4 !important;
 }
 
 .u-loadingLight {

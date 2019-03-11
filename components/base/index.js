@@ -27,6 +27,7 @@ function resolve (doc) {
     case 'homepage': return '/'
     case 'landing': return `/${doc.uid}`
     case 'page': return `/${doc.uid}`
+    case 'events': return '/participate'
     case 'Web':
     case 'Media': return doc.url
     default: {
