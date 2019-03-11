@@ -40,6 +40,9 @@
   flex-grow: 1;
   position: relative; /* 1 */
   width: 100%;
+}
+
+.Card--image .Card-body {
   margin-top: 1.375rem;
 }
 
