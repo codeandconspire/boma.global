@@ -1,4 +1,11 @@
 :root {
+  --color-orange: 255, 130, 0;
+  --color-royal: 32, 23, 71;
+  --color-yellow: 255, 209, 0;
+  --color-red: 224, 60, 49;
+  --color-lavender: 141, 137, 165;
+  --color-fog: 243, 243, 246;
+
   --color-muted: 0, 0, 0, 0.5;
 
   --color-link: blue;
