@@ -86,10 +86,6 @@ function home (state, emit) {
               </div>
             </section>
 
-            <section class="View-section View-section--grayToWhite">
-              <p class="u-textCenter">karta</p>
-            </section>
-
           </div>
         `
       })}
