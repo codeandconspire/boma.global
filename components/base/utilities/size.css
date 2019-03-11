@@ -60,6 +60,11 @@
     flex-basis: auto !important;
     width: 75% !important;
   }
+
+  .u-sm-size1of1 {
+    flex-basis: auto !important;
+    width: 100% !important;
+  }
 }
 
 /**
@@ -92,6 +97,11 @@
     flex-basis: auto !important;
     width: 75% !important;
   }
+
+  .u-md-size1of1 {
+    flex-basis: auto !important;
+    width: 100% !important;
+  }
 }
 
 /**
@@ -123,6 +133,11 @@
   .u-lg-size3of4 {
     flex-basis: auto !important;
     width: 75% !important;
+  }
+
+  .u-lg-size1of1 {
+    flex-basis: auto !important;
+    width: 100% !important;
   }
 }
 
