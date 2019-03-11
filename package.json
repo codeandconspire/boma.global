@@ -65,6 +65,7 @@
     "prismic-element": "^1.0.0",
     "prismic-javascript": "^2.0.1",
     "prismic-richtext": "^0.4.2",
+    "siema": "1.5.1",
     "smoothscroll-polyfill": "^0.4.3"
   }
 }

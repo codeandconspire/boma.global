@@ -7,6 +7,7 @@ var card = require('../components/card')
 var event = require('../components/event')
 var glocal = require('../components/glocal')
 var compass = require('../components/compass')
+var Quotes = require('../components/quotes')
 var serialize = require('../components/text/serialize')
 var { asText, resolve, loader, srcset, HTTPError } = require('../components/base')
 
@@ -116,6 +117,12 @@ function home (state, emit) {
                 })}
               </div>
             </section>
+
+            <div class="View-section">
+              <div class="u-container">
+                ${state.cache(Quotes, `quotes-${doc.id}`).render(quotesData)}
+              </div>
+            </div>
 
           </div>
         `
@@ -262,3 +269,21 @@ var eventData = [
     }
   }
 ]
+
+var quotesData = {
+  image: {
+    src: 'https://via.placeholder.com/1400x1000/0000FF'
+  },
+  content: [
+    {
+      body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
+      name: 'Susan Nemeth',
+      title: 'Director, COO and CFO, Aportio Technologies'
+    },
+    {
+      body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
+      name: 'Susan Nemeth',
+      title: 'Director, COO and CFO, Aportio Technologies'
+    }
+  ]
+}
