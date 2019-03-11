@@ -119,9 +119,7 @@ function home (state, emit) {
             </section>
 
             <div class="View-section">
-              <div class="u-container">
-                ${state.cache(Quotes, `quotes-${doc.id}`).render(quotesData)}
-              </div>
+              ${state.cache(Quotes, `quotes-${doc.id}`).render(quotesData)}
             </div>
 
           </div>
