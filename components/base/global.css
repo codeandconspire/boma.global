@@ -17,8 +17,8 @@
   --heading-font-family: "Gilroy", var(--document-font-family);
   --heading-line-height: 1;
 
-  --document-background: 250, 250, 250;
-  --document-color: var(--color-royal);
+  --document-background: 255, 255, 255;
+  --document-color: 32, 23, 69;
 
   --document-width: 1800px;
   --document-margin: 0.75rem;
