@@ -4,6 +4,7 @@ var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var event = require('../components/event')
+var compass = require('../components/compass')
 var asElement = require('prismic-element')
 var serialize = require('../components/text/serialize')
 var { asText, resolve } = require('../components/base')
@@ -23,6 +24,10 @@ function home (state, emit) {
 
         var featuredEvents = eventData.map(function (data) {
           return event(data)
+        })
+
+        var compassPosts = compassPostData.map(function (data) {
+          return card(data)
         })
 
         /*
@@ -66,6 +71,18 @@ function home (state, emit) {
                     md: '1of2'
                   }
                 }, featuredEvents)}
+              </div>
+            </section>
+
+            <section class="View-section">
+              <div class="u-container">
+                ${compass({
+                  title: 'We support leaders & teams in the necessary transformation of organizations.',
+                  image: {
+                    src: 'https://via.placeholder.com/1400x1000/4B2A96/FFFFFF'
+                  },
+                  children: compassPosts
+                })}
               </div>
             </section>
 
@@ -135,16 +152,9 @@ var newsData = [
     video: true
   },
   {
-    date: {
-      text: '25 April',
-      datetime: ''
-    },
     title: 'Salim Ismail Exponential Impact',
     body: '',
     location: 'São Paulo, Brazil',
-    link: {
-      href: '#/'
-    },
     image: {
       src: 'https://placehold.it/400x800'
     }
@@ -159,6 +169,33 @@ var newsData = [
       src: 'https://placehold.it/400x800'
     },
     community: false
+  }
+]
+
+var compassPostData = [
+  {
+    title: 'Summits',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua.',
+    link: {
+      href: '#/',
+      title: 'About Summits'
+    }
+  },
+  {
+    title: 'Institute',
+    body: 'Penatibus et magnis dis parturient montes nascetur ridiculus mus. Vulputate mi sit. Adipiscing elit ut aliquam purus.',
+    link: {
+      href: '#/',
+      title: 'About Boma Institute'
+    }
+  },
+  {
+    title: 'Boma Club',
+    body: 'Lectus arcu bibendum at varius. Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum.',
+    link: {
+      href: '#/',
+      title: 'About Boma Club'
+    }
   }
 ]
 
