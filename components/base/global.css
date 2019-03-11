@@ -14,14 +14,11 @@
   --document-font-size: 1rem;
   --document-line-height: 1.5;
 
-  --heading-font-family: "Gilroy", var(--document-font-family);
-  --heading-line-height: 1;
-
   --document-background: 255, 255, 255;
-  --document-color: 32, 23, 69;
+  --document-color: var(--color-royal);
 
   --document-width: 1800px;
-  --document-margin: 0.75rem;
+  --document-margin: 1rem;
 
   --container-width: var(--document-width);
   --container-wide-width: 65rem;
@@ -40,19 +37,19 @@
 
 @media (min-width: 350px) {
   :root {
-    --document-margin: 1rem;
+    --document-margin: 1.125rem;
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 400px) {
   :root {
-    --document-margin: 1.5rem;
+    --document-margin: 2rem;
   }
 }
 
 @media (min-width: 1000px) {
   :root {
-    --document-margin: 3rem;
+    --document-margin: 3.5rem;
   }
 }
 

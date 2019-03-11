@@ -81,6 +81,7 @@ svg,
 img,
 video,
 iframe {
+  display: inline-block;
   vertical-align: bottom;
 }
 

@@ -100,7 +100,6 @@
 .Event-title {
   font-size: 1.75rem;
   line-height: 1;
-  font-family: var(--heading-font-family);
   font-weight: 600;
   max-width: 22rem;
 }
