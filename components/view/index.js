@@ -6,7 +6,7 @@ var error = require('./error')
 var Header = require('../header')
 var Footer = require('../footer')
 var Player = require('../embed/player')
-var { i18n, asText, resolve } = require('../base')
+var { i18n, asText } = require('../base')
 
 // Quick fix for enabling active states in iOS (forgot how it works…)
 if (typeof window !== 'undefined') {

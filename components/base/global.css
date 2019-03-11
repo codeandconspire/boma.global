@@ -7,7 +7,7 @@
   --document-font-size: 1rem;
   --document-line-height: 1.5;
 
-  --heading-font-family: var(--document-font-family);
+  --heading-font-family: "Gilroy", var(--document-font-family);
   --heading-line-height: 1;
 
   --document-background: 250, 250, 250;
