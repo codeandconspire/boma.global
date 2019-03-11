@@ -79,7 +79,7 @@ function home (state, emit) {
                 ${compass({
                   title: 'We support leaders & teams in the necessary transformation of organizations.',
                   image: {
-                    src: 'https://via.placeholder.com/1400x1000/4B2A96/FFFFFF'
+                    src: 'https://via.placeholder.com/1400x1000/0000FF'
                   },
                   children: compassPosts
                 })}
@@ -132,7 +132,7 @@ var newsData = [
       href: '#/'
     },
     image: {
-      src: 'https://placehold.it/800x400'
+      src: 'https://via.placeholder.com/800x400/0000FF'
     }
   },
   {
@@ -143,7 +143,7 @@ var newsData = [
       title: 'Watch video'
     },
     image: {
-      src: 'https://placehold.it/400x800'
+      src: 'https://via.placeholder.com/400x800/0000FF'
     },
     video: true
   },
@@ -152,7 +152,7 @@ var newsData = [
     body: '',
     location: 'São Paulo, Brazil',
     image: {
-      src: 'https://placehold.it/400x800'
+      src: 'https://via.placeholder.com/400x800/0000FF'
     }
   },
   {
@@ -162,7 +162,7 @@ var newsData = [
       href: '#/'
     },
     image: {
-      src: 'https://placehold.it/400x800'
+      src: 'https://via.placeholder.com/400x800/0000FF'
     },
     community: false
   }
@@ -207,7 +207,7 @@ var eventData = [
       href: '#/'
     },
     image: {
-      src: 'https://via.placeholder.com/800x400/0000FF/808080'
+      src: 'https://via.placeholder.com/800x400/0000FF'
     }
   },
   {
@@ -227,7 +227,7 @@ var eventData = [
       href: '#/'
     },
     image: {
-      src: 'https://via.placeholder.com/400x800/0000FF/808080'
+      src: 'https://via.placeholder.com/400x800/0000FF'
     }
   }
 ]

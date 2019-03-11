@@ -61,7 +61,7 @@ module.exports = class hero extends Component {
     return true
   }
 
-  createElement () {
+  createElement (doc) {
     return html`
       <div class="Hero">
         <div class="Hero-content">
@@ -75,7 +75,7 @@ module.exports = class hero extends Component {
             </h2>
           </div>
         </div>
-        <img class="Hero-image" src="https://via.placeholder.com/2600x1000/0000FF/808080" alt="">
+        <img class="Hero-image" src="https://via.placeholder.com/2600x1000/0000FF" alt="">
       </div>
     `
   }
