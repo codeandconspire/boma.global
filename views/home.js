@@ -39,7 +39,7 @@ function home (state, emit) {
           <div>
             ${state.cache(hero, `hero-${doc.id}`).render()}
 
-            <div class="View-section">
+            <section class="View-section">
               <div class="u-container">
                 ${grid({
                   size: {
@@ -48,21 +48,32 @@ function home (state, emit) {
                   }
                 }, featuredPosts)}
               </div>
-            </div>
+            </section>
 
-            <div class="View-section">
+            <section class="View-section">
               <div class="u-container">
+
+                <header class="View-sectionHead">
+                  <h2 class="u-textBold">Upcoming events</h2>
+                  <a class="u-textBold" href="#/">
+                    <span>Show more</span>
+                    <svg class="" width="7" height="11" version="1" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 9l4-4-4-4" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </header>
+
                 ${grid({
                   size: {
                     md: '1of2'
                   }
                 }, featuredEvents)}
               </div>
-            </div>
+            </section>
 
-            <div class="View-section View-section--grayToWhite">
+            <section class="View-section View-section--grayToWhite">
               <p class="u-textCenter">karta</p>
-            </div>
+            </section>
 
           </div>
         `
@@ -160,13 +171,32 @@ var eventData = [
       datetime: ''
     },
     title: 'Grow 2019 agri summit',
-    body: '',
     location: 'Christchurch, New Zealand',
     link: {
       href: '#/'
     },
     image: {
-      src: 'https://placehold.it/800x400'
+      src: 'https://via.placeholder.com/800x400/0000FF/808080'
+    }
+  },
+  {
+    title: 'Boma France Campfire: What if?',
+    link: {
+      href: '#/'
+    }
+  },
+  {
+    date: {
+      text: '25 April',
+      datetime: ''
+    },
+    title: 'Boma Germany Summit',
+    location: 'Berlin, Germany',
+    link: {
+      href: '#/'
+    },
+    image: {
+      src: 'https://via.placeholder.com/400x800/0000FF/808080'
     }
   }
 ]

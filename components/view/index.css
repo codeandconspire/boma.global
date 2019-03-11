@@ -50,7 +50,7 @@
   max-height: 7rem;
 }
 
-.View-section::after {
+.View-section:last-child::after {
   content: "";
   height: 13vh;
   display: block;
@@ -60,6 +60,13 @@
 .View-section--grayToWhite {
   background: linear-gradient(#f3f3f6 70%, #fff);
 }
+
+.View-sectionHead {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
 
 
 /**
