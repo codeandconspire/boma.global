@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var view = require('../components/view')
-var { asText } = require('../components/base')
+var { asText, HTTPError } = require('../components/base')
 
 module.exports = view(page, meta)
 
@@ -8,7 +8,7 @@ function page (state, emit) {
   return html`
     <main class="View-main">
       ${state.prismic.getByUID('page', state.params.page, (err, doc) => {
-        if (err) throw err
+        if (err) throw HTTPError(404, err)
         if (!doc) return html`<div></div>`
 
         return html`

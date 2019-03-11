@@ -1,0 +1,49 @@
+@import "../base";
+
+/* @define Glocal */
+.Glocal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+@media (min-width: 900px) {
+  .Glocal {
+    flex-wrap: nowrap;
+  }
+}
+
+.Glocal-figure {
+  flex: 1 1 100%;
+  margin-bottom: 2rem;
+  white-space: nowrap;
+  text-align: right;
+  font-size: 4.8rem;
+  font-weight: 600;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+}
+
+@media (min-width: 900px) {
+  .Glocal-figure {
+    flex: 0 1 24rem;
+    margin-bottom: 0;
+    margin-right: 9rem;
+  }
+}
+
+.Glocal-tinted {
+  color: rgb(var(--color-orange));
+}
+
+.Glocal-symbol {
+  display: inline-block;
+  margin-left: 0.3em;
+  vertical-align: baseline;
+}
+
+.Glocal-body {
+  flex: 0 1 auto;
+  max-width: 37.5rem;
+}

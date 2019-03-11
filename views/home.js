@@ -1,13 +1,14 @@
 var html = require('choo/html')
+var asElement = require('prismic-element')
 var view = require('../components/view')
-var hero = require('../components/hero')
+var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var event = require('../components/event')
+var glocal = require('../components/glocal')
 var compass = require('../components/compass')
-var asElement = require('prismic-element')
 var serialize = require('../components/text/serialize')
-var { asText, resolve } = require('../components/base')
+var { asText, resolve, loader, srcset, HTTPError } = require('../components/base')
 
 module.exports = view(home, meta)
 
@@ -15,8 +16,23 @@ function home (state, emit) {
   return html`
     <main class="View-main">
       ${state.prismic.getSingle('homepage', function (err, doc) {
-        if (err) throw err
-        if (!doc) return html`<div></div>`
+        if (err) throw HTTPError(404, err)
+        if (!doc) {
+          return html`
+            <div>
+              ${Hero.loading()}
+              <div class="View-section">
+                <div class="u-container">
+                  ${glocal(html`
+                    <div class="Text">
+                      ${loader(80)}
+                    </div>
+                  `)}
+                </div>
+              </div>
+            </div>
+          `
+        }
 
         var featuredPosts = newsData.map(function (data) {
           return card(data)
@@ -30,19 +46,34 @@ function home (state, emit) {
           return card(data)
         })
 
-        /*
-        var featuredPosts = doc.data.featured_posts.map(function (data) {
-          return card(data)
-        })
-
-        var featuredEvents = doc.data.featured_events.map(function (data) {
-          return event(data)
-        })
-        */
+        var image = null
+        if (doc.data.image.url) {
+          let sources = srcset(doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']])
+          image = Object.assign({
+            sizes: '100vw',
+            srcset: sources,
+            alt: doc.data.image.alt || '',
+            src: sources.split(' ')[0]
+          }, doc.data.image.dimensions)
+        }
 
         return html`
           <div>
-            ${state.cache(hero, `hero-${doc.id}`).render()}
+            ${state.cache(Hero, `hero-${doc.id}`).render(
+              asText(doc.data.intro_text),
+              doc.data.intro_words.map((item) => item.text),
+              image
+            )}
+
+            <div class="View-section">
+              <div class="u-container">
+                ${glocal(html`
+                  <div class="Text">
+                    ${asElement(doc.data.description, resolve, serialize)}
+                  </div>
+                `)}
+              </div>
+            </div>
 
             <section class="View-section">
               <div class="u-container">

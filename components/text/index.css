@@ -7,6 +7,7 @@
   line-height: var(--default-line-height);
   font-size: 1rem;
   text-align: left;
+  max-width: 39em;
 }
 
 @media (min-width: 350px) {
@@ -59,12 +60,20 @@
  * Block elements
  */
 
-.Text p,
-.Text ul,
-.Text ol,
-.Text img,
-.Text pre {
-  margin: 1.5em 0;
+.Text p:not(:first-child),
+.Text ul:not(:first-child),
+.Text ol:not(:first-child),
+.Text img:not(:first-child),
+.Text pre:not(:first-child) {
+  margin-top: 1.5em;
+}
+
+.Text p:not(:last-child),
+.Text ul:not(:last-child),
+.Text ol:not(:last-child),
+.Text img:not(:last-child),
+.Text pre:not(:last-child) {
+  margin-bottom: 1.5em;
 }
 
 .Text img {

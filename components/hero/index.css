@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.Hero.is-loading {
+  background-color: rgba(var(--loading-color));
+}
+
 .Hero-content {
   position: relative;
   z-index: 1;
@@ -20,8 +24,10 @@
 
 .Hero-title {
   font-size: 2.25rem;
-  line-height: 1.2;
+  line-height: 1.4;
   max-width: 800px;
+  font-weight: 600;
+  font-family: var(--heading-font-family);
 }
 
 @media (min-width: 700px) {
@@ -52,19 +58,26 @@
 
 .Hero-rotateText {
   position: absolute;
-  display: inline-block;
   white-space: nowrap;
+}
+
+.Hero-rotateText:not(:first-child) {
+  display: none;
+}
+
+:root[scripting-enabled] .Hero-rotateText {
+  display: inline-block;
   transform: translateY(50px);
   transition: transform 500ms ease, opacity 500ms ease;
   opacity: 0;
 }
 
-.Hero-rotateText.out {
+:root[scripting-enabled] .Hero-rotateText.out {
   transform: translateY(-50px);
   opacity: 0;
 }
 
-.Hero-rotateText.in {
+:root[scripting-enabled] .Hero-rotateText.in {
   transform: translateY(0px);
   opacity: 1;
 }

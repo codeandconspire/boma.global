@@ -1,31 +1,17 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-var { i18n } = require('../base')
-var text = i18n(require('./lang.json'))
+var { loader } = require('../base')
 
-module.exports = class hero extends Component {
+module.exports = class Hero extends Component {
   constructor (id, state, emit) {
     super(id)
-
-    var textArray = [
-      text`TEXT_1`,
-      text`TEXT_2`,
-      text`TEXT_3`,
-      text`TEXT_4`
-    ]
-    var lastItem = textArray.pop()
-    textArray.unshift(lastItem)
-
-    this.local = state.components[id] = {
-      id: id,
-      state: state,
-      textArray: textArray
-    }
+    this.local = state.components[id] = { id }
   }
 
   load (el) {
     var that = this
-    var textElements = Array.from(el.querySelectorAll('.js-rotate'))
+    var words = Array.from(el.querySelectorAll('.js-rotate'))
+    var count = words.length
     var currentText = 0
 
     function animateTextOut (el) {
@@ -39,13 +25,13 @@ module.exports = class hero extends Component {
     }
 
     function changeText () {
-      var currentTextEl = textElements[currentText]
-      var nextTextEl = currentText === textElements.length - 1 ? textElements[0] : textElements[currentText + 1]
+      var currentTextEl = words[currentText]
+      var nextTextEl = currentText === words.length - 1 ? words[0] : words[currentText + 1]
 
       animateTextOut(currentTextEl)
       animateTextIn(nextTextEl)
 
-      currentText = (currentText === that.local.textArray.length - 1) ? 0 : currentText + 1
+      currentText = (currentText === count - 1) ? 0 : currentText + 1
     }
 
     changeText()
@@ -57,25 +43,53 @@ module.exports = class hero extends Component {
     }
   }
 
-  update () {
-    return true
+  update (text, words) {
+    if (text !== this.local.text) return true
+    if (words.join() !== this.local.words.join()) return true
+    return false
   }
 
-  createElement (doc) {
+  static loading () {
     return html`
-      <div class="Hero">
+      <div class="Hero is-loading">
         <div class="Hero-content">
           <div class="u-container">
-            <h2 class="Hero-title u-textBold">
-              Supporting <span class="Hero-rotateWrap">
-              ${this.local.textArray.map(function (text) {
-                return html`<span class="Hero-rotateText js-rotate">${text}</span>`
-              })}
-              </span> <span class="u-block">to navigate our rapidly changing world</span>
+            <h2 class="Hero-title">
+              ${loader(28)}
             </h2>
           </div>
         </div>
-        <img class="Hero-image" src="https://via.placeholder.com/2600x1000/0000FF" alt="">
+      </div>
+    `
+  }
+
+  createElement (text, words, image) {
+    this.local.text = text
+    this.local.words = words
+
+    var attrs = {}
+    if (image) {
+      Object.keys(image).forEach(function (key) {
+        if (key !== 'src') attrs[key] = image[key]
+      })
+    }
+
+    var parts = text.split('#WORDS')
+
+    return html`
+      <div class="Hero" id="${this.local.id}">
+        <div class="Hero-content">
+          <div class="u-container">
+            <h2 class="Hero-title">
+              ${parts[0]} <span class="Hero-rotateWrap">
+              ${words.map(function (text) {
+                return html`<span class="Hero-rotateText js-rotate">${text}</span>`
+              })}
+              </span> <span class="u-block">${parts[1]}</span>
+            </h2>
+          </div>
+        </div>
+        ${image ? html`<img class="Hero-image" ${attrs} src="${image.src}" />` : null}
       </div>
     `
   }
