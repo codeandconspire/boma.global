@@ -3,10 +3,10 @@ var link = require('./link')
 var figure = require('./figure')
 var { className, snippet, loader } = require('../base')
 
-module.exports = card
-card.loading = loading
+module.exports = event
+event.loading = loading
 
-function card (props = {}, slot) {
+function event (props = {}, slot) {
   var body = props.body
   if (body) {
     if (typeof window === 'undefined') {
@@ -24,7 +24,7 @@ function card (props = {}, slot) {
   }
 
   var attrs = {
-    class: className('Card', {
+    class: className('Event', {
       'Event--interactive': props.link,
       'Event--image': props.image,
       'Event--video': props.video
@@ -42,7 +42,7 @@ function card (props = {}, slot) {
       <div class="Event-content">
         <div class="Event-body">
           ${props.date && props.date.text ? html`
-            <time class="Event-meta" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
+            <time class="Event-meta u-textBold" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
               ${props.date.text}
             </time>
           ` : null}
@@ -52,9 +52,14 @@ function card (props = {}, slot) {
             ` : props.title}
           </h3>
           ${body}
-          ${props.link && props.link.title && (
-            html`<div class="Event-action u-textBold">${props.link.title}</div>`
-          )}
+          ${props.location ? html`
+            <div class="Event-footer">
+              <svg class="Event-footerIcon" width="11" height="13" xmlns="http://www.w3.org/2000/svg">
+                <g fill="currentColor" fill-rule="nonzero"><path d="M5.5.25a5 5 0 0 0-5 4.95c0 3.42 4.4 7.24 4.6 7.4.23.2.57.2.8 0 .22-.16 4.6-3.97 4.6-7.4a5 5 0 0 0-5-4.95zm0 11.03c-1.04-1-3.75-3.75-3.75-6.08a3.75 3.75 0 0 1 7.5 0c0 2.31-2.7 5.09-3.75 6.08z"/><path d="M5.5 2.75a2.19 2.19 0 1 0 0 4.38 2.19 2.19 0 0 0 0-4.38zm0 3.13A.94.94 0 1 1 5.5 4a.94.94 0 0 1 0 1.88z"/></g>
+              </svg>
+              ${props.location}
+            </div>
+          ` : null}
         </div>
         ${props.link ? link(Object.assign({ inherit: props.background }, props.link)) : null}
       </div>
@@ -64,7 +69,7 @@ function card (props = {}, slot) {
 
 function loading (props = {}) {
   return html`
-    <article class="Card">
+    <article class="Event">
       ${figure.loading()}
       <div class="Event-content">
         <div class="Event-body">
