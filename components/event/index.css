@@ -5,10 +5,17 @@
 .Event {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   width: 100%;
+  height: 100%;
   position: relative;
   z-index: 0;
   color: rgb(var(--current-color));
+  background: #eee;
+}
+
+.Event--image {
+
 }
 
 @media print {
@@ -18,23 +25,20 @@
   }
 }
 
-.Event-content {
-  position: absolute;
-  left: 1.5rem;
-  bottom: 1.5rem;
-  color: #fff;
 
+.Event-content {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
   align-items: flex-start;
-  padding: 0;
+  padding: 0 0 1.5rem 1.5rem;
 }
 
-@media (min-width: 400px) {
-  .Event-content {
-    padding: 0;
-  }
+.Event--image .Event-content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: #fff;
+  flex: 1 0 auto;
 }
 
 /**
