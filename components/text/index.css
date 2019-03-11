@@ -90,7 +90,6 @@
   line-height: 1.2;
   font-weight: normal;
   font-family: var(--heading-font-family);
-  letter-spacing: -0.01em;
   text-align: center;
 }
 
@@ -193,7 +192,6 @@
   font-weight: normal;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
-  letter-spacing: -0.01em;
 }
 
 .Text h1,
