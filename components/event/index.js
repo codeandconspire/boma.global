@@ -47,9 +47,7 @@ function event (props = {}, slot) {
             </time>
           ` : null}
           <h3 class="Event-title u-textBold">
-            ${props.type ? html`
-              <span><span class="Event-type">${props.type}:</span> ${props.title}</span>
-            ` : props.title}
+            ${props.title}
           </h3>
           ${body}
           ${props.location ? html`

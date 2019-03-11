@@ -51,9 +51,7 @@ function card (props = {}) {
             </time>
           ` : null}
           <h3 class="Card-title u-textBold">
-            ${props.type ? html`
-              <span><span class="Card-type">${props.type}:</span> ${props.title}</span>
-            ` : props.title}
+            ${props.title}
           </h3>
           ${body}
           ${props.location ? html`
