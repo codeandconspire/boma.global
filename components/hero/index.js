@@ -7,15 +7,19 @@ module.exports = class hero extends Component {
   constructor (id, state, emit) {
     super(id)
 
+    var textArray = [
+      text`TEXT_1`,
+      text`TEXT_2`,
+      text`TEXT_3`,
+      text`TEXT_4`
+    ]
+    var lastItem = textArray.pop()
+    textArray.unshift(lastItem)
+
     this.local = state.components[id] = {
       id: id,
       state: state,
-      textArray: [
-        text`TEXT_4`, // TODO: Fix order in load()
-        text`TEXT_1`,
-        text`TEXT_2`,
-        text`TEXT_3`
-      ]
+      textArray: textArray
     }
   }
 
@@ -58,8 +62,6 @@ module.exports = class hero extends Component {
   }
 
   createElement () {
-    console.log(this.local.textArray)
-
     return html`
       <div class="Hero">
         <div class="Hero-content">
