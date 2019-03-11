@@ -9,6 +9,24 @@
 @import "./utilities/transitions";
 
 /**
+ * Font declaration
+ */
+
+@font-face {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/g-regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  src: url("./fonts/g-semibold.woff") format("woff");
+}
+
+/**
  * Document styles
  * 1. Global box sizing
  * 2. Guard for horizontal scrolling
@@ -19,7 +37,7 @@
  * 7. Fabulous svg text sizing
  */
 
- :root {
+:root {
   box-sizing: border-box; /* 1 */
   width: 100%; /* 2 */
   height: 100%; /* 3 */
