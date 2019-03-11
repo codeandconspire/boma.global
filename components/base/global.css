@@ -18,7 +18,7 @@
   --heading-line-height: 1;
 
   --document-background: 250, 250, 250;
-  --document-color: 32, 23, 69;
+  --document-color: var(--color-royal);
 
   --document-width: 1800px;
   --document-margin: 0.75rem;

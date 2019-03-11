@@ -102,7 +102,7 @@
 .Card-action {
   display: inline-block;
   margin: 0.5rem 0 0;
-  border-bottom: 2px solid orange;
+  border-bottom: 2px solid rgb(var(--color-orange));
   font-weight: 600;
 }
 
