@@ -9,6 +9,7 @@ var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var glocal = require('../components/glocal')
+var principles = require('../components/principles')
 var compass = require('../components/compass')
 var Quotes = require('../components/quotes')
 var serialize = require('../components/text/serialize')
@@ -268,6 +269,10 @@ function home (state, emit) {
             <div class="View-section">
               ${state.cache(Quotes, `quotes-${doc.id}`).render(quotesData)}
             </div>
+
+            <div class="View-section">
+              ${principles(principlesData)}
+            </div>
           </div>
         `
       })}
@@ -322,3 +327,22 @@ var quotesData = {
     }
   ]
 }
+
+var principlesData = [
+  {
+    title: 'Embrace Complexity',
+    body: 'We’re heading into a future with no simple answers. Technology, for example, has brought about extraordinary progress, but it has also created unprecedented challenges. We need to accept these complexities fearlessly if we want to make a better future for everyone.'
+  },
+  {
+    title: 'Be robust and credible',
+    body: 'While nobody knows what the future holds, our work is evidence-based and defensible.'
+  },
+  {
+    title: 'Question dogma',
+    body: 'We embrace new evidence and are willing to challenge our own status quo. We aren’t inflexible champions of technology, and we aren’t attached to a particular model of society.'
+  },
+  {
+    title: 'Be inclusive',
+    body: 'Our events and programs welcome people from all sectors of society, and we work hard to make them accessible to a broad range of people.'
+  }
+]
