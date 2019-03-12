@@ -7,7 +7,6 @@ var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
-var event = require('../components/event')
 var glocal = require('../components/glocal')
 var compass = require('../components/compass')
 var Quotes = require('../components/quotes')
@@ -42,10 +41,6 @@ function home (state, emit) {
 
         var featuredPosts = newsData.map(function (data) {
           return card(data)
-        })
-
-        var featuredEvents = eventData.map(function (data) {
-          return event(data)
         })
 
         var compassPosts = compassPostData.map(function (data) {
@@ -158,25 +153,6 @@ function home (state, emit) {
                     lg: '1of3'
                   }
                 }, featuredPosts)}
-              </div>
-            </section>
-
-            <section class="View-section">
-              <div class="u-container">
-                <header class="View-sectionHead">
-                  <h2>Upcoming events</h2>
-                  <a href="#/">
-                    <span>Show more</span>
-                    <svg class="" width="7" height="11" version="1" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 9l4-4-4-4" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </a>
-                </header>
-                ${grid({
-                  size: {
-                    md: '1of2'
-                  }
-                }, featuredEvents)}
               </div>
             </section>
 
@@ -301,43 +277,6 @@ var compassPostData = [
     link: {
       href: '#/',
       title: 'About Boma Club'
-    }
-  }
-]
-
-var eventData = [
-  {
-    date: {
-      text: '10-11 April',
-      datetime: ''
-    },
-    title: 'Grow 2019 agri summit',
-    location: 'Christchurch, New Zealand',
-    link: {
-      href: '#/'
-    },
-    image: {
-      src: 'https://via.placeholder.com/800x400/0000FF'
-    }
-  },
-  {
-    title: 'Boma France Campfire: What if?',
-    link: {
-      href: '#/'
-    }
-  },
-  {
-    date: {
-      text: '25 April',
-      datetime: ''
-    },
-    title: 'Boma Germany Summit',
-    location: 'Berlin, Germany',
-    link: {
-      href: '#/'
-    },
-    image: {
-      src: 'https://via.placeholder.com/400x800/0000FF'
     }
   }
 ]
