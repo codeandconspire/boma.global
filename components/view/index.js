@@ -68,7 +68,7 @@ function createView (view, meta) {
           description: doc ? asText(doc.data.description) : null
         }
 
-        if (doc && doc.data.featured_image.url) {
+        if (doc && doc.data.featured_image && doc.data.featured_image.url) {
           defaults['og:image'] = doc.data.featured_image.url
           defaults['og:image:width'] = doc.data.featured_image.dimensions.width
           defaults['og:image:height'] = doc.data.featured_image.dimensions.height
