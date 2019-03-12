@@ -23,7 +23,7 @@
 
 @media (min-width: 600px) and (min-height: 400px) {
   .Hero-content {
-    padding: 20vh 0 10vh;
+    padding: 10rem 0 5rem;
   }
 }
 
@@ -35,7 +35,7 @@
 
 @media (min-width: 600px) and (min-height: 400px) {
   .Hero--image .Hero-content {
-    padding: 20vh 0;
+    padding: 10rem 0;
   }
 }
 
