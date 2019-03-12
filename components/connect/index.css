@@ -68,6 +68,5 @@
 }
 
 .Connect-input:focus {
-  outline: 0;
   border-color: currentColor;
 }

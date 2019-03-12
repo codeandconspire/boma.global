@@ -27,8 +27,8 @@
   --loading-color: 0, 0, 0, 0.06;
   --loading-color-solid: 235, 235, 235;
 
-  --focus-ring-width: 2px;
-  --focus-ring-color: var(--color-black);
+  --focus-ring-width: 3px;
+  --focus-ring-color: var(--color-yellow);
 
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);

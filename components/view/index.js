@@ -9,8 +9,10 @@ var Player = require('../embed/player')
 var { i18n, asText } = require('../base')
 var PrismicToolbar = require('../prismic-toolbar')
 
-// Enable active states in iOS
 if (typeof window !== 'undefined') {
+  require('focus-visible')
+
+  // Enable active states in iOS
   document.addEventListener('touchstart', function () {}, false)
 }
 
