@@ -30,9 +30,9 @@ function error (err) {
 
 function message (status) {
   switch (status) {
-    case 404: return html`<p>${text`There is no page at this address. Try finding your way using the menu or from ${html`<a href="/">${text`the homepage`}</a>`}.`}</p>`
-    case 503: return html`<p>${text`You seem to be offline. Check your network connection and ${html`<a href="" onclick=${reload}>${text`try again`}</a>`}.`}</p>`
-    default: return html`<p>${text`We apologize, an error has occured on our site. It may be temporary and you could ${html`<a href="" onclick=${reload}>${text`try again`}</a>`} or go back to ${html`<a href="/">${text`the homepage`}</a>`}.`}</p>`
+    case 404: return html`<div><p>${text`There is no page at this address. Try finding your way using the menu or from ${html`<a href="/">${text`the homepage`}</a>`}.`}</p></div>`
+    case 503: return html`<div><p>${text`You seem to be offline. Check your network connection.`}</p><p>${html`<button role="button" onclick=${reload}>${text`try again`}</button>`}</p></div>`
+    default: return html`<div><p>${text`We apologize, an error has occured on our site.`}</p><p>${html`<button role="button" onclick=${reload}>${text`try again`}</button>`}</p></div>`
   }
 
   function reload (event) {
