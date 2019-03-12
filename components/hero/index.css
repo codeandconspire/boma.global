@@ -17,15 +17,11 @@
 .Hero-content {
   position: relative;
   z-index: 1;
-  padding: 8rem 0;
-}
-
-.Hero--center .Hero-content {
   padding: 6rem 0;
 }
 
-@media (min-height: 400px) {
-  .Hero .Hero-content {
+@media (min-width: 600px) and (min-height: 400px) {
+  .Hero-content {
     padding: 20vh 0;
   }
 }
