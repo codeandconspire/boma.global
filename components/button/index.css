@@ -1,0 +1,27 @@
+@import "../base";
+
+/* @define Button */
+.Button {
+  display: inline-block;
+  padding: 0 1.2rem;
+  line-height: 3.25rem;
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  background: rgb(var(--color-orange));
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  border-radius: 4rem;
+  transform-origin: center;
+  transition: 90ms var(--ease-out);
+  transition-property: transform;
+}
+
+.Button:not([disabled]):hover {
+  transform: scale(1.05);
+}
+
+.Button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
