@@ -17,10 +17,15 @@ module.exports = class Hero extends Component {
     var words = Array.from(el.querySelectorAll('.js-rotate'))
     var count = words.length
     var currentText = 0
+    var rotatingDelay = this.local.rotatingDelay
 
     function animateTextOut (el) {
       el.classList.remove('in')
       el.classList.add('out')
+
+      setTimeout(function () {
+        el.classList.remove('out')
+      }, rotatingDelay + 100)
     }
 
     function animateTextIn (el) {
@@ -73,6 +78,8 @@ module.exports = class Hero extends Component {
     var { action, image, title, body, words } = props
     var rotatingWords = false
 
+    var rotatingDelay = this.local.rotatingDelay = 600
+
     if (title && words) {
       this.local.title = title
       this.local.words = words
@@ -100,7 +107,7 @@ module.exports = class Hero extends Component {
     var titleElement = rotatingWords ? html`
       ${parts[0]} <span class="Hero-rotateWrap">
       ${words.map(function (title) {
-        return html`<span class="Hero-rotateText js-rotate">${title}</span>`
+        return html`<span class="Hero-rotateText js-rotate" style="--Hero-rotatingDelay: ${rotatingDelay}ms">${title}</span>`
       })}
       </span> <span class="u-block">${parts[1]}</span>
     ` : title

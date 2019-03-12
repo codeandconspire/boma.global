@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+  --Hero-rotatingDelay: 500ms;
 }
 
 .Hero--image {
@@ -88,13 +89,13 @@
 
 :root[scripting-enabled] .Hero-rotateText {
   display: inline-block;
-  transform: translateY(50px);
-  transition: transform 500ms ease, opacity 500ms ease;
+  transform: translateY(.75em);
+  transition: transform var(--Hero-rotatingDelay) ease, opacity var(--Hero-rotatingDelay) ease;
   opacity: 0;
 }
 
 :root[scripting-enabled] .Hero-rotateText.out {
-  transform: translateY(-50px);
+  transform: translateY(-.75em);
   opacity: 0;
 }
 
