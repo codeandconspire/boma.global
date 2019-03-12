@@ -23,10 +23,10 @@ function embed (props) {
     <figure class="Embed">
       <a class="Embed-link" href="${props.url}" target="_blank" rel="noopener noreferrer" onclick=${onclick}>
         <span class="u-hiddenVisually">${text`Play ${props.title || ''}`}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89" class="Embed-play">
-          <g fill="none" fill-rule="evenodd">
-            <circle cx="44.5" cy="44.5" r="44.5" fill="currentColor"/>
-            <path fill="#FFF" d="M36 31l24 14-24 14z"/>
+        <svg class="Embed-play" viewBox="0 0 79 79">
+          <g fill="none" fill-rule="evenodd" transform="translate(1 1)">
+            <circle cx="38.5" cy="38.5" r="38.5" fill="#FFF" stroke="#FFF"/>
+            <path fill="#201745" d="M50 40L32 50V30z"/>
           </g>
         </svg>
       </a>
