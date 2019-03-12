@@ -9,7 +9,6 @@ module.exports = class Hero extends Component {
   }
 
   load (el) {
-    var that = this
     var words = Array.from(el.querySelectorAll('.js-rotate'))
     var count = words.length
     var currentText = 0
