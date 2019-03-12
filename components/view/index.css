@@ -25,8 +25,10 @@
   flex-grow: 1;
 }
 
-.View.is-overlayed .View-main {
-  display: none !important;
+@media (max-width: 599px) {
+  .View.is-overlayed .View-main {
+    display: none !important;
+  }
 }
 
 .View-section::before {

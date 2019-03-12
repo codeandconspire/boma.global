@@ -4,7 +4,7 @@
 .Header {
   padding: 0.7rem 0;
   background: rgb(255, 255, 255);
-  box-shadow: 0 1px 0 rgba(var(--color-lavender), 0.2);
+  box-shadow: 0 1px 0 rgba(141, 137, 165, 0.2);
 }
 
 .Header-content {

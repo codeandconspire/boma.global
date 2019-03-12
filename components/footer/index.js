@@ -66,7 +66,7 @@ module.exports = class Footer extends Component {
           <nav>
             <ul class="Footer-menu">
               <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: 50ms">
-                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">About Boma</a></li>
+                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">${symbol.arrow('About Boma adf')}</a></li>
                 <li>
                   <ul class="Footer-list">
                     <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
@@ -77,18 +77,8 @@ module.exports = class Footer extends Component {
                   </ul>
                 </li>
               </li>
-              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 100 : 0}ms">
-                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">About Boma</a></li>
-                <li>
-                  <ul class="Footer-list">
-                    <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
-                    <li class="Footer-item"><a class="Footer-link" href="#">Important link</a></li>
-                    <li class="Footer-item"><a class="Footer-link" href="#">last one</a></li>
-                  </ul>
-                </li>
-              </li>
-              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 200 : 0}ms">
-                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">About Boma</a></li>
+              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 150 : 0}ms">
+                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">${symbol.arrow('About Boma adf')}</a></li>
                 <li>
                   <ul class="Footer-list">
                     <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
@@ -98,7 +88,17 @@ module.exports = class Footer extends Component {
                 </li>
               </li>
               <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 300 : 0}ms">
-                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">About Boma</a></li>
+                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">${symbol.arrow('Services')}</a></li>
+                <li>
+                  <ul class="Footer-list">
+                    <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
+                    <li class="Footer-item"><a class="Footer-link" href="#">Important link</a></li>
+                    <li class="Footer-item"><a class="Footer-link" href="#">last one</a></li>
+                  </ul>
+                </li>
+              </li>
+              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 450 : 0}ms">
+                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">${symbol.arrow('About Boma')}</a></li>
                 <li>
                   <ul class="Footer-list">
                     <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
@@ -109,8 +109,8 @@ module.exports = class Footer extends Component {
                   </ul>
                 </li>
               </li>
-              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 400 : 0}ms">
-                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">About Boma</a></li>
+              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 600 : 0}ms">
+                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">${symbol.arrow('About Boma adf')}</a></li>
                 <li>
                   <ul class="Footer-list">
                     <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
@@ -121,8 +121,8 @@ module.exports = class Footer extends Component {
                   </ul>
                 </li>
               </li>
-              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 500 : 0}ms">
-                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">About Boma</a></li>
+              <li class="Footer-section ${this.alternative ? 'u-slideDown' : ''}" style="animation-delay: ${this.alternative ? 700 : 0}ms">
+                <li class="Footer-item"><a class="Footer-link Footer-link--primary" href="#">${symbol.arrow('About Boma adf')}</a></li>
                 <li>
                   <ul class="Footer-list">
                     <li class="Footer-item"><a class="Footer-link" href="#">First link</a></li>
