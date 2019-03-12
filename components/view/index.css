@@ -25,7 +25,7 @@
   flex-grow: 1;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .View.is-overlayed .View-main {
     display: none !important;
   }

@@ -245,7 +245,7 @@
  * Used when the footer is used as mobile navigation
  */
 
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .Footer--alt {
     padding-top: 6.5rem;
     background: rgb(255, 255, 255);
