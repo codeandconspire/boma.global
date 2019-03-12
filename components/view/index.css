@@ -43,6 +43,13 @@
   max-height: 7rem;
 }
 
+.View-sectionHead {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
 /**
  * Footer
  */
