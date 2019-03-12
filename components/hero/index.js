@@ -84,7 +84,8 @@ module.exports = class Hero extends Component {
     var attrs = {
       id: this.local.id,
       class: className('Hero', {
-        'Hero--center': !rotatingWords
+        'Hero--center': !rotatingWords,
+        'Hero--image': image
       })
     }
 

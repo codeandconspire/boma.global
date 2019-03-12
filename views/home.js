@@ -293,6 +293,11 @@ function home (state, emit) {
               },
               image
             })}
+
+            ${state.cache(Hero, `hero-${doc.id}`).render({
+              title: 'Executive Programme',
+              body: 'An immersive 3-day experience which brings together key social, economic, technological, and environmental trends, so you can take charge of your role in the future we’re creating—leaving you confident to lead purposefully in the face of the dramatic changes affecting our world.'
+            })}
           </div>
         `
       })}
