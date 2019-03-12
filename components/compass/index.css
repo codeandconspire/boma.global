@@ -1,7 +1,9 @@
+@import "../base";
+
+/* @define Compass */
 .Compass {
   position: relative;
 }
-
 
 .Compass-wrap {
   display: grid;

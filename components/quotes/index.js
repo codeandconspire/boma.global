@@ -51,6 +51,10 @@ module.exports = class Quotes extends Component {
     })
   }
 
+  update () {
+    return false
+  }
+
   unload () {
     this.local.slideshow.destroy()
   }

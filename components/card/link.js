@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var assert = require('assert')
-var { i18n, isSameDomain, filetype, loader } = require('../base')
+var { i18n, isSameDomain, filetype, loader, className } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -24,7 +24,9 @@ function link (opts = {}) {
 
   return html`
     <a ${attrs}>
-      <span class="u-hiddenVisually">${label(opts)}</span>
+      <span class="${('visible' in opts && !opts.visible) ? 'u-hiddenVisually' : ''}">
+        ${label(opts)}
+      </span>
     </a>
   `
 }
