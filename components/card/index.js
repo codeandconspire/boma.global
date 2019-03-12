@@ -45,30 +45,35 @@ function card (props = {}) {
       ${image}
       <div class="Card-content">
         <div class="Card-body">
-          ${props.date && props.date.text ? html`
-            <time class="Card-meta" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
-              ${props.date.text}
-            </time>
-          ` : null}
+          ${(props.background || props.location) && props.date && props.date.text ? date(props.date) : null}
           <h3 class="Card-title">
             ${props.title}
           </h3>
           ${body}
-          ${props.location ? html`
+          ${props.location || (!props.background && props.date) ? html`
             <div class="Card-footer">
-              <svg class="Card-footerIcon" width="11" height="13" xmlns="http://www.w3.org/2000/svg">
-                <g fill="currentColor" fill-rule="nonzero"><path d="M5.5.25a5 5 0 0 0-5 4.95c0 3.42 4.4 7.24 4.6 7.4.23.2.57.2.8 0 .22-.16 4.6-3.97 4.6-7.4a5 5 0 0 0-5-4.95zm0 11.03c-1.04-1-3.75-3.75-3.75-6.08a3.75 3.75 0 0 1 7.5 0c0 2.31-2.7 5.09-3.75 6.08z"/><path d="M5.5 2.75a2.19 2.19 0 1 0 0 4.38 2.19 2.19 0 0 0 0-4.38zm0 3.13A.94.94 0 1 1 5.5 4a.94.94 0 0 1 0 1.88z"/></g>
-              </svg>
-              ${props.location}
+              ${props.location ? html`
+                <svg class="Card-footerIcon" width="11" height="13">
+                  <g fill="currentColor" fill-rule="nonzero"><path d="M5.5.25a5 5 0 0 0-5 4.95c0 3.42 4.4 7.24 4.6 7.4.23.2.57.2.8 0 .22-.16 4.6-3.97 4.6-7.4a5 5 0 0 0-5-4.95zm0 11.03c-1.04-1-3.75-3.75-3.75-6.08a3.75 3.75 0 0 1 7.5 0c0 2.31-2.7 5.09-3.75 6.08z"/><path d="M5.5 2.75a2.19 2.19 0 1 0 0 4.38 2.19 2.19 0 0 0 0-4.38zm0 3.13A.94.94 0 1 1 5.5 4a.94.94 0 0 1 0 1.88z"/></g>
+                </svg>
+              ` : null}
+              ${props.location || date(props.date)}
             </div>
           ` : null}
-          ${props.link && props.link.title && (
-            html`<div class="Card-action">${props.link.title}</div>`
-          )}
         </div>
-        ${props.link ? link(Object.assign({ inherit: props.background }, props.link)) : null}
+        ${props.link ? link(Object.assign({
+          visible: !props.background && !props.location
+        }, props.link)) : null}
       </div>
     </article>
+  `
+}
+
+function date (props) {
+  return html`
+    <time class="Card-meta" datetime="${JSON.stringify(props.datetime).replace(/"/g, '')}">
+      ${props.text}
+    </time>
   `
 }
 

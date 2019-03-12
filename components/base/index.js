@@ -1,5 +1,7 @@
 var fs = require('fs')
 var path = require('path')
+var LRU = require('nanolru')
+var assert = require('assert')
 var html = require('choo/html')
 var common = require('./lang.json')
 
@@ -25,9 +27,11 @@ function resolve (doc) {
   switch (doc.type) {
     case 'website':
     case 'homepage': return '/'
+    case 'page':
     case 'landing': return `/${doc.uid}`
-    case 'page': return `/${doc.uid}`
     case 'events': return '/participate'
+    case 'discover': return '/discover'
+    case 'article': return `/discover/${doc.uid}`
     case 'Web':
     case 'Media': return doc.url
     default: {
@@ -321,4 +325,20 @@ if (Object.setPrototypeOf) {
   Object.setPrototypeOf(HTTPError, Error)
 } else {
   HTTPError.__proto__ = Error // eslint-disable-line no-proto
+}
+
+var MEMO = new LRU()
+
+// momize function
+// (fn, arr) -> any
+exports.memo = memo
+function memo (fn, keys) {
+  assert(Array.isArray(keys) && keys.length, 'memo: keys should be non-empty array')
+  var key = JSON.stringify(keys)
+  var result = MEMO.get(key)
+  if (!result) {
+    result = fn.apply(undefined, keys)
+    MEMO.set(key, result)
+  }
+  return result
 }
