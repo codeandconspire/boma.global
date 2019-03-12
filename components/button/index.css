@@ -17,6 +17,10 @@
   transition-property: transform;
 }
 
+.Button:hover {
+  background: rgb(var(--color-orange));
+}
+
 .Button:not([disabled]):hover {
   transform: scale(1.05);
 }
