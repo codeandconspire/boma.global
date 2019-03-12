@@ -1,0 +1,73 @@
+@import "../base";
+
+/* @define Connect */
+.Connect {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 900px) {
+  .Connect {
+    flex-wrap: nowrap;
+  }
+}
+
+.Connect-heading {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+}
+
+.Connect-link {
+  color: rgb(var(--color-orange));
+}
+
+.Connect-instagram {
+  --Grid-gutter: 1.5rem;
+  --Grid-gutter-vertical: 1.5rem;
+  flex: 1 1 100%;
+  order: 1;
+  margin-top: 4rem;
+}
+
+@media (min-width: 900px) {
+  .Connect-instagram {
+    order: 0;
+    flex: 1 1 auto;
+    margin-right: 7rem;
+    margin-top: 0;
+  }
+}
+
+.Connect-newsletter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Connect-image {
+  display: block;
+  max-width: 7rem;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.Connect-input {
+  display: inline-block;
+  width: 18rem;
+  max-width: 100%;
+  margin-top: 2rem;
+  border: 1px solid #BBB8C9;
+  line-height: normal;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 2rem;
+  -webkit-appearence: none;
+  appearance: none;
+}
+
+.Connect-input:focus {
+  outline: 0;
+  border-color: currentColor;
+}

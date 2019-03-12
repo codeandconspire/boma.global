@@ -7,6 +7,7 @@ var Header = require('../header')
 var Footer = require('../footer')
 var Player = require('../embed/player')
 var { i18n, asText } = require('../base')
+var PrismicToolbar = require('../prismic-toolbar')
 
 // Enable active states in iOS
 if (typeof window !== 'undefined') {
@@ -85,6 +86,7 @@ function createView (view, meta) {
           ${children}
           ${state.cache(Footer, 'footer').render(doc)}
           ${Player.render()}
+          ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>
       `
 

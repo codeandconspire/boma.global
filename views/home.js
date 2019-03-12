@@ -9,9 +9,10 @@ var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var glocal = require('../components/glocal')
-var principles = require('../components/principles')
-var compass = require('../components/compass')
 var Quotes = require('../components/quotes')
+var compass = require('../components/compass')
+var connect = require('../components/connect')
+var principles = require('../components/principles')
 var serialize = require('../components/text/serialize')
 var { i18n, asText, resolve, loader, srcset, HTTPError, memo } = require('../components/base')
 
@@ -41,19 +42,16 @@ function home (state, emit) {
           `
         }
 
-        var image = memo(function (url) {
+        var image = memo(function (url, sizes) {
           if (!url) return null
-          var sources = srcset(
-            doc.data.image.url,
-            [400, 600, 900, 1400, 1800, [2600, 'q_70']]
-          )
+          var sources = srcset(doc.data.image.url, sizes)
           return Object.assign({
             sizes: '100vw',
             srcset: sources,
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image.url])
+        }, [doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
 
         return html`
           <div>
@@ -103,13 +101,12 @@ function home (state, emit) {
                     }
 
                     return card({
-                      background: memo(function (url) {
+                      background: memo(function (url, sizes) {
                         if (!url) return () => html`<div class="u-aspect16-9 u-bgOrange"></div>`
-                        var sources = srcset(
-                          url,
-                          [400, [800, 'q_70'], [1200, 'q_50']],
-                          { aspect: 9 / 16, transforms: 'c_thumb' }
-                        )
+                        var sources = srcset(url, sizes, {
+                          aspect: 9 / 16,
+                          transforms: 'c_thumb'
+                        })
                         return {
                           srcset: sources,
                           sizes: '(min-midth: 900px) 50vw, 100vw',
@@ -118,7 +115,7 @@ function home (state, emit) {
                           width: item.image.dimensions.width,
                           height: item.image.dimensions.width * 9 / 16
                         }
-                      }, [item.image.url]),
+                      }, [item.image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
                       title: asText(item.title),
                       date: {
                         datetime: item.start,
@@ -156,13 +153,12 @@ function home (state, emit) {
                 <div class="u-container">
                   ${compass({
                     title: asText(doc.data.services_heading),
-                    image: memo(function (url) {
+                    image: memo(function (url, sizes) {
                       if (!url) return null
-                      var sources = srcset(
-                        url,
-                        [320, 400, 800, [1200, 'q_70'], [1600, 'q_70']],
-                        { transforms: 'c_thumb', aspect: 1 }
-                      )
+                      var sources = srcset(url, sizes, {
+                        transforms: 'c_thumb',
+                        aspect: 1
+                      })
                       return {
                         src: sources.split(' ')[0],
                         sizes: '(min-width: 1000px) 660px, (min-width: 600px) 400px, 320px',
@@ -171,21 +167,21 @@ function home (state, emit) {
                         width: doc.data.services_image.dimensions.width,
                         height: doc.data.services_image.dimensions.width
                       }
-                    }, [doc.data.services_image.url]),
+                    }, [doc.data.services_image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_70']]]),
                     children: doc.data.services.map(function (item) {
                       return card({
                         title: asText(item.heading),
                         body: asElement(item.description, resolve, serialize),
-                        image: memo(function (url) {
+                        image: memo(function (url, sizes) {
                           if (!url) return null
-                          var sources = srcset(url, [400, [800, 'q_70']])
+                          var sources = srcset(url, sizes)
                           return Object.assign({
                             sizes: '33vw',
                             srcset: sources,
                             alt: item.image.alt || '',
                             src: sources.split(' ')[0]
                           }, item.image.dimensions)
-                        }, [item.image.url]),
+                        }, [item.image.url, [400, [800, 'q_70']]]),
                         link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                           href: resolve(item.link),
                           text: item.link.type === 'Document' ? item.link.data.cta : null
@@ -216,20 +212,18 @@ function home (state, emit) {
                       if (!image.url) image = article.data.image
                       var date = parse(article.first_publication_date)
                       return card({
-                        image: memo(function (url) {
+                        image: memo(function (url, sizes) {
                           if (!url) return null
-                          var sources = srcset(
-                            url,
-                            [400, [800, 'q_70'], [1200, 'q_50']],
-                            { transforms: 'c_thumb' }
-                          )
+                          var sources = srcset(url, sizes, {
+                            transforms: 'c_thumb'
+                          })
                           return Object.assign({
                             srcset: sources,
                             sizes: '(min-midth: 600px) 33vw, 100vw',
                             alt: image.alt || '',
                             src: sources.split(' ')[0]
                           }, image.dimensions)
-                        }, [image.url]),
+                        }, [image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
                         title: asText(article.data.title),
                         date: {
                           datetime: date,
@@ -265,6 +259,22 @@ function home (state, emit) {
                 }
               )}
             </div>
+
+            <aside class="View-section">
+              <div class="u-container">
+                ${connect({
+                  instagram: {
+                    link: resolve(doc.data.instagram_link),
+                    images: doc.data.instagram.map((item) => item.image)
+                  },
+                  newsletter: {
+                    heading: asText(doc.data.newsletter_heading),
+                    text: asElement(doc.data.newsletter_text, resolve, serialize),
+                    ref: doc.data.newsletter_ref
+                  }
+                })}
+              </div>
+            </aside>
 
             <div class="View-section">
               ${state.cache(Quotes, `quotes-${doc.id}`).render(quotesData)}

@@ -1,6 +1,5 @@
 if (!process.env.NOW) require('dotenv/config')
 
-var url = require('url')
 var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
@@ -15,7 +14,7 @@ var REPOSITORY = 'https://bomaglobal.cdn.prismic.io/api/v2'
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  serve: process.env.NODE_ENV === 'production'
+  serve: process.env.NOW
 })
 
 // proxy cloudinary on-demand-transform API
@@ -44,11 +43,6 @@ app.use(post('/api/prismic-hook', compose([body(), function (ctx) {
 
 // set preview cookie
 app.use(get('/api/prismic-preview', async function (ctx) {
-  var host = process.env.NOW_URL && url.parse(process.env.NOW_URL).host
-  if (host && ctx.host !== host) {
-    return ctx.redirect(url.resolve(process.env.NOW_URL, ctx.url))
-  }
-
   var token = ctx.query.token
   var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var href = await api.previewSession(token, resolve, '/')
@@ -57,9 +51,21 @@ app.use(get('/api/prismic-preview', async function (ctx) {
     : new Date(Date.now() + (1000 * 60 * 30))
 
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
-  ctx.cookies.set(Prismic.previewCookie, token, { expires: expires, path: '/' })
+  ctx.cookies.set(Prismic.previewCookie, token, {
+    expires: expires,
+    httpOnly: false,
+    path: '/'
+  })
   ctx.redirect(href)
 }))
+
+// expose common constants on state
+app.use(function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  ctx.state.repository = REPOSITORY
+  ctx.state.origin = ctx.origin
+  return next()
+})
 
 // disallow robots anywhere but live URL
 app.use(get('/robots.txt', function (ctx, next) {
