@@ -36,6 +36,67 @@ module.exports = class Header extends Component {
               <span class="u-hiddenVisually">${text`Toggle navigation`}</span>
               <div class="Header-figure"><div class="Header-lines"></div></div>
             </a>
+            <ul class="Header-list">
+              <li class="Header-item Header-item--dropdown">
+                <a class="Header-link" href="#">${symbol.chevron('About')}</a>
+                <ul class="Header-dropdown">
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                </ul>
+              </li>
+              <li class="Header-item Header-item--dropdown">
+                <a class="Header-link" href="#">${symbol.chevron('Services')}</a>
+                <ul class="Header-dropdown">
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                </ul>
+              </li>
+              <li class="Header-item Header-item--dropdown">
+                <a class="Header-link" href="#">${symbol.chevron('Partners')}</a>
+                <ul class="Header-dropdown">
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                </ul>
+              </li>
+              <li class="Header-item Header-item--dropdown">
+                <a class="Header-link" href="#">${symbol.chevron('Community')}</a>
+                <ul class="Header-dropdown">
+                  <li class="Header-item">
+                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
+                  </li>
+                </ul>
+              </li>
+              <li class="Header-item">
+                <a class="Header-link" href="#">Discover</a>
+              </li>
+            </ul>
           </div>
         </div>
       </header>
@@ -43,6 +104,7 @@ module.exports = class Header extends Component {
 
     function toggle (event) {
       emit('header:toggle', !open)
+      window.scrollTo(0, 0)
       event.preventDefault()
     }
   }

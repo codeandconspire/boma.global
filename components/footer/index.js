@@ -32,7 +32,7 @@ module.exports = class Footer extends Component {
                 <li class="Footer-item">
                   <a class="Footer-icon" href="#" target="_blank" rel="noopener noreferrer">
                     <span class="u-hiddenVisually">Facebook</span>
-                    <svg class="Footer-network Footer-network--pushed" viewBox="0 0 11 22"><path fill="currentColor" fill-rule="nonzero" d="M7.13 21.2v-9.66h3.25l.5-3.78H7.12v-2.4c0-1.1.3-1.84 1.87-1.84h2V.15C10.03.05 9.06 0 8.1 0 5.2 0 3.24 1.76 3.24 4.98v2.78H0v3.78h3.25v9.66h3.88z"/></svg>
+                    <svg class="Footer-network" viewBox="0 0 11 22"><path fill="currentColor" fill-rule="nonzero" d="M7.13 21.2v-9.66h3.25l.5-3.78H7.12v-2.4c0-1.1.3-1.84 1.87-1.84h2V.15C10.03.05 9.06 0 8.1 0 5.2 0 3.24 1.76 3.24 4.98v2.78H0v3.78h3.25v9.66h3.88z"/></svg>
                   </a>
                 </li>
                 <li class="Footer-item">
