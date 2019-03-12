@@ -356,6 +356,11 @@ var quotesData = {
       body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
       name: 'Susan Nemeth',
       title: 'Director, COO and CFO, Aportio Technologies'
+    },
+    {
+      body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
+      name: 'Susan Nemeth',
+      title: 'Director, COO and CFO, Aportio Technologies'
     }
   ]
 }

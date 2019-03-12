@@ -1,6 +1,6 @@
 .Quotes {
   position: relative;
-  padding: 1.4375rem 0;
+  padding: 3.75rem 0 2.5rem;
 
   --Quotes-dot-size: 8px;
 }
@@ -19,12 +19,18 @@
 
 
 .Quotes-card {
-  width: calc(100% - 2.875rem);
+  width: calc(100% - 1rem);
   max-width: 720px;
   margin: 0 auto;
   background: #fff;
-  padding: 2rem;
+  padding: 3rem 1.25rem;
   text-align: center;
+}
+
+@media (min-width: 310px) {
+  .Quotes-card {
+    width: calc(100% - 3rem);
+  }
 }
 
 @media (min-width: 800px) {
@@ -35,6 +41,8 @@
 
 .Quotes-icon {
   color: rgb(var(--color-orange));
+  max-width: 45px;
+  height: auto;
 }
 
 .Quotes-text {
@@ -64,6 +72,7 @@
 
 .Quotes-metaName {
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 
@@ -102,8 +111,7 @@
   transition: opacity 200ms ease;
 }
 
-.Quotes-navButton.is-active::before,
-.Quotes-navButton:hover::before {
+.Quotes-navButton.is-active::before {
   opacity: 1;
 }
 
