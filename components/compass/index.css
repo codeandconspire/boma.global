@@ -25,7 +25,7 @@
 
 .Compass-figure {
   flex: 1 0 auto;
-  max-width: 160px;
+  max-width: 290px;
 }
 
 @media (min-width: 600px) {
@@ -44,8 +44,8 @@
   border-radius: 50%;
   display: block;
   max-width: none;
-  width: 320px;
-  height: 320px;
+  width: 375px;
+  height: 375px;
   float: right;
   object-fit: cover;
 }
