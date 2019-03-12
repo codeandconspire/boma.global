@@ -44,6 +44,8 @@ module.exports = class Quotes extends Component {
             slideshow.goTo(index)
           })
         })
+
+        el.classList.remove('is-loading')
       },
       onChange: function () {
         setActiveButton(this.currentSlide)
@@ -68,7 +70,8 @@ module.exports = class Quotes extends Component {
     var attrs = {
       id: this.local.id,
       class: className('Quotes', {
-        'Quotes--single': isSingle
+        'Quotes--single': isSingle,
+        'is-loading': true
       })
     }
 

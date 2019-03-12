@@ -25,6 +25,10 @@
   z-index: 1;
 }
 
+/* Hide all but the first slide when component is initiating */
+.Quotes.is-loading .Quotes-slide:not(:first-child) {
+  display: none;
+}
 
 .Quotes-card {
   width: calc(100% - 1rem);
