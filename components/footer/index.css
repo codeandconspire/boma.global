@@ -239,3 +239,46 @@
     margin-bottom: 0;
   }
 }
+
+/**
+ * Alternative version
+ * Used when the footer is used as mobile navigation
+ */
+
+@media (max-width: 599px) {
+  .Footer--alt {
+    padding-top: 6.5rem;
+    background: rgb(255, 255, 255);
+    text-align: center;
+  }
+
+  .Footer--alt .Footer-menu {
+    font-size: 1.125rem;
+  }
+
+  .Footer--alt .Footer-link--primary {
+    font-size: 1.5rem;
+  }
+
+  .Footer--alt .Footer-link--primary {
+    font-size: 1.5rem;
+  }
+
+  .Footer--alt .Footer-social,
+  .Footer--alt .Footer-copy {
+    display: none;
+  }
+
+  .Footer--alt .Footer-section {
+    flex-basis: 100%;
+  }
+
+  .Footer--alt .Footer-section--inline .Footer-list {
+    display: block;
+  }
+
+  .Footer--alt .Footer-meta {
+    padding-top: 2rem;
+    margin: 1.3rem 0;
+  }
+}

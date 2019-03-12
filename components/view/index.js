@@ -50,6 +50,7 @@ function createView (view, meta) {
 
     return state.prismic.getSingle('website', function (err, doc) {
       var children
+
       try {
         if (err) throw err
         children = view.call(self, state, emit)
@@ -78,7 +79,7 @@ function createView (view, meta) {
       }
 
       return html`
-        <body class="View" id="view">
+        <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
           ${state.cache(Header, 'header').render(state.href)}
           ${children}

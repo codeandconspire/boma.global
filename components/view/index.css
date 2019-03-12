@@ -17,23 +17,6 @@
   z-index: 5;
 }
 
-.View-header--appear {
-  opacity: 0;
-  will-change: opacity;
-  animation: View-header--appearing 600ms 100ms var(--ease) forwards;
-}
-
-@keyframes View-header--appearing {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-    will-change: unset;
-  }
-}
-
 /**
  * Main content area
  */
@@ -42,6 +25,9 @@
   flex-grow: 1;
 }
 
+.View.is-overlayed .View-main {
+  display: none !important;
+}
 
 .View-section::before {
   content: "";

@@ -3,7 +3,7 @@ module.exports = ui
 function ui (state, emitter) {
   state.ui = state.ui || {}
   state.ui.isLoading = false
-  state.ui.hasOverlay = false
+  state.ui.openNavigation = false
   state.ui.clock = { ref: 1 }
 
   // generic (optionally namespaced) vector clock for tracking changes
@@ -15,15 +15,9 @@ function ui (state, emitter) {
     }
   })
 
-  emitter.on('header:toggle', function (isOpen) {
-    state.ui.hasOverlay = isOpen
-    document.documentElement.classList[isOpen ? 'add' : 'remove']('has-overlay')
+  emitter.on('header:toggle', function (toggle) {
+    state.ui.openNavigation = toggle
     emitter.emit('render')
-  })
-
-  emitter.prependListener('navigate', function () {
-    state.ui.hasOverlay = false
-    document.documentElement.classList.remove('has-overlay')
   })
 
   var requests = 0

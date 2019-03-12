@@ -2,17 +2,30 @@
 
 /* @define Header */
 .Header {
-  padding: 1.4rem 0;
+  padding: 0.7rem 0;
+  background: rgb(255, 255, 255);
 }
 
-.Header-home {
-  display: inline-block;
+.Header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media (min-width: 600px) {
-  .Header-home {
-    font-size: 1.15rem;
+  .Header {
+    padding: 1.4rem 0;
   }
+}
+
+/**
+ * Logotype
+ */
+
+.Header-home {
+  display: inline-block;
+  position: relative;
+  top: 0.1rem;
 }
 
 .Header-logo {
@@ -25,4 +38,106 @@
 .Header-logotype {
   width: 5.27em;
   position: relative;
+}
+
+@media (min-width: 600px) {
+  .Header-home {
+    font-size: 1.15rem;
+  }
+}
+
+/**
+ * Toggle button
+ */
+
+.Header-toggle {
+  display: block;
+  width: 48px;
+  height: 48px;
+  position: relative;
+  right: -13px;
+  border-radius: 2px;
+}
+
+.Header-toggle:active {
+  background: rgba(var(--color-lavender), 0.3);
+}
+
+@media (min-width: 600px) {
+  .Header-toggle {
+    display: none;
+  }
+}
+
+.Header-figure {
+  width: 20px;
+  height: 18px;
+  margin: -10px 0 0 -9px;
+  position: absolute;
+  top: 25px;
+  left: 23px;
+}
+
+.Header-lines::after,
+.Header-lines::before {
+  content: "";
+}
+
+.Header-lines,
+.Header-lines::after,
+.Header-lines::before {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  transition: transform 150ms var(--ease);
+  border-radius: 2px;
+  background-color: currentColor;
+}
+
+.Header-lines {
+  top: 50%;
+  margin-top: -1px;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  transition-duration: 220ms;
+}
+
+.Header-lines::before {
+  top: -8px;
+  transition: top 100ms var(--ease-in) .25s, opacity 100ms var(--ease-in);
+}
+
+.Header-lines::after {
+  bottom: -8px;
+  transition: bottom 100ms var(--ease-in) 250ms, transform 220ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+/**
+ * Open state
+ */
+
+.Header.is-open {
+  width: 100%;
+  border-bottom: 1px solid rgba(var(--color-lavender), 0.2);
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.Header.is-open .Header-lines {
+  transition-delay: 120ms;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: rotate(225deg);
+}
+
+.Header.is-open .Header-lines::before {
+  top: 0;
+  transition: top 100ms var(--ease-out), opacity 100ms var(--ease-out) 120ms;
+  opacity: 0;
+}
+
+.Header.is-open .Header-lines:after {
+  bottom: 0;
+  transition: bottom 100ms var(--ease-out), transform 220ms cubic-bezier(0.215, 0.61, 0.355, 1) 120ms;
+  transform: rotate(-90deg);
 }
