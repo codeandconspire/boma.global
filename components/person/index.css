@@ -1,0 +1,28 @@
+.Person {
+  text-align: center;
+}
+
+.Person-figure {
+
+}
+
+.Person-image {
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+.Person-title {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.Person-text,
+.Person-community {
+  margin-top: .2rem;
+  font-size: 0.875rem;
+}
+
+.Person-community {
+  color: rgb(var(--color-orange));
+}

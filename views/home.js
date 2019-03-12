@@ -12,6 +12,7 @@ var glocal = require('../components/glocal')
 var Quotes = require('../components/quotes')
 var compass = require('../components/compass')
 var connect = require('../components/connect')
+var person = require('../components/person')
 var principles = require('../components/principles')
 var serialize = require('../components/text/serialize')
 var spur = require('../components/spur')
@@ -318,6 +319,29 @@ function home (state, emit) {
                 href: '#/'
               }
             })}
+
+            ${(function () {
+              var peopleItems = peopleData.map(function (data) {
+                return person(data)
+              })
+
+              return html`
+                <div class="View-section">
+                  <div class="u-container">
+                    <header class="View-sectionHead View-sectionHead--center">
+                      <h2>${text`Founders`}</h2>
+                    </header>
+                    ${grid({
+                      size: {
+                        sm: '1of2',
+                        md: '1of3',
+                        lg: peopleItems.length > 3 ? '1of4' : '1of3'
+                      }
+                    }, peopleItems)}
+                  </div>
+                </div>
+              `
+            }())}
           </div>
         `
       })}
@@ -372,6 +396,39 @@ var quotesData = {
     }
   ]
 }
+
+var peopleData = [
+  {
+    title: 'Lara Stein',
+    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
+    image: {
+      src: 'https://via.placeholder.com/400x400/0000FF'
+    }
+  },
+  {
+    title: 'Kaila Colbin',
+    body: 'Curator, TEDxChristchurch; Curator, TEDxScottBase; Curator, SingularityU New Zealand Summit; Curator, SingularityU Australia Summit; Co-founder, Ministry of Awesome',
+    image: {
+      src: 'https://via.placeholder.com/400x400/0000FF'
+    }
+  },
+  {
+    title: 'Lara Stein',
+    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University'
+  },
+  {
+    title: 'Lara Stein',
+    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
+    image: {
+      src: 'https://via.placeholder.com/400x400/0000FF'
+    }
+  },
+  {
+    title: 'Lara Stein',
+    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
+    community: 'Stockholm'
+  }
+]
 
 var principlesData = [
   {

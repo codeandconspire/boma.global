@@ -52,6 +52,12 @@
   font-weight: 600;
 }
 
+.View-sectionHead--center {
+  display: block;
+  text-align: center;
+  font-size: 2.125rem;
+}
+
 /**
  * Footer
  */
