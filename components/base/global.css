@@ -20,9 +20,9 @@
   --document-width: 1800px;
   --document-margin: 1rem;
 
-  --container-width: var(--document-width);
-  --container-wide-width: 65rem;
-  --container-narrow-width: 42rem;
+  --container-large-width: var(--document-width);
+  --container-medium-width: 43rem;
+  --container-small-width: 30rem;
 
   --loading-color: 0, 0, 0, 0.06;
   --loading-color-solid: 235, 235, 235;
@@ -43,7 +43,7 @@
 
 @media (min-width: 400px) {
   :root {
-    --document-margin: 2rem;
+    --document-margin: 1.5rem;
   }
 }
 

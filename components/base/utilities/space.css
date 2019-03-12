@@ -3,6 +3,22 @@
 @import "../global";
 
 /**
+ * Dynamic
+ */
+
+.u-space {
+  margin-top: 2.6em;
+  margin-bottom: 2.6em;
+}
+
+@media (min-width: 800px) {
+  .u-space {
+    margin-top: 4em;
+    margin-bottom: 4em;
+  }
+}
+
+/**
  * All
  */
 

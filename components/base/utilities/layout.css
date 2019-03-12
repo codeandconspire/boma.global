@@ -96,25 +96,19 @@
   margin-right: auto !important;
   padding-left: var(--document-margin) !important;
   padding-right: var(--document-margin) !important;
-  max-width: calc(var(--container-width) + (var(--document-margin) * 2)) !important
+  max-width: calc(var(--container-large-width) + (var(--document-margin) * 2)) !important
 }
 
-.u-wide {
-  max-width: var(--container-wide-width);
+.u-large {
+  max-width: var(--container-large-width) !important;
 }
 
-.u-narrow {
-  max-width: var(--container-narrow-width);
+.u-medium {
+  max-width: var(--container-medium-width) !important;
 }
 
-@media (min-width: 600px) {
-  .u-wide {
-    margin: 7rem auto 4rem;
-  }
-
-  .u-narrow {
-    margin: 5.5rem auto 4rem;
-  }
+.u-small {
+  max-width: var(--container-small-width) !important;
 }
 
  @supports (padding-left: constant(safe-area-inset-left)) {
