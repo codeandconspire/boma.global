@@ -59,10 +59,12 @@ module.exports = class Quotes extends Component {
     assert(props.content, 'content: is required')
     assert(props.image.src, 'image: src string is required')
 
+    var isSingle = props.content.length < 2
+
     var attrs = {
       id: this.local.id,
       class: className('Quotes', {
-        'Quotes--single': props.content.length < 2
+        'Quotes--single': isSingle
       })
     }
 
@@ -91,20 +93,22 @@ module.exports = class Quotes extends Component {
       `
     }
 
+    var slideNav = isSingle ? '' : html`
+      <nav class="Quotes-nav">
+        ${props.content.map(function (content, index) {
+          return html`<button class="Quotes-navButton js-slideButton">
+            <span class="u-hiddenVisually">Slide ${index}</span>
+          </button>`
+        })}
+      </nav>
+    `
+
     return html`
       <div ${attrs}>
         <div class="Quotes-wrap js-slide">
           ${props.content.map(slide)}
         </div>
-        ${props.content.length > 1 && html`
-          <nav class="Quotes-nav">
-            ${props.content.map(function (content, index) {
-              return html`<button class="Quotes-navButton js-slideButton">
-                <span class="u-hiddenVisually">Slide ${index}</span>
-              </button>`
-            })}
-          </nav>
-        `}
+        ${slideNav}
         <img class="Quotes-image" ${imageAttrs} src="${imageSrc}" />
       </div>
     `
