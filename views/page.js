@@ -30,8 +30,9 @@ function meta (state) {
       description: asText(doc.data.description)
     }
 
-    var image = doc.data.image
-    if (image && image.url) {
+    var image = doc.data.featured_image
+    if (!image.url) image = doc.data.image
+    if (image.url) {
       Object.assign(props, {
         'og:image': image.url,
         'og:image:width': image.dimensions.width,
