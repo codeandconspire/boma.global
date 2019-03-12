@@ -8,7 +8,7 @@ var Footer = require('../footer')
 var Player = require('../embed/player')
 var { i18n, asText } = require('../base')
 
-// Quick fix for enabling active states in iOS (forgot how it works…)
+// Enable active states in iOS
 if (typeof window !== 'undefined') {
   document.addEventListener('touchstart', function () {}, false)
 }
