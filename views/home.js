@@ -14,6 +14,7 @@ var compass = require('../components/compass')
 var connect = require('../components/connect')
 var principles = require('../components/principles')
 var serialize = require('../components/text/serialize')
+var spur = require('../components/spur')
 var { i18n, asText, resolve, loader, srcset, HTTPError, memo } = require('../components/base')
 
 var text = i18n()
@@ -297,6 +298,25 @@ function home (state, emit) {
             ${state.cache(Hero, `hero-${doc.id}`).render({
               title: 'Executive Programme',
               body: 'An immersive 3-day experience which brings together key social, economic, technological, and environmental trends, so you can take charge of your role in the future we’re creating—leaving you confident to lead purposefully in the face of the dramatic changes affecting our world.'
+            })}
+
+            ${spur({
+              title: 'Are ready to challenge business as usual and drive positive impact?',
+              action: {
+                text: 'Find your closest Boma',
+                href: '#/'
+              },
+              image: {
+                src: 'https://via.placeholder.com/1400x1000/0000FF'
+              }
+            })}
+
+            ${spur({
+              title: 'Are ready to challenge business as usual and drive positive impact?',
+              action: {
+                text: 'Contact us',
+                href: '#/'
+              }
             })}
           </div>
         `
