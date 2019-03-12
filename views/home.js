@@ -55,11 +55,11 @@ function home (state, emit) {
 
         return html`
           <div>
-            ${state.cache(Hero, `hero-${doc.id}`).render(
-              asText(doc.data.intro_text),
-              doc.data.intro_words.map((item) => item.text),
+            ${state.cache(Hero, `hero-${doc.id}`).render({
+              title: asText(doc.data.intro_text),
+              words: doc.data.intro_words.map((item) => item.text),
               image
-            )}
+            })}
 
             <div class="View-section">
               <div class="u-container">
@@ -283,6 +283,17 @@ function home (state, emit) {
             <div class="View-section">
               ${principles(principlesData)}
             </div>
+
+            ${state.cache(Hero, `hero-${doc.id}`).render({
+              title: 'Services',
+              words: doc.data.intro_words.map((item) => item.text),
+              body: 'Consequat ac felis donec et odio pellentesque. At lectus urna duis convallis convallis tellus.',
+              action: {
+                title: 'Make me a button',
+                href: '#/'
+              },
+              image
+            })}
           </div>
         `
       })}

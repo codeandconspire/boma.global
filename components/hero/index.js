@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-var { loader } = require('../base')
+var { className, loader } = require('../base')
 
 module.exports = class Hero extends Component {
   constructor (id, state, emit) {
@@ -9,6 +9,10 @@ module.exports = class Hero extends Component {
   }
 
   load (el) {
+    if (!this.local.words) {
+      return
+    }
+
     var words = Array.from(el.querySelectorAll('.js-rotate'))
     var count = words.length
     var currentText = 0
@@ -42,7 +46,9 @@ module.exports = class Hero extends Component {
     }
   }
 
-  update (text, words) {
+  update (props) {
+    var { text, words } = props
+
     if (text !== this.local.text) return true
     if (words.join() !== this.local.words.join()) return true
     return false
@@ -62,33 +68,48 @@ module.exports = class Hero extends Component {
     `
   }
 
-  createElement (text, words, image) {
-    this.local.text = text
+  createElement (props) {
+    var { action, image, title, body, words } = props
+
+    this.local.title = title
     this.local.words = words
 
-    var attrs = {}
-    if (image) {
-      Object.keys(image).forEach(function (key) {
-        if (key !== 'src') attrs[key] = image[key]
+    var parts = title.split('#WORDS')
+    var rotatingWords = (words && parts.length > 1)
+
+    var attrs = {
+      id: this.local.id,
+      class: className('Hero', {
+        'Hero--center': !rotatingWords
       })
     }
 
-    var parts = text.split('#WORDS')
+    var imageAttrs = {}
+
+    if (image) {
+      Object.keys(image).forEach(function (key) {
+        if (key !== 'src') imageAttrs[key] = image[key]
+      })
+    }
+
+    var titleElement = rotatingWords ? html`
+      ${parts[0]} <span class="Hero-rotateWrap">
+      ${words.map(function (title) {
+        return html`<span class="Hero-rotateText js-rotate">${title}</span>`
+      })}
+      </span> <span class="u-block">${parts[1]}</span>
+    ` : title
 
     return html`
-      <div class="Hero" id="${this.local.id}">
+      <div ${attrs}>
         <div class="Hero-content">
           <div class="u-container">
-            <h2 class="Hero-title">
-              ${parts[0]} <span class="Hero-rotateWrap">
-              ${words.map(function (text) {
-                return html`<span class="Hero-rotateText js-rotate">${text}</span>`
-              })}
-              </span> <span class="u-block">${parts[1]}</span>
-            </h2>
+            <h2 class="Hero-title">${titleElement}</h2>
+            ${body ? html`<p class="Hero-text">${body}</p>` : null}
+            ${action ? html`<div class="Hero-action"><a class="Button" href="${action.href}">${action.title}</a></div>` : null}
           </div>
         </div>
-        ${image ? html`<img class="Hero-image" ${attrs} src="${image.src}" />` : null}
+        ${image ? html`<img class="Hero-image" ${imageAttrs} src="${image.src}" />` : null}
       </div>
     `
   }
