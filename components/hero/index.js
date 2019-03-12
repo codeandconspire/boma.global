@@ -1,5 +1,6 @@
 var html = require('choo/html')
 var Component = require('choo/component')
+var button = require('../button')
 var { className, loader } = require('../base')
 
 module.exports = class Hero extends Component {
@@ -70,12 +71,15 @@ module.exports = class Hero extends Component {
 
   createElement (props) {
     var { action, image, title, body, words } = props
+    var rotatingWords = false
 
-    this.local.title = title
-    this.local.words = words
+    if (title && words) {
+      this.local.title = title
+      this.local.words = words
 
-    var parts = title.split('#WORDS')
-    var rotatingWords = (words && parts.length > 1)
+      var parts = title.split('#WORDS')
+      rotatingWords = (words && parts.length > 1)
+    }
 
     var attrs = {
       id: this.local.id,
@@ -106,7 +110,11 @@ module.exports = class Hero extends Component {
           <div class="u-container">
             <h2 class="Hero-title">${titleElement}</h2>
             ${body ? html`<p class="Hero-text">${body}</p>` : null}
-            ${action ? html`<div class="Hero-action"><a class="Button" href="${action.href}">${action.title}</a></div>` : null}
+            ${action ? html`
+              <div class="Hero-action">
+                ${button({ href: action.href, text: action.text })}
+              </div>
+            ` : null}
           </div>
         </div>
         ${image ? html`<img class="Hero-image" ${imageAttrs} src="${image.src}" />` : null}

@@ -1,6 +1,6 @@
 .Hero {
   position: relative;
-  background: var(--color-royal);
+  background: rgb(var(--color-royal));
   color: #fff;
   overflow: hidden;
   width: 100%;

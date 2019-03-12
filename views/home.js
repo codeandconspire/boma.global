@@ -286,10 +286,9 @@ function home (state, emit) {
 
             ${state.cache(Hero, `hero-${doc.id}`).render({
               title: 'Services',
-              words: doc.data.intro_words.map((item) => item.text),
               body: 'Consequat ac felis donec et odio pellentesque. At lectus urna duis convallis convallis tellus.',
               action: {
-                title: 'Make me a button',
+                text: 'Make me a button',
                 href: '#/'
               },
               image
