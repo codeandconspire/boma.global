@@ -410,7 +410,8 @@ var peopleData = [
     body: 'Curator, TEDxChristchurch; Curator, TEDxScottBase; Curator, SingularityU New Zealand Summit; Curator, SingularityU Australia Summit; Co-founder, Ministry of Awesome',
     image: {
       src: 'https://via.placeholder.com/400x400/0000FF'
-    }
+    },
+    href: '#/'
   },
   {
     title: 'Lara Stein',
@@ -421,7 +422,8 @@ var peopleData = [
     body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
     image: {
       src: 'https://via.placeholder.com/400x400/0000FF'
-    }
+    },
+    href: '#/'
   },
   {
     title: 'Lara Stein',

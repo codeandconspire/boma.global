@@ -20,7 +20,7 @@ function person (props = {}) {
 
   var attrs = {
     class: className('Person', {
-      'Person--?': false
+      'Person--link': props.href
     })
   }
 
@@ -28,16 +28,26 @@ function person (props = {}) {
   if (typeof image === 'function') image = image()
   else if (image) image = figure(image)
 
+  var content = html`
+    ${image}
+    <div class="Person-info">
+      <h3 class="Person-title">
+        ${props.title}
+      </h3>
+      ${body}
+      ${props.community
+        ? html`<p class="Person-community">${props.community}</p>`
+        : null
+      }
+    </div>
+  `
+
   return html`
     <div ${attrs}>
-      ${image}
-      <div class="Person-info">
-        <h3 class="Person-title">
-          ${props.title}
-        </h3>
-        ${body}
-        ${props.community ? html`<p class="Person-community">${props.community}</p>` : null}
-      </div>
+      ${props.href
+        ? html`<a class="u-block" href="${props.href}">${content}</a>`
+        : content
+      }
     </div>
   `
 }

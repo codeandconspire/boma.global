@@ -3,7 +3,12 @@
 }
 
 .Person-figure {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
 
+.Person--link:hover .Person-figure {
+  opacity: .8;
 }
 
 .Person-image {
@@ -15,6 +20,10 @@
   margin-top: 1.5rem;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.Person--link .Person-title {
+  text-decoration: underline;
 }
 
 .Person-text,
