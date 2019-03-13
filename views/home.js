@@ -30,7 +30,7 @@ function home (state, emit) {
         if (!doc) {
           return html`
             <div>
-              ${Hero.loading()}
+              ${Hero.loading({ image: true })}
               <div class="View-section">
                 <div class="u-container">
                   ${glocal(html`

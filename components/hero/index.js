@@ -10,26 +10,6 @@ module.exports = class Hero extends Component {
     this.local = state.components[id] = { id }
   }
 
-  load (el) {
-    var moveEl = el.querySelector('.js-move')
-    var rotatingWords = Array.from(el.querySelectorAll('.js-rotate'))
-
-    if (moveEl) {
-      this.moveContent(moveEl)
-    }
-
-    if (this.local.words && rotatingWords.length) {
-      this.rotateWords(rotatingWords)
-    }
-  }
-
-  update (props) {
-    var { text, words } = props
-    if (text !== this.local.text) return true
-    if (words.join() !== this.local.words.join()) return true
-    return false
-  }
-
   static loading (opts = {}) {
     return html`
       <div class="${className('Hero is-loading', { 'Hero--center': opts.center, 'Hero--image': opts.image })}">
@@ -46,23 +26,14 @@ module.exports = class Hero extends Component {
   moveContent (el) {
     var speed = 0.06
     var height, offset
-    var inview
 
     var onScroll = nanoraf(function () {
       var { scrollY } = window
-
       if (
         (scrollY > offset + height) || // Below element
         (scrollY + vh() < offset) // Above element
-      ) {
-        return
-      }
-
-      if (inview) {
-        el.style.setProperty('--Hero-scroll', `${Math.round(scrollY * speed)}px`)
-      }
-
-      inview = true
+      ) return
+      el.style.setProperty('--Hero-scroll', `${Math.round((scrollY - offset) * speed)}px`)
     })
 
     var onResize = nanoraf(function () {
@@ -117,16 +88,32 @@ module.exports = class Hero extends Component {
     }
   }
 
+  load (el) {
+    var moveEl = el.querySelector('.js-move')
+    var rotatingWords = Array.from(el.querySelectorAll('.js-rotate'))
+
+    if (moveEl) {
+      this.moveContent(moveEl)
+    }
+
+    if (this.local.words && rotatingWords.length) {
+      this.rotateWords(rotatingWords)
+    }
+  }
+
+  update () {
+    return false
+  }
+
   createElement (props) {
     var { action, image, title, body, words } = props
-    var rotatingWords = false
 
+    Object.assign(this.local, props)
+
+    var rotatingWords = false
     var rotatingDelay = this.local.rotatingDelay = 600
 
     if (title && words) {
-      this.local.title = title
-      this.local.words = words
-
       var parts = title.split('#WORDS')
       rotatingWords = (words && parts.length > 1)
     }
