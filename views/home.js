@@ -286,21 +286,6 @@ function home (state, emit) {
               ${principles(principlesData)}
             </div>
 
-            ${state.cache(Hero, `hero-${doc.id}`).render({
-              title: 'Services',
-              body: 'Consequat ac felis donec et odio pellentesque. At lectus urna duis convallis convallis tellus.',
-              action: {
-                text: 'Make me a button',
-                href: '#/'
-              },
-              image
-            })}
-
-            ${state.cache(Hero, `hero-${doc.id}`).render({
-              title: 'Executive Programme',
-              body: 'An immersive 3-day experience which brings together key social, economic, technological, and environmental trends, so you can take charge of your role in the future we’re creating—leaving you confident to lead purposefully in the face of the dramatic changes affecting our world.'
-            })}
-
             ${spur({
               title: 'Are ready to challenge business as usual and drive positive impact?',
               action: {
