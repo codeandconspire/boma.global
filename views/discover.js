@@ -135,7 +135,7 @@ function home (state, emit) {
             <div class="u-container u-spaceB8">
               ${featured}
               <div class="${featured.length ? 'u-spaceT8' : ''}">
-                ${grid({ size: { md: '1of3', sm: '1of2' } }, articles)}
+                ${articles ? grid({ size: { md: '1of3', sm: '1of2' } }, articles) : null}
               </div>
             </section>
           </div>
