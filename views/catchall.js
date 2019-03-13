@@ -13,7 +13,6 @@ function catchall (state, emit) {
 
   if (segments.length === 2) {
     state.params.slug = slug
-    state.params.slug = segments[0]
     let view = require('./page')
     return view(state, emit)
   }
