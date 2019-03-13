@@ -12,22 +12,22 @@ function catchall (state, emit) {
   }
 
   if (segments.length === 2) {
-    state.params.page = slug
-    state.params.landing = segments[0]
+    state.params.slug = slug
+    state.params.slug = segments[0]
     let view = require('./page')
     return view(state, emit)
   }
 
   return state.prismic.getByUID('landing', slug, function (err, doc) {
     if (!err) {
-      let view = require('./landing')
-      state.params.landing = slug
+      let view = require('./page').landing
+      state.params.slug = slug
       return view(state, emit)
     }
 
     return state.prismic.getByUID('page', slug, function (err, doc) {
       var view = err ? require('./404') : require('./page')
-      state.params.page = slug
+      state.params.slug = slug
       return view(state, emit)
     })
   })

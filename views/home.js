@@ -186,7 +186,7 @@ function home (state, emit) {
                         }, [item.image.url, [400, [800, 'q_70']]]),
                         link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                           href: resolve(item.link),
-                          text: item.link.type === 'Document' ? item.link.data.cta : null
+                          text: item.link.type === 'Document' ? item.link.data.call_to_action : null
                         } : null
                       })
                     })
