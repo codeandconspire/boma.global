@@ -29,6 +29,7 @@ function resolve (doc) {
     case 'homepage': return '/'
     case 'landing': return `/${doc.uid}`
     case 'events': return '/participate'
+    case 'community': return '/community'
     case 'discover': return '/discover'
     case 'article': return `/discover/${doc.uid}`
     case 'page': {
