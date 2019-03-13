@@ -264,11 +264,10 @@ function home (state, emit) {
             <div class="Sponsors u-space2" style="overflow: hidden; background: rgb(var(--color-fog))">
               <div class="u-space2">
                 <div class="Text">
-                  <h1 class="u-textCenter">Sponsors here</h1>
+                  <h1 class="u-textCenter">In good company (logos)</h1>
                 </div>    
               </div>    
             </div>
-              
 
             <aside class="u-space2">
               <div class="u-container">

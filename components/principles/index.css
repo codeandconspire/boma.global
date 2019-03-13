@@ -1,6 +1,9 @@
-.Principles {
-}
+@import "../base";
 
+/* @define Principles */
+.Principles {
+  padding-bottom: 2rem;
+}
 
 .Principles-item {
   position: relative;

@@ -177,6 +177,18 @@
   white-space: nowrap;
 }
 
+.Hero-rotateText:nth-child(2n) {
+  color: rgb(var(--color-red));
+}
+
+.Hero-rotateText:nth-child(3n) {
+  color: rgb(var(--color-yellow));
+}
+
+.Hero-rotateText:nth-child(4n) {
+  color: rgb(var(--color-lavender));
+}
+
 .Hero-rotateText:not(:first-child) {
   display: none;
 }

@@ -5,6 +5,7 @@ var Hero = require('../components/hero')
 var card = require('../components/card')
 var grid = require('../components/grid')
 var embed = require('../components/embed')
+var principles = require('../components/principles')
 var person = require('../components/person')
 var compass = require('../components/compass')
 var highlight = require('../components/highlight')
@@ -123,6 +124,21 @@ function page (state, emit) {
             <figure class="Text u-${size}">
               <div class="u-space1">${children}</div>
             </div>
+          </div>
+        `
+      }
+      case 'principles': {
+        if (!slice.items.length) return null
+        let list = slice.items.map(function (item) {
+          return {
+            title: item.heading ? asText(item.heading) : null,
+            body: item.content ? asElement(item.content) : null
+          }
+        })
+
+        return html`
+          <div class="u-md-container u-overflowHidden">
+            ${principles(list)}
           </div>
         `
       }

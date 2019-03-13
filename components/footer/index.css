@@ -258,10 +258,8 @@
 
   .Footer--alt .Footer-link--primary {
     font-size: 1.5rem;
-  }
-
-  .Footer--alt .Footer-link--primary {
-    font-size: 1.5rem;
+    position: relative;
+    right: -0.5rem;
   }
 
   .Footer--alt .Footer-social,

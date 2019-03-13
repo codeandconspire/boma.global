@@ -11,8 +11,12 @@ function home (state, emit) {
         if (err) throw HTTPError(404, err)
 
         return html`
-          <div>
-            Hej vinnie
+          <div class="Sponsors u-space2" style="overflow: hidden;">
+            <div class="u-space2">
+              <div class="Text">
+                <h1 class="u-textCenter">The Community</h1>
+              </div>    
+            </div>    
           </div>
         `
       })}

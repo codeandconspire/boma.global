@@ -29,6 +29,10 @@
   top: -0.05em;
 }
 
+.u-overflowHidden {
+  overflow: hidden !important;
+}
+
 /**
  * Display
  */
