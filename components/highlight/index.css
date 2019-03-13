@@ -24,10 +24,8 @@
   flex-basis: 50%;
 }
 
-.Highlight--left {
-  
-}
-
 @media (min-width: 800px) {
-
+  .Highlight--right .Highlight-figure {
+    order: 1;
+  }
 }

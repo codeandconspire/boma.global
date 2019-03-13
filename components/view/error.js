@@ -17,7 +17,7 @@ module.exports = error
 function error (err) {
   return html`
     <main class="View-main">
-      <div class="u-container">
+      <div class="u-container u-space2">
           <div class="Text">
             <h1>${text`Ouch`}</h1>
             ${message(err.status)}
