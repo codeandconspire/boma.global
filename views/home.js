@@ -44,8 +44,8 @@ function home (state, emit) {
           `
         }
 
-        var image = memo(function (url, sizes) {
-          if (!url) return null
+        var image = memo(function (img, sizes) {
+          if (!img || !img.url) return null
           var sources = srcset(doc.data.image.url, sizes)
           return Object.assign({
             sizes: '100vw',
@@ -53,7 +53,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
+        }, [doc.data.image, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
 
         return html`
           <div>

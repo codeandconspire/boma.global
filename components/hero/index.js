@@ -115,9 +115,9 @@ module.exports = class Hero extends Component {
     return html`
       <div ${attrs}>
         <div class="Hero-content">
-          <div class="u-container">
+          <div class="Hero-container u-container">
             <h2 class="Hero-title">${titleElement}</h2>
-            ${body ? html`<p class="Hero-text">${body}</p>` : null}
+            ${body ? html`<div class="Hero-text">${body}</div>` : null}
             ${action ? html`
               <div class="Hero-action">
                 ${button({ href: action.href, text: action.text })}

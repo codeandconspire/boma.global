@@ -19,7 +19,7 @@ function error (err) {
     <main class="View-main">
       <div class="u-container">
           <div class="Text">
-            <h1>${text`Oops`}</h1>
+            <h1>${text`Ouch`}</h1>
             ${message(err.status)}
             ${DEBUG ? html`<pre>${err.stack}</pre>` : null}
           </div>

@@ -1,9 +1,10 @@
 var html = require('choo/html')
 var asElement = require('prismic-element')
 var view = require('../components/view')
-var intro = require('../components/intro')
+var Hero = require('../components/hero')
 var embed = require('../components/embed')
-var { asText, resolve, srcset, HTTPError } = require('../components/base')
+var serialize = require('../components/text/serialize')
+var { asText, resolve, srcset, HTTPError, memo } = require('../components/base')
 
 module.exports = view(page, meta)
 
@@ -15,34 +16,29 @@ function page (state, emit) {
         if (!doc) {
           return html`
             <div>
-              ${intro.loading({
-                center: true,
-                image: true
-              })}
+              ${Hero.loading()}
             </div>
           `
         }
 
-        var props = {
-          center: true,
-          title: asText(doc.data.title),
-          body: asElement(doc.data.description, resolve, state.serialize)
-        }
-
-        if (doc.data.image) {
-          let sources = srcset(doc.data.image.url, [400, 600, 900, [1600, 'q_60'], [2200, 'q_60']])
-          props.image = Object.assign({
-            alt: doc.data.image_caption || doc.data.image.alt,
-            caption: doc.data.image_caption,
-            sizes: '(min-width: 65rem) 65rem, 100vw',
+        var image = memo(function (img, sizes) {
+          if (!img || !img.url) return null
+          var sources = srcset(doc.data.image.url, sizes)
+          return Object.assign({
+            sizes: '100vw',
             srcset: sources,
-            src: sources.split(' ')[0],
-            original: doc.data.image.url
+            alt: doc.data.image.alt || '',
+            src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }
+        }, [doc.data.image, [400, 600, 900, 1400, 1800, [2600, 'q_50']]])
+
         return html`
           <div>
-            ${intro(props)}
+            ${state.cache(Hero, `hero-${doc.id}`).render({
+              title: asText(doc.data.title),
+              body: asElement(doc.data.description, resolve, serialize),
+              image: image
+            })}
             ${doc.data.body.map(asSlice)}
           </div>
         `
@@ -59,36 +55,30 @@ function page (state, emit) {
         return html`
           <div class="u-container">
             <div class="Text">
-              ${asElement(slice.primary.text, resolve, state.serialize)}
+              ${asElement(slice.primary.text, resolve, serialize)}
             </div>
           </div>
         `
       }
       case 'image': {
         if (!slice.primary.image.url) return null
-        var size = slice.primary.width
-        let attrs
+        var size = slice.primary.width.toLowerCase()
+        var large = size === 'large'
 
-        if (!/\.gif$/.test(slice.primary.image.url)) {
-          let sources = srcset(slice.primary.image.url, [400, 600, 900, [1600, 'q_60'], [3000, 'q_50']])
-          attrs = Object.assign({
-            sizes: '100vw',
-            srcset: sources,
-            src: sources.split(' ')[0],
-            alt: slice.primary.image.alt || ''
-          }, slice.primary.image.dimensions)
-        } else {
-          attrs = Object.assign({
-            src: slice.primary.image.url,
-            alt: slice.primary.image.alt || ''
-          }, slice.primary.image.dimensions)
-        }
+        let sources = srcset(slice.primary.image.url, [400, 600, 900, [1600, 'q_60'], [3000, 'q_35']])
+        let attrs = Object.assign({
+          sizes: large ? '100vw' : '(min-width: 800px) 43rem, 100vw',
+          srcset: sources,
+          class: large ? 'u-space2' : 'u-space1',
+          src: sources.split(' ')[0],
+          alt: slice.primary.image.alt || ''
+        }, slice.primary.image.dimensions)
 
         var caption = slice.primary.caption ? asElement(slice.primary.caption) : slice.primary.image.copyright
 
         return html`
-          <div class="u-container">
-            <figure class="Text u-${size.toLowerCase()}">
+          <div class="${large ? 'u-md-container' : 'u-container'}">
+            <figure class="Text u-${size}">
               <img ${attrs}>
               ${caption ? html`<figcaption class="Text-caption">${caption}</figcaption>` : null}
             </figure>
@@ -97,7 +87,7 @@ function page (state, emit) {
       }
       case 'line': {
         return html`
-          <div class="u-container"><hr class="u-medium u-space" /></div>
+          <div class="u-container"><hr class="u-medium u-space1" /></div>
         `
       }
       case 'video': {
@@ -105,9 +95,9 @@ function page (state, emit) {
         let children = video(slice.primary.video)
         if (!children) return null
         return html`
-          <div class="u-container"></div>
+          <div class="u-container">
             <div class="Text u-medium">
-              <div class="Text-block">${children}</div>
+              <div class="u-space1">${children}</div>
             </div>
           </div>
         `

@@ -1,7 +1,7 @@
 {
   "SITE_NAME": "Boma Global",
   "Loading": "Loading",
-  "Oops": "Oops",
+  "Ouch": "Ouch",
   "the homepage": "the homepage",
   "There is no page at this address. Try finding your way using the menu or from %s.": "There is no page at this address. Try finding your way using the menu or from %s.",
   "try again": "try again",
@@ -18,5 +18,7 @@
   "Enter your email": "Enter your email",
   "Submit": "Submit",
   "Try again": "Try again",
-  "We apologize, an error has occured on our site.": "We apologize, an error has occured on our site."
+  "We apologize, an error has occured on our site.": "We apologize, an error has occured on our site.",
+  "Founders": "Founders",
+  "Oops": "Oops"
 }
