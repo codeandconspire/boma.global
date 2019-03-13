@@ -98,7 +98,13 @@
 }
 
 .Text .Button {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+}
+
+@media (min-width: 500px) {
+  .Text .Button {
+    margin: 1rem 0;
+  }
 }
 
 /**
@@ -162,7 +168,6 @@
 .Text h1,
 .Text .Text-h1 {
   font-size: 1.55em;
-  margin: 0;
 }
 
 .Text h2,

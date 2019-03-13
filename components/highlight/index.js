@@ -15,7 +15,7 @@ function highlight (props) {
       ` : null}
       <div class="Highlight-body">
         <div class="Text Highlight-text">
-          ${props.title ? html`<h2>${props.title}</h2>` : null}
+          ${props.title ? html`<h1>${props.title}</h1>` : null}
           ${props.body ? props.body : null}
           ${props.action ? html`
             <p>
