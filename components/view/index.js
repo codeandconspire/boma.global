@@ -6,8 +6,8 @@ var error = require('./error')
 var Header = require('../header')
 var Footer = require('../footer')
 var Player = require('../embed/player')
-var { i18n, asText } = require('../base')
 var PrismicToolbar = require('../prismic-toolbar')
+var { i18n, asText, memo, resolve } = require('../base')
 
 if (typeof window !== 'undefined') {
   require('focus-visible')
@@ -81,10 +81,31 @@ function createView (view, meta) {
         emit('meta', { title: `${text`Oops`} – ${DEFAULT_TITLE}` })
       }
 
+      var menu = memo(function () {
+        if (!doc) return []
+        return doc.data.main_menu.map(function (slice) {
+          var { primary, items } = slice
+          if (slice.slice_type !== 'menu_item') return null
+          if (!primary.link.id || primary.link.isBroken) return null
+          return {
+            label: primary.label || primary.link.data.cta,
+            href: resolve(primary.link),
+            children: items.map(function (item) {
+              if (!item.link.id || item.link.isBroken) return null
+              return {
+                label: item.label || item.link.cta,
+                href: resolve(item.link),
+                description: asText(item.description)
+              }
+            }).filter(Boolean)
+          }
+        }).filter(Boolean)
+      }, [doc && doc.id, 'menu'])
+
       return html`
         <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
-          ${state.cache(Header, 'header').render(state.href)}
+          ${state.cache(Header, 'header').render(state.href, menu)}
           ${children}
           ${state.cache(Footer, 'footer').render(doc)}
           ${Player.render()}

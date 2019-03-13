@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 var symbol = require('../base/symbol')
-var { i18n } = require('../base')
+var { i18n, className } = require('../base')
 
 var text = i18n()
 
@@ -19,7 +19,7 @@ module.exports = class Header extends Component {
     return href !== this.local.href
   }
 
-  createElement (href, categories = []) {
+  createElement (href, menu = []) {
     this.local.href = href.replace(/\/$/, '')
     var { id, state } = this.local
     var emit = this.emit
@@ -37,65 +37,22 @@ module.exports = class Header extends Component {
               <div class="Header-figure"><div class="Header-lines"></div></div>
             </a>
             <ul class="Header-list">
-              <li class="Header-item Header-item--dropdown">
-                <a class="Header-link" href="#">${symbol.chevron('About')}</a>
-                <ul class="Header-dropdown">
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                </ul>
-              </li>
-              <li class="Header-item Header-item--dropdown">
-                <a class="Header-link" href="#">${symbol.chevron('Services')}</a>
-                <ul class="Header-dropdown">
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                </ul>
-              </li>
-              <li class="Header-item Header-item--dropdown">
-                <a class="Header-link" href="#">${symbol.chevron('Partners')}</a>
-                <ul class="Header-dropdown">
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                </ul>
-              </li>
-              <li class="Header-item Header-item--dropdown">
-                <a class="Header-link" href="#">${symbol.chevron('Community')}</a>
-                <ul class="Header-dropdown">
-                  <li class="Header-item">
-                    <a class="Header-link"><div><strong class="Header-title">Sub page here</strong> <span class="u-hiddenVisually">–</span> Lorem ipsum dolor sit amet consectetur adipiscing elit.</div></a>
-                  </li>
-                </ul>
-              </li>
-              <li class="Header-item">
-                <a class="Header-link" href="#">Discover</a>
-              </li>
+              ${menu.map(({ label, href, children }) => html`
+                <li class="${className('Header-item', { 'Header-item--dropdown': children.length })}">
+                  <a class="Header-link" href="${href}">
+                    ${children.length ? symbol.chevron(label) : label}
+                  </a>
+                  ${children.length ? html`
+                    <ul class="Header-dropdown">
+                      ${children.map(({ label, href, description }) => html`
+                        <li class="Header-item">
+                          <a class="Header-link" href="${href}"><div><strong class="Header-title">${label}</strong> <span class="u-hiddenVisually">–</span> ${description}</div></a>
+                        </li>
+                      `)}
+                    </ul>
+                  ` : null}
+                </li>
+              `)}
             </ul>
           </div>
         </div>
