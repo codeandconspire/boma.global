@@ -67,6 +67,18 @@ app.use(function (ctx, next) {
   return next()
 })
 
+// redirect pages with parent to proper url
+app.use(get('/:slug', async function (ctx, slug, next) {
+  var api = await Prismic.api(REPOSITORY, { req: ctx.req })
+  try {
+    let doc = await api.getByUID('page', slug)
+    if (!doc.data.parent || !doc.data.parent.id) return next()
+    ctx.redirect(resolve(doc))
+  } catch (err) {
+    return next()
+  }
+}))
+
 // disallow robots anywhere but live URL
 app.use(get('/robots.txt', function (ctx, next) {
   ctx.type = 'text/plain'

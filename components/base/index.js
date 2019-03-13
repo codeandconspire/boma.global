@@ -27,11 +27,15 @@ function resolve (doc) {
   switch (doc.type) {
     case 'website':
     case 'homepage': return '/'
-    case 'page':
     case 'landing': return `/${doc.uid}`
     case 'events': return '/participate'
     case 'discover': return '/discover'
     case 'article': return `/discover/${doc.uid}`
+    case 'page': {
+      var parent = doc.data && doc.data.parent
+      if (!parent || !parent.id || parent.isBroken) return `/${doc.uid}`
+      return `${resolve(parent)}/${doc.uid}`
+    }
     case 'Web':
     case 'Media': return doc.url
     default: {
