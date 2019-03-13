@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-.Hero.is-loading {
+.Hero--image.is-loading {
   background-color: rgb(var(--loading-color));
 }
 

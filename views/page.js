@@ -23,7 +23,7 @@ function page (type) {
           if (!doc) {
             return html`
               <div>
-                ${Hero.loading()}
+                ${Hero.loading({ center: true })}
               </div>
             `
           }
