@@ -22,6 +22,7 @@ app.use(require('choo-service-worker')('/sw.js'))
 app.route('/', require('./views/home'))
 app.route('/community', require('./views/community'))
 app.route('/participate', require('./views/events'))
+app.route('/discover', require('./views/discover'))
 app.route('/*', require('./views/catchall'))
 
 try {
