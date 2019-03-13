@@ -40,6 +40,10 @@ function card (props = {}) {
   if (typeof image === 'function') image = image()
   else if (image) image = figure(image)
 
+  if (props.image && props.image.width && props.image.height) {
+    attrs.style = `--Card-aspect: ${props.image.height / props.image.width};`
+  }
+
   return html`
     <article ${attrs}>
       ${image}

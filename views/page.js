@@ -17,6 +17,7 @@ module.exports = view(page, meta, 'page')
 
 function page (state, emit) {
   var type = state.params.type || 'page'
+
   return html`
     <main class="View-main">
       ${state.prismic.getByUID(type, state.params.slug, (err, doc) => {
@@ -193,58 +194,119 @@ function page (state, emit) {
         `
       }
       case 'people': {
-        let people = slice.items.filter((item) => item.image.url)
+        let people = slice.items.filter(function (item) {
+          if (item.link) return !item.link.isBroken
+          return Boolean(item.image.url)
+        })
         if (!people.length) return null
+
         return html`
-          <div class="u-space2">
-            <div class="u-container">
-              ${slice.primary.heading.length ? html`
-                <header class="View-title View-title--center">
-                  <h2>${asText(slice.primary.heading)}</h2>
-                </header>
-              ` : null}
-              ${grid({
-                size: {
-                  sm: '1of2',
-                  md: '1of3',
-                  lg: people.length > 3 ? '1of4' : '1of3'
+          <div class="u-container u-space2">
+            ${slice.primary.heading.length ? html`
+              <header class="View-title View-title--center">
+                <h2>${asText(slice.primary.heading)}</h2>
+              </header>
+            ` : null}
+            ${grid({
+              size: {
+                sm: '1of2',
+                md: '1of3',
+                lg: people.length > 3 ? '1of4' : '1of3'
+              }
+            }, people.map(function (item) {
+              var title = asText(item.heading)
+              var link = item.link
+              var linkText = item.link_text
+              if (!linkText) {
+                if (link.id && !link.isBroken) {
+                  linkText = link.data.call_to_action || asText(link.data.title)
+                } else if (link.url) {
+                  linkText = text`Read more`
                 }
-              }, people.map(function (item) {
-                var title = asText(item.heading)
-                var link = item.link
-                var linkText = item.link_text
-                if (!linkText) {
-                  if (link.id && !link.isBroken) {
-                    linkText = link.data.call_to_action || asText(link.data.title)
-                  } else if (link.url) {
-                    linkText = text`Read more`
+              }
+              return person({
+                title: title,
+                body: asElement(item.text, resolve, serialize),
+                link: (link.id || link.url) && !link.isBroken ? {
+                  href: resolve(link),
+                  text: linkText,
+                  external: link.target === '_blank'
+                } : null,
+                image: memo(function (url, sizes) {
+                  var sources = srcset(url, sizes, {
+                    aspect: 1,
+                    transforms: 'g_face,r_max'
+                  })
+                  return {
+                    alt: title,
+                    width: 180,
+                    height: 180,
+                    sizes: '180px',
+                    srcset: sources,
+                    src: sources.split(' ')[0]
                   }
-                }
-                return person({
-                  title: title,
-                  body: asElement(item.text, resolve, serialize),
-                  link: (link.id || link.url) && !link.isBroken ? {
-                    href: resolve(link),
-                    text: linkText,
-                    external: link.target === '_blank'
-                  } : null,
-                  image: memo(function (url, sizes) {
-                    var sources = srcset(url, sizes, {
-                      aspect: 1,
-                      transforms: 'g_face,r_max'
-                    })
-                    return {
-                      alt: title,
-                      width: 180,
-                      height: 180,
-                      sizes: '180px',
-                      srcset: sources,
-                      src: sources.split(' ')[0]
-                    }
-                  }, [item.image.url, [180, 360, 500]])
+                }, [item.image.url, [180, 360, 500]])
+              })
+            }))}
+          </div>
+        `
+      }
+      case 'blurbs': {
+        let blurbs = slice.items.filter(function (item) {
+          if (item.link.id) return !item.link.isBroken
+          if (item.link.url && item.link_text) return true
+          return item.image.url || item.heading.length
+        })
+        if (!blurbs.length) return null
+
+        return html`
+          <div class="u-container u-space2">
+            ${slice.primary.heading.length ? html`
+              <header class="Text u-large u-spaceB4">
+                <h2>${asText(slice.primary.heading)}</h2>
+              </header>
+            ` : null}
+            ${grid({ size: { md: '1of3', sm: '1of2' } }, blurbs.map(function (item) {
+              var title = asText(item.heading)
+              if (!title && item.link.id) title = asText(item.link.data.title)
+
+              var body = item.text.length && asElement(item.text, resolve, serialize)
+              if (!body && item.link.id) {
+                body = asElement(item.link.data.description, resolve, serialize)
+              }
+
+              var image = item.image
+              if (!image.url && item.link.id) image = item.link.data.featured_image
+              if (!image || (!image.url && item.link.id)) image = item.link.data.image
+              image = memo(function (url, sizes) {
+                if (!url) return null
+                var sources = srcset(url, sizes, {
+                  aspect: 9 / 16,
+                  transforms: 'c_thumb'
                 })
-              }))}
-            </div>
+                return {
+                  srcset: sources,
+                  sizes: '(min-width: 600) 33vw, (min-width: 400px) 50vw, 100vw',
+                  alt: image.alt || title,
+                  src: sources.split(' ')[0],
+                  width: image.dimensions.width,
+                  height: image.dimensions.width * 9 / 16
+                }
+              }, [image && image.url, [300, 400, [600, 'q_70'], [900, 'q_50']]])
+
+              var linkText = item.link_text
+              if (!linkText) {
+                if (item.link.id) linkText = item.link.data.call_to_action
+                else if (item.link.url) linkText = text`Read more`
+              }
+              var link = item.link.id || item.link.url ? {
+                href: resolve(item.link),
+                text: linkText,
+                external: item.link.target === '_blank'
+              } : null
+
+              return card({ title, body, image, link })
+            }))}
           </div>
         `
       }

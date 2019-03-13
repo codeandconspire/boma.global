@@ -1,6 +1,10 @@
 @import "../base";
 
 /* @define Card */
+:root {
+  --Card-aspect: calc(67 / 74);
+}
+
 .Card {
   display: flex;
   flex-direction: column;
@@ -152,7 +156,7 @@
   content: "";
   display: block;
   height: 0;
-  padding-top: calc(100% * 67/74);
+  padding-top: calc(100% * var(--Card-aspect));
 }
 
 .Card--video .Card-figure::before {
