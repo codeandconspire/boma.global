@@ -32,17 +32,17 @@
   font-size: 0.875rem;
 }
 
-.Text a:not(.Embed-link) {
+.Text a:not(.Embed-link):not(.Button) {
   border-bottom: 2px solid rgb(var(--color-orange));
   font-weight: 600;
   transition: color 100ms var(--ease-out);
 }
 
-.Text a:not(.Embed-link):hover {
+.Text a:not(.Embed-link):not(.Button):hover {
   color: rgb(var(--color-orange));
 }
 
-.Text a:not(.Embed-link):active {
+.Text a:not(.Embed-link):not(.Button):active {
   opacity: 0.5;
 }
 

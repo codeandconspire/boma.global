@@ -1,0 +1,33 @@
+@import "../base";
+
+/* @define Highlight */
+.Highlight {
+  display: flex;
+  margin: 6rem 0;
+}
+
+.Highlight-figure {
+  flex-basis: 50%;
+}
+
+.Highlight-image {
+  display: block;
+  width: 100%;
+}
+
+.Highlight-text {
+  text-align: left;
+  margin-left: 0;
+}
+
+.Highlight-body {
+  flex-basis: 50%;
+}
+
+.Highlight--left {
+  
+}
+
+@media (min-width: 800px) {
+
+}

@@ -16,14 +16,13 @@
   transform-origin: center;
   transition: 90ms var(--ease-out);
   transition-property: transform;
-}
-
-.Button:hover {
-  background: rgb(var(--color-orange));
+  text-align: center;
 }
 
 .Button:not([disabled]):hover {
   transform: scale(1.05);
+  color: rgb(255, 255, 255);
+  background: rgb(var(--color-orange));
 }
 
 .Button[disabled] {

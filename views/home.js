@@ -44,8 +44,8 @@ function home (state, emit) {
           `
         }
 
-        var image = memo(function (img, sizes) {
-          if (!img || !img.url) return null
+        var image = memo(function (url, sizes) {
+          if (!url) return null
           var sources = srcset(doc.data.image.url, sizes)
           return Object.assign({
             sizes: '100vw',
@@ -53,7 +53,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
+        }, [doc.data.image && doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
 
         return html`
           <div>
@@ -169,7 +169,7 @@ function home (state, emit) {
                         width: doc.data.services_image.dimensions.width,
                         height: doc.data.services_image.dimensions.width
                       }
-                    }, [doc.data.services_image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_70']]]),
+                    }, [doc.data.services_image && doc.data.services_image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_70']]]),
                     children: doc.data.services.map(function (item) {
                       return card({
                         title: asText(item.heading),
@@ -183,7 +183,7 @@ function home (state, emit) {
                             alt: item.image.alt || '',
                             src: sources.split(' ')[0]
                           }, item.image.dimensions)
-                        }, [item.image.url, [400, [800, 'q_70']]]),
+                        }, [item.image && item.image.url, [400, [800, 'q_70']]]),
                         link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                           href: resolve(item.link),
                           text: item.link.type === 'Document' ? item.link.data.call_to_action : null
@@ -225,7 +225,7 @@ function home (state, emit) {
                             alt: image.alt || '',
                             src: sources.split(' ')[0]
                           }, image.dimensions)
-                        }, [image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
+                        }, [image && image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
                         title: asText(article.data.title),
                         date: {
                           datetime: date,

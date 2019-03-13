@@ -3,10 +3,13 @@ var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var card = require('../components/card')
+var highlight = require('../components/highlight')
 var compass = require('../components/compass')
 var embed = require('../components/embed')
 var serialize = require('../components/text/serialize')
-var { asText, resolve, srcset, HTTPError, memo } = require('../components/base')
+var { i18n, asText, resolve, srcset, HTTPError, memo } = require('../components/base')
+
+var text = i18n()
 
 module.exports = view(page('page'), meta('page'), 'page')
 module.exports.landing = view(page('landing'), meta('landing'), 'landing')
@@ -25,8 +28,8 @@ function page (type) {
             `
           }
 
-          var image = memo(function (img, sizes) {
-            if (!img || !img.url) return null
+          var image = memo(function (url, sizes) {
+            if (!url) return null
             var sources = srcset(doc.data.image.url, sizes)
             return Object.assign({
               sizes: '100vw',
@@ -34,7 +37,7 @@ function page (type) {
               alt: doc.data.image.alt || '',
               src: sources.split(' ')[0]
             }, doc.data.image.dimensions)
-          }, [doc.data.image, [400, 600, 900, 1400, 1800, [2600, 'q_50']]])
+          }, [doc.data.image && doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_50']]])
 
           var action = doc.data.action
           if (action && action.id && !action.isBroken) {
@@ -119,8 +122,37 @@ function page (type) {
             </div>
           `
         }
+        case 'highlight': {
+          let props = {
+            title: slice.primary.heading ? asText(slice.primary.heading) : null,
+            body: slice.primary.highlight_body ? asElement(slice.primary.highlight_body) : null,
+            direction: slice.primary.direction.toLowerCase(),
+            action: (slice.primary.link.url || slice.primary.link.id) && !slice.primary.link.isBroken ? {
+              href: resolve(slice.primary.link),
+              text: slice.primary.link.type === 'Document' ? slice.primary.link.data.call_to_action : text`Read more`
+            } : null,
+            image: memo(function (url, sizes) {
+              if (!url) return null
+              var sources = srcset(url, sizes, {
+                transforms: 'c_thumb',
+                aspect: 1
+              })
+              return {
+                src: sources.split(' ')[0],
+                sizes: '(min-width: 1000px) 660px, (min-width: 600px) 400px, 320px',
+                srcset: sources,
+                alt: slice.primary.image.alt || '',
+                width: slice.primary.image.dimensions.width,
+                height: slice.primary.image.dimensions.width
+              }
+            }, [slice.primary.image && slice.primary.image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_60']]])
+          }
+
+          return html`
+            <div class="u-container">${highlight(props)}</div>
+          `
+        }
         case 'compass': {
-          console.log(slice)
           if (!slice.primary.heading || !slice.primary.image) return null
           let props = {
             title: asText(slice.primary.heading),
@@ -138,7 +170,7 @@ function page (type) {
                 width: slice.primary.image.dimensions.width,
                 height: slice.primary.image.dimensions.width
               }
-            }, [slice.primary.image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_60']]]),
+            }, [slice.primary.image && slice.primary.image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_60']]]),
             children: slice.items.map(function (item) {
               return card({
                 title: asText(item.heading),
