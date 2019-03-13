@@ -83,31 +83,34 @@ function createView (view, meta) {
 
       var menu = memo(function () {
         if (!doc) return []
-        return doc.data.main_menu.map(function (slice) {
-          var { primary, items } = slice
-          if (slice.slice_type !== 'menu_item') return null
-          if (!primary.link.id || primary.link.isBroken) return null
-          return {
-            label: primary.label || primary.link.data.cta,
-            href: resolve(primary.link),
-            children: items.map(function (item) {
-              if (!item.link.id || item.link.isBroken) return null
-              return {
-                label: item.label || item.link.cta,
-                href: resolve(item.link),
-                description: asText(item.description)
-              }
-            }).filter(Boolean)
-          }
-        }).filter(Boolean)
+        return doc.data.main_menu.map(branch).filter(Boolean)
       }, [doc && doc.id, 'menu'])
+
+      var footer = memo(function () {
+        if (!doc) return null
+        return {
+          social: doc.data.social_links
+            .filter((item) => item.link.url)
+            .map((item) => ({
+              type: item.type,
+              href: item.link.url
+            })),
+          legal: doc.data.legal_links
+            .filter((item) => item.link.id && !item.link.isBroken)
+            .map((item) => ({
+              href: resolve(item.link),
+              label: item.link.data.call_to_action || asText(item.link.data.title)
+            })),
+          menu: doc.data.footer_menu.map(branch).filter(Boolean)
+        }
+      }, [doc && doc.id, 'footer'])
 
       return html`
         <body class="View ${state.ui.openNavigation ? 'is-overlayed' : ''}" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
           ${state.cache(Header, 'header').render(state.href, menu)}
           ${children}
-          ${state.cache(Footer, 'footer').render(doc)}
+          ${state.cache(Footer, 'footer').render(footer)}
           ${Player.render()}
           ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>
@@ -125,5 +128,25 @@ function createView (view, meta) {
         }
       }
     })
+  }
+}
+
+// construct menu branch
+// obj -> obj
+function branch (slice) {
+  var { primary, items } = slice
+  if (slice.slice_type !== 'menu_item') return null
+  if (!primary.link.id || primary.link.isBroken) return null
+  return {
+    label: primary.label || primary.link.data.call_to_action,
+    href: resolve(primary.link),
+    children: items.map(function (item) {
+      if (!item.link.id || item.link.isBroken) return null
+      return {
+        label: item.label || item.link.data.call_to_action,
+        href: resolve(item.link),
+        description: asText(item.description)
+      }
+    }).filter(Boolean)
   }
 }
