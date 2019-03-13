@@ -20,6 +20,7 @@
 
 .Connect-link {
   color: rgb(var(--color-orange));
+  border: 0 !important;
 }
 
 .Connect-instagram {
@@ -44,6 +45,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
 }
 
 .Connect-image {
@@ -57,16 +61,48 @@
   display: inline-block;
   width: 18rem;
   max-width: 100%;
-  margin-top: 2rem;
+  margin-top: 1rem;
   border: 1px solid #BBB8C9;
   line-height: normal;
-  padding: 1rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 2rem;
+  padding: 1.2rem 1.7rem;
+  font-size: 1.125rem;
+  border-radius: 4rem;
   -webkit-appearence: none;
   appearance: none;
+  color: rgb(var(--color-orange));
+}
+
+.Connect-input::placeholder {
+  color: rgb(var(--color-royal));
+  opacity: 1;
 }
 
 .Connect-input:focus {
   border-color: currentColor;
+  border-width: 2px;
+  padding: calc(1.2rem - 1px) calc(1.7rem - 1px);
+}
+
+.Connect-input:focus-within {
+  outline: 0 !important;
+}
+
+
+.Connect-figure {
+  display: block;
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+.Connect-post {
+  display: block;
+  width: 100%;
+  transform-origin: center;
+  transition: transform 600ms cubic-bezier(0.15, 0.03, 0.2, 0.955);
+  will-change: transform;
+}
+
+.Connect-figure:hover .Connect-post {
+  transform: scale(1.05);
 }

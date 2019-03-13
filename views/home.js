@@ -28,7 +28,7 @@ function home (state, emit) {
           return html`
             <div>
               ${Hero.loading({ image: true })}
-              <div class="View-section">
+              <div class="u-space2">
                 <div class="u-container">
                   ${glocal(html`
                     <div class="Text">
@@ -60,7 +60,7 @@ function home (state, emit) {
               image
             })}
 
-            <div class="View-section">
+            <div class="u-space2">
               <div class="u-container">
                 ${glocal(html`
                   <div class="Text">
@@ -129,8 +129,8 @@ function home (state, emit) {
                 }
 
                 return html`
-                  <section class="View-section">
-                    <header class="View-sectionHead">
+                  <section class="u-space2">
+                    <header class="View-title">
                       <h2>${text`Upcoming events`}</h2>
                       ${doc ? html`
                         <a href="${resolve(doc)}">
@@ -138,14 +138,14 @@ function home (state, emit) {
                         </a>
                       ` : null}
                     </header>
-                    ${grid({ size: { md: '1of2' } }, items)}
+                    ${grid({ size: { lg: '1of2' }, slim: true }, items)}
                   </section>
                 `
               })}
             </div>
 
             ${doc.data.services_heading.length ? html`
-              <section class="View-section">
+              <section class="u-space2">
                 <div class="u-container">
                   ${compass({
                     title: asText(doc.data.services_heading),
@@ -189,53 +189,53 @@ function home (state, emit) {
               </section>
             ` : null}
 
-            <div class="u-container">
-              ${state.prismic.get(
-                Predicates.at('document.type', 'article'),
-                {
-                  pageSize: 3,
-                  orderings: '[document.first_publication_date desc]'
-                },
-                function (err, response) {
-                  if (err) return null
+            ${state.prismic.get(
+              Predicates.at('document.type', 'article'),
+              {
+                pageSize: 3,
+                orderings: '[document.first_publication_date desc]'
+              },
+              function (err, response) {
+                if (err) return null
 
-                  var items = []
-                  if (!response) {
-                    for (let i = 0; i < 4; i++) items.push(card.loading())
-                  } else {
-                    items = response.results.map(function (article) {
-                      var image = article.data.featured_image
-                      if (!image.url) image = article.data.image
-                      var date = parse(article.first_publication_date)
-                      return card({
-                        image: memo(function (url, sizes) {
-                          if (!url) return null
-                          var sources = srcset(url, sizes, {
-                            transforms: 'c_thumb'
-                          })
-                          return Object.assign({
-                            srcset: sources,
-                            sizes: '(min-midth: 600px) 33vw, 100vw',
-                            alt: image.alt || '',
-                            src: sources.split(' ')[0]
-                          }, image.dimensions)
-                        }, [image && image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
-                        title: asText(article.data.title),
-                        date: {
-                          datetime: date,
-                          text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
-                        },
-                        link: {
-                          href: resolve(article),
-                          visible: false
-                        }
-                      })
+                var items = []
+                if (!response) {
+                  for (let i = 0; i < 4; i++) items.push(card.loading())
+                } else {
+                  items = response.results.map(function (article) {
+                    var image = article.data.featured_image
+                    if (!image.url) image = article.data.image
+                    var date = parse(article.first_publication_date)
+                    return card({
+                      image: memo(function (url, sizes) {
+                        if (!url) return null
+                        var sources = srcset(url, sizes, {
+                          transforms: 'c_thumb'
+                        })
+                        return Object.assign({
+                          srcset: sources,
+                          sizes: '(min-midth: 600px) 33vw, 100vw',
+                          alt: image.alt || '',
+                          src: sources.split(' ')[0]
+                        }, image.dimensions)
+                      }, [image && image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
+                      title: asText(article.data.title),
+                      date: {
+                        datetime: date,
+                        text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
+                      },
+                      link: {
+                        href: resolve(article),
+                        visible: false
+                      }
                     })
-                  }
+                  })
+                }
 
-                  return html`
-                    <section class="View-section">
-                      <header class="View-sectionHead">
+                return html`
+                  <section class="u-space2">
+                    <div class="u-container">
+                      <header class="View-title">
                         <h2>${text`Ideas`}</h2>
                         ${state.prismic.getSingle('discover', function (err, doc) {
                           if (err || !doc) return null
@@ -246,14 +246,25 @@ function home (state, emit) {
                           `
                         })}
                       </header>
+                    </div>
+                    <div class="u-md-container">
                       ${grid({ size: { md: '1of3' }, carousel: true }, items)}
-                    </section>
-                  `
-                }
-              )}
-            </div>
+                    </div>
+                  </section>
+                `
+              }
+            )}
 
-            <aside class="View-section">
+            <div class="Sponsors u-space2" style="overflow: hidden; background: rgb(var(--color-fog))">
+              <div class="u-space2">
+                <div class="Text">
+                  <h1 class="u-textCenter">Sponsors here</h1>
+                </div>    
+              </div>    
+            </div>
+              
+
+            <aside class="u-space2">
               <div class="u-container">
                 ${connect({
                   instagram: {

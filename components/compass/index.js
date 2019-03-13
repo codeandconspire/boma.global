@@ -24,9 +24,9 @@ function compass (props = {}) {
         ${image}
         <div class="Compass-content">
           ${props.title && html`
-          <h3 class="Compass-title">
-            ${props.title}
-          </h3>
+            <h3 class="Compass-title">
+              ${props.title}
+            </h3>
           `}
           ${props.children && grid({
             size: {

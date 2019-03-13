@@ -31,31 +31,24 @@
   }
 }
 
-.View-section::before {
-  content: "";
-  height: 13vh;
-  display: block;
-  max-height: 7rem;
-}
-
-.View-section:last-child::after {
-  content: "";
-  height: 13vh;
-  display: block;
-  max-height: 7rem;
-}
-
-.View-sectionHead {
+.View-title {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-weight: 600;
+  font-size: 1.25rem;
 }
 
-.View-sectionHead--center {
+.View-title--center {
   display: block;
   text-align: center;
   font-size: 2.125rem;
+}
+
+@media (min-width: 600px) {
+  .View-title {
+    margin-bottom: 1.5rem;
+  }
 }
 
 /**

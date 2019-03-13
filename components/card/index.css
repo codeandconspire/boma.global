@@ -41,7 +41,7 @@
   left: 0;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 600px) {
   .Card--background .Card-content {
     padding: 1.5rem;
   }
@@ -110,14 +110,20 @@
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.1;
-  max-width: 22rem;
+  max-width: 28rem;
 }
 
 .Card--background .Card-title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 600px) {
+  .Card--background .Card-title {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
   .Card--background .Card-title {
     font-size: 2.625rem;
   }
@@ -221,12 +227,12 @@
  * Link
  */
 
- .Card-link {
+.Card-link {
   display: inline-block;
   margin: 0.5rem 0 0;
   border-bottom: 2px solid rgb(var(--color-orange));
   font-weight: 600;
- }
+}
 
 .Card-link::before {
   content: "";
@@ -235,4 +241,8 @@
   position: absolute;
   left: 0;
   top: 0;
+}
+
+.Card--background .Card-link{
+  margin: 0;
 }

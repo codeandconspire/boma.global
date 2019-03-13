@@ -3,6 +3,7 @@ var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var card = require('../components/card')
+var grid = require('../components/grid')
 var highlight = require('../components/highlight')
 var compass = require('../components/compass')
 var embed = require('../components/embed')
@@ -183,7 +184,7 @@ function page (state, emit) {
         }
 
         return html`
-          <section class="View-section">
+          <section class="u-space2">
             <div class="u-container">
               ${compass(props)}
             </div>

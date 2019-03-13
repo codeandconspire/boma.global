@@ -157,7 +157,7 @@
 
 .Text h1,
 .Text .Text-h1 {
-  font-size: 2em;
+  font-size: 1.55em;
   margin: 0;
 }
 
@@ -178,7 +178,7 @@
 @media (min-width: 800px) and (min-height: 400px) {
   .Text h1,
   .Text .Text-h1 {
-    font-size: 3.2em;
+    font-size: 2.1em;
   }
 
   .Text h2,

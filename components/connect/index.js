@@ -11,14 +11,14 @@ function connect (props) {
   return html`
     <div class="Connect">
       <div class="Connect-instagram">
-        <h2 class="Connect-heading">
-          ${text`On Instagram`} <a class="Connect-link" href="${instagram.link}">@bomaglobal</a>
-        </h2>
+        <div class="Text u-large">
+          <h3 class="u-spaceT0">${text`On Instagram`} <a class="Connect-link" href="${instagram.link}">@bomaglobal</a></h3>
+        </div>
         <div class="u-md-uncontain">
-          ${grid({ size: { md: '1of3' }, carousel: true }, instagram.images.map(function (embed) {
+          ${grid({ size: { md: '1of3' }, carousel: true, slim: true }, instagram.images.map(function (embed) {
             return html`
-              <a href="${embed.embed_url}" class="u-block" target="_blank" rel="noopener noreferrer">
-                <img ${attrs(embed)} class="u-sizeFull" />
+              <a href="${embed.embed_url}" class="Connect-figure" target="_blank" rel="noopener noreferrer">
+                <img ${attrs(embed)} class="Connect-post" />
               </a>
             `
           }))}
@@ -31,8 +31,8 @@ function connect (props) {
             <path fill="#201745" d="M20 45.4a20 20 0 1 1 20-20.1v26.4c0 2-2 2-2.7.4-1.4-3-2.4-6.7-6.7-6.7H20z"/>
           </g>
         </svg>
-        <h2 class="Connect-heading u-spaceB1">${newsletter.heading}</h2>
-        <div class="Text u-textCenter">
+        <div class="Text u-large u-textCenter">
+          <h2 class="u-spaceA0">${newsletter.heading}</h2>
           ${newsletter.text}
         </div>
         <form method="POST" action="/">
