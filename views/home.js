@@ -68,7 +68,7 @@ function home (state, emit) {
                     ${asElement(doc.data.description, resolve, serialize)}
                     ${doc.data.description_link ? html`
                       <p>
-                        ${button({ href: doc.data.description_link.href, text: doc.data.description_link.data.call_to_action || asText(doc.data.description_link.data.title) })}
+                        ${button({ href: resolve(doc.data.description_link), text: doc.data.description_link.data.call_to_action || asText(doc.data.description_link.data.title) })}
                       </p>
                     ` : null}
                   </div>

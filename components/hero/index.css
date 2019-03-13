@@ -113,7 +113,7 @@
 
 .Hero-wrap::after {
   content: "";
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .Hero-image {

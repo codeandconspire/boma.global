@@ -205,8 +205,8 @@ function page (state, emit) {
         return html`
           <div class="u-container u-space2">
             ${slice.primary.heading.length ? html`
-              <header class="View-title View-title--center">
-                <h2>${asText(slice.primary.heading)}</h2>
+              <header class="Text u-space2 u-textCenter">
+                <h1>${asText(slice.primary.heading)}</h1>
               </header>
             ` : null}
             ${grid({
@@ -264,8 +264,8 @@ function page (state, emit) {
         return html`
           <div class="u-container u-space2">
             ${slice.primary.heading.length ? html`
-              <header class="Text u-large u-spaceB4">
-                <h2>${asText(slice.primary.heading)}</h2>
+              <header class="Text u-space2 u-textCenter">
+                <h1>${asText(slice.primary.heading)}</h1>
               </header>
             ` : null}
             ${grid({ size: { md: '1of3', sm: '1of2' } }, blurbs.map(function (item) {

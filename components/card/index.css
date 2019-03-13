@@ -174,7 +174,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: radial-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.5) 90%)
+  background: radial-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.5) 90%);
 }
 
 .Card-figureIcon {
@@ -218,12 +218,15 @@
 
 .Card--background .Card-image {
   position: static;
+}
+
+.Card-image {
   transform-origin: center;
   transition: transform 600ms cubic-bezier(0.15, 0.03, 0.2, 0.955);
   will-change: transform;
 }
 
-.Card--background:hover .Card-image {
+.Card:hover .Card-image {
   transform: scale(1.05);
 }
 
@@ -236,6 +239,7 @@
   margin: 0.5rem 0 0;
   border-bottom: 2px solid rgb(var(--color-orange));
   font-weight: 600;
+  transition: color 100ms var(--ease-out);
 }
 
 .Card-link::before {
@@ -247,6 +251,15 @@
   top: 0;
 }
 
-.Card--background .Card-link{
+.Card-link:hover {
+  color: rgb(var(--color-orange));
+}
+
+.Card-link:active {
+  opacity: 0.5;
+}
+
+.Card--background .Card-link {
   margin: 0;
+  border: 0;
 }

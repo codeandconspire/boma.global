@@ -26,9 +26,9 @@ function home (state, emit) {
           return html`
             <div>
               ${Hero.loading({ center: true, image: true })}
-              <div class="u-container u-spaceB8">
+              <div class="u-container">
                 ${highlight.loading()}
-                <div class="u-spaceT8">
+                <div class="u-space2">
                   ${grid({ size: { md: '1of3', sm: '1of2' } }, items)}
                 </div>
               </div>
@@ -132,9 +132,9 @@ function home (state, emit) {
               title: asText(doc.data.title),
               image: image
             })}
-            <div class="u-container u-spaceB8">
+            <div class="u-container">
               ${featured}
-              <div class="${featured.length ? 'u-spaceT8' : ''}">
+              <div class="u-space2">
                 ${articles ? grid({ size: { md: '1of3', sm: '1of2' } }, articles) : null}
               </div>
             </section>

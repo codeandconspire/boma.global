@@ -39,21 +39,9 @@
   font-size: 1.25rem;
 }
 
-.View-title--center {
-  display: block;
-  text-align: center;
-  font-size: 1.6625rem;
-}
-
 @media (min-width: 600px) {
   .View-title {
     margin-bottom: 1.5rem;
-  }
-}
-
-@media (min-width: 800px) and (min-height: 400px) {
-  .View-title--center {
-    font-size: 2em;
   }
 }
 
