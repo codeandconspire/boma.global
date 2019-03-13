@@ -8,7 +8,7 @@ var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
-var spur = require('../components/spur')
+var symbol = require('../components/base/symbol')
 var glocal = require('../components/glocal')
 var Quotes = require('../components/quotes')
 var person = require('../components/person')
@@ -137,10 +137,7 @@ function home (state, emit) {
                       <h2>${text`Upcoming events`}</h2>
                       ${doc ? html`
                         <a href="${resolve(doc)}">
-                          <span>${text`Show more`}</span>
-                          <svg class="" width="7" height="11" version="1">
-                            <path d="M1 9l4-4-4-4" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" />
-                          </svg>
+                          ${symbol.arrow(text`Show more`)}
                         </a>
                       ` : null}
                     </header>
@@ -247,10 +244,7 @@ function home (state, emit) {
                           if (err || !doc) return null
                           return html`
                             <a href="${resolve(doc)}">
-                              <span>${text`Show more`}</span>
-                              <svg class="" width="7" height="11" version="1">
-                                <path d="M1 9l4-4-4-4" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" />
-                              </svg>
+                              ${symbol.arrow(text`Show more`)}
                             </a>
                           `
                         })}
@@ -277,56 +271,6 @@ function home (state, emit) {
                 })}
               </div>
             </aside>
-
-            <div class="View-section">
-              ${state.cache(Quotes, `quotes-${doc.id}`).render(quotesData)}
-            </div>
-
-            <div class="View-section">
-              ${principles(principlesData)}
-            </div>
-
-            ${spur({
-              title: 'Are ready to challenge business as usual and drive positive impact?',
-              action: {
-                text: 'Find your closest Boma',
-                href: '#/'
-              },
-              image: {
-                src: 'https://via.placeholder.com/1400x1000/0000FF'
-              }
-            })}
-
-            ${spur({
-              title: 'Are ready to challenge business as usual and drive positive impact?',
-              action: {
-                text: 'Contact us',
-                href: '#/'
-              }
-            })}
-
-            ${(function () {
-              var peopleItems = peopleData.map(function (data) {
-                return person(data)
-              })
-
-              return html`
-                <div class="View-section">
-                  <div class="u-container">
-                    <header class="View-sectionHead View-sectionHead--center">
-                      <h2>${text`Founders`}</h2>
-                    </header>
-                    ${grid({
-                      size: {
-                        sm: '1of2',
-                        md: '1of3',
-                        lg: peopleItems.length > 3 ? '1of4' : '1of3'
-                      }
-                    }, peopleItems)}
-                  </div>
-                </div>
-              `
-            }())}
           </div>
         `
       })}
@@ -356,82 +300,3 @@ function meta (state) {
     return props
   })
 }
-
-/* TODO: Remove dummy data */
-
-var quotesData = {
-  image: {
-    src: 'https://via.placeholder.com/1400x1000/0000FF'
-  },
-  content: [
-    {
-      body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
-      name: 'Susan Nemeth',
-      title: 'Director, COO and CFO, Aportio Technologies'
-    },
-    {
-      body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
-      name: 'Susan Nemeth',
-      title: 'Director, COO and CFO, Aportio Technologies'
-    },
-    {
-      body: 'A few days with the Boma New Zealand team has given me the freedom to imagine the unimaginable for my business. This is a fantastic programme for any leader trying to achieve aspirational goals in a world of exponential change.',
-      name: 'Susan Nemeth',
-      title: 'Director, COO and CFO, Aportio Technologies'
-    }
-  ]
-}
-
-var peopleData = [
-  {
-    title: 'Lara Stein',
-    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
-    image: {
-      src: 'https://via.placeholder.com/400x400/0000FF'
-    }
-  },
-  {
-    title: 'Kaila Colbin',
-    body: 'Curator, TEDxChristchurch; Curator, TEDxScottBase; Curator, SingularityU New Zealand Summit; Curator, SingularityU Australia Summit; Co-founder, Ministry of Awesome',
-    image: {
-      src: 'https://via.placeholder.com/400x400/0000FF'
-    },
-    href: '#/'
-  },
-  {
-    title: 'Lara Stein',
-    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University'
-  },
-  {
-    title: 'Lara Stein',
-    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
-    image: {
-      src: 'https://via.placeholder.com/400x400/0000FF'
-    },
-    href: '#/'
-  },
-  {
-    title: 'Lara Stein',
-    body: 'Founder, TEDx; Global Expansion Strategist, Singularity University',
-    community: 'Stockholm'
-  }
-]
-
-var principlesData = [
-  {
-    title: 'Embrace Complexity',
-    body: 'We’re heading into a future with no simple answers. Technology, for example, has brought about extraordinary progress, but it has also created unprecedented challenges. We need to accept these complexities fearlessly if we want to make a better future for everyone.'
-  },
-  {
-    title: 'Be robust and credible',
-    body: 'While nobody knows what the future holds, our work is evidence-based and defensible.'
-  },
-  {
-    title: 'Question dogma',
-    body: 'We embrace new evidence and are willing to challenge our own status quo. We aren’t inflexible champions of technology, and we aren’t attached to a particular model of society.'
-  },
-  {
-    title: 'Be inclusive',
-    body: 'Our events and programs welcome people from all sectors of society, and we work hard to make them accessible to a broad range of people.'
-  }
-]
