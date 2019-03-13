@@ -4,9 +4,10 @@ var view = require('../components/view')
 var Hero = require('../components/hero')
 var card = require('../components/card')
 var grid = require('../components/grid')
-var highlight = require('../components/highlight')
-var compass = require('../components/compass')
 var embed = require('../components/embed')
+var person = require('../components/person')
+var compass = require('../components/compass')
+var highlight = require('../components/highlight')
 var serialize = require('../components/text/serialize')
 var { i18n, asText, resolve, srcset, HTTPError, memo } = require('../components/base')
 
@@ -189,6 +190,62 @@ function page (state, emit) {
               ${compass(props)}
             </div>
           </section>
+        `
+      }
+      case 'people': {
+        let people = slice.items.filter((item) => item.image.url)
+        if (!people.length) return null
+        return html`
+          <div class="u-space2">
+            <div class="u-container">
+              ${slice.primary.heading.length ? html`
+                <header class="View-title View-title--center">
+                  <h2>${asText(slice.primary.heading)}</h2>
+                </header>
+              ` : null}
+              ${grid({
+                size: {
+                  sm: '1of2',
+                  md: '1of3',
+                  lg: people.length > 3 ? '1of4' : '1of3'
+                }
+              }, people.map(function (item) {
+                var title = asText(item.heading)
+                var link = item.link
+                var linkText = item.link_text
+                if (!linkText) {
+                  if (link.id && !link.isBroken) {
+                    linkText = link.data.call_to_action || asText(link.data.title)
+                  } else if (link.url) {
+                    linkText = text`Read more`
+                  }
+                }
+                return person({
+                  title: title,
+                  body: asElement(item.text, resolve, serialize),
+                  link: (link.id || link.url) && !link.isBroken ? {
+                    href: resolve(link),
+                    text: linkText,
+                    external: link.target === '_blank'
+                  } : null,
+                  image: memo(function (url, sizes) {
+                    var sources = srcset(url, sizes, {
+                      aspect: 1,
+                      transforms: 'g_face,r_max'
+                    })
+                    return {
+                      alt: title,
+                      width: 180,
+                      height: 180,
+                      sizes: '180px',
+                      srcset: sources,
+                      src: sources.split(' ')[0]
+                    }
+                  }, [item.image.url, [180, 360, 500]])
+                })
+              }))}
+            </div>
+          </div>
         `
       }
       default: return null

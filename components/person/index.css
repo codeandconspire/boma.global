@@ -1,5 +1,9 @@
+@import "../base";
+
+/* @define Person */
 .Person {
   text-align: center;
+  position: relative;
 }
 
 .Person-figure {
@@ -22,16 +26,26 @@
   font-weight: 600;
 }
 
-.Person--link .Person-title {
-  text-decoration: underline;
-}
-
 .Person-text,
-.Person-community {
+.Person-link {
   margin-top: .2rem;
   font-size: 0.875rem;
 }
 
-.Person-community {
+.Person-link {
   color: rgb(var(--color-orange));
+}
+
+.Person-link:hover,
+.Person-link:active {
+  text-decoration: underline;
+}
+
+.Person-link::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
