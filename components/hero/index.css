@@ -1,7 +1,9 @@
 .Hero {
+  --Hero-rotatingDelay: 500ms;
+  --Hero-scroll: 0;
+
   position: relative;
   width: 100%;
-  --Hero-rotatingDelay: 500ms;
 }
 
 .Hero.is-loading {
@@ -13,6 +15,8 @@
   flex-direction: column;
   justify-content: center;
   margin: 5rem 0 4rem;
+  transition: transform 100ms ease;
+  transform: translate3d(0, var(--Hero-scroll), 0);
 }
 
 @media (min-width: 600px) and (min-height: 400px) {

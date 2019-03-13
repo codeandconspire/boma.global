@@ -1,7 +1,8 @@
 var html = require('choo/html')
 var Component = require('choo/component')
+var nanoraf = require('nanoraf')
 var button = require('../button')
-var { className, loader } = require('../base')
+var { className, loader, vh } = require('../base')
 
 module.exports = class Hero extends Component {
   constructor (id, state, emit) {
@@ -10,11 +11,77 @@ module.exports = class Hero extends Component {
   }
 
   load (el) {
-    if (!this.local.words) {
-      return
+    var moveEl = el.querySelector('.js-move')
+    var rotatingWords = Array.from(el.querySelectorAll('.js-rotate'))
+
+    if (moveEl) {
+      this.moveContent(moveEl)
     }
 
-    var words = Array.from(el.querySelectorAll('.js-rotate'))
+    if (this.local.words && rotatingWords.length) {
+      this.rotateWords(rotatingWords)
+    }
+  }
+
+  update (props) {
+    var { text, words } = props
+
+    if (text !== this.local.text) return true
+    if (words.join() !== this.local.words.join()) return true
+    return false
+  }
+
+  static loading () {
+    return html`
+      <div class="Hero is-loading">
+        <div class="Hero-content">
+          <div class="u-container">
+            <h2 class="Hero-title">
+              ${loader(28)}
+            </h2>
+          </div>
+        </div>
+      </div>
+    `
+  }
+
+  moveContent (el) {
+    var speed = 0.06
+    var height, offset
+    var inview
+
+    var onScroll = nanoraf(function () {
+      var { scrollY } = window
+
+      if (
+        (scrollY > offset + height) || // Below element
+        (scrollY + vh() < offset) // Above element
+      ) {
+        return
+      }
+
+      if (inview) {
+        el.style.setProperty('--Hero-scroll', `${Math.round(scrollY * speed)}px`)
+      }
+
+      inview = true
+    })
+
+    var onResize = nanoraf(function () {
+      height = el.offsetHeight
+      offset = el.offsetTop
+      var parent = el
+      while ((parent = parent.offsetParent)) offset += parent.offsetTop
+      onScroll()
+    })
+
+    onScroll()
+    onResize()
+    window.addEventListener('resize', onResize)
+    window.addEventListener('scroll', onScroll, { passive: true })
+  }
+
+  rotateWords (words) {
     var count = words.length
     var currentText = 0
     var rotatingDelay = this.local.rotatingDelay
@@ -50,28 +117,6 @@ module.exports = class Hero extends Component {
     this.unload = function () {
       clearInterval(changeTextInterval)
     }
-  }
-
-  update (props) {
-    var { text, words } = props
-
-    if (text !== this.local.text) return true
-    if (words.join() !== this.local.words.join()) return true
-    return false
-  }
-
-  static loading () {
-    return html`
-      <div class="Hero is-loading">
-        <div class="Hero-content">
-          <div class="u-container">
-            <h2 class="Hero-title">
-              ${loader(28)}
-            </h2>
-          </div>
-        </div>
-      </div>
-    `
   }
 
   createElement (props) {
@@ -114,7 +159,7 @@ module.exports = class Hero extends Component {
 
     return html`
       <div ${attrs}>
-        <div class="Hero-content">
+        <div class="Hero-content js-move">
           <div class="Hero-container u-container">
             <h2 class="Hero-title">${titleElement}</h2>
             ${body ? html`<div class="Hero-text">${body}</div>` : null}
