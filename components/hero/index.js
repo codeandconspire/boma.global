@@ -126,14 +126,6 @@ module.exports = class Hero extends Component {
       })
     }
 
-    var imageAttrs = {}
-
-    if (image) {
-      Object.keys(image).forEach(function (key) {
-        if (key !== 'src') imageAttrs[key] = image[key]
-      })
-    }
-
     var titleElement = rotatingWords ? html`
       ${parts[0]} <span class="Hero-rotateWrap">
       ${words.map(function (title) {
@@ -155,8 +147,18 @@ module.exports = class Hero extends Component {
             ` : null}
           </div>
         </div>
-        ${image ? html`<img class="Hero-image" ${imageAttrs} src="${image.src}" />` : null}
+        ${image ? getImage(image) : null}
       </div>
     `
   }
+}
+
+// get hero image element
+// obj -> Element
+function getImage (props) {
+  var attrs = {}
+  Object.keys(props).forEach(function (key) {
+    if (key !== 'src') attrs[key] = props[key]
+  })
+  return html`<img class="Hero-image" ${attrs} src="${props.src}" />`
 }
