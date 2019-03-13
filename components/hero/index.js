@@ -25,22 +25,20 @@ module.exports = class Hero extends Component {
 
   update (props) {
     var { text, words } = props
-
     if (text !== this.local.text) return true
     if (words.join() !== this.local.words.join()) return true
     return false
   }
 
-  static loading () {
+  static loading (opts = {}) {
     return html`
-      <div class="Hero is-loading">
+      <div class="${className('Hero is-loading', { 'Hero--center': opts.center, 'Hero--image': opts.image })}">
         <div class="Hero-content">
-          <div class="u-container">
-            <h2 class="Hero-title">
-              ${loader(28)}
-            </h2>
+          <div class="Hero-container u-container">
+            <h2 class="Hero-title">${loader(opts.center ? 8 : 28)}</h2>
           </div>
         </div>
+        <div class="Hero-image"></div>
       </div>
     `
   }

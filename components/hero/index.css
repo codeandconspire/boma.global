@@ -1,3 +1,10 @@
+@import "../base";
+
+/* @define Hero */
+:root {
+  --Hero-rotatingDelay: 500ms;
+}
+
 .Hero {
   --Hero-rotatingDelay: 500ms;
   --Hero-scroll: 0;

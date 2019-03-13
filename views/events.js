@@ -1,0 +1,126 @@
+var html = require('choo/html')
+var parse = require('date-fns/parse')
+var format = require('date-fns/format')
+var isSameMonth = require('date-fns/is_same_month')
+var view = require('../components/view')
+var Hero = require('../components/hero')
+var grid = require('../components/grid')
+var card = require('../components/card')
+var { asText, srcset, HTTPError, memo } = require('../components/base')
+
+module.exports = view(home, meta)
+
+function home (state, emit) {
+  return html`
+    <main class="View-main">
+      ${state.prismic.getSingle('events', function (err, doc) {
+        if (err) throw HTTPError(404, err)
+        if (!doc) {
+          let items = []
+          let opts = { location: true, date: true, body: false }
+          for (let i = 0; i < 6; i++) items.push(card.loading(opts))
+          return html`
+            <div>
+              ${Hero.loading({ center: true, image: true })}
+              <div class="u-container u-spaceB8">
+                ${grid({ size: { md: '1of3', sm: '1of2' } }, items)}
+              </div>
+            </div>
+          `
+        }
+
+        var image = memo(function (url, sizes) {
+          if (!url) return null
+          var sources = srcset(url, sizes)
+          return Object.assign({
+            sizes: '100vw',
+            srcset: sources,
+            alt: doc.data.image.alt || '',
+            src: sources.split(' ')[0]
+          }, doc.data.image.dimensions)
+        }, [doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
+
+        var events = doc.data.events
+          .filter((item) => item.start && item.link.url)
+          .map((item) => Object.assign({}, item, { start: parse(item.start) }))
+          .sort((a, b) => a.start < b.start ? -1 : 1)
+          .slice(0, 4)
+          .map(function (item) {
+            var date
+            if (item.end) {
+              let end = parse(item.end)
+              if (isSameMonth(item.start, end)) {
+                date = `${item.start.getDate()} – ${format(end, 'D MMMM')}`
+              } else {
+                date = `${format(item.start, 'D MMMM')} – ${format(end, 'D MMMM')}`
+              }
+            } else {
+              date = format(item.start, 'D MMMM')
+            }
+
+            return card({
+              image: memo(function (url, sizes) {
+                if (!url) return () => html`<div class="u-aspect1-1 u-bgOrange"></div>`
+                var sources = srcset(url, sizes, {
+                  aspect: 1,
+                  transforms: 'c_thumb'
+                })
+                return {
+                  srcset: sources,
+                  sizes: '(min-midth: 600px) 33vw, (min-width: 400px) 50vw, 100vw',
+                  alt: item.image.alt || '',
+                  src: sources.split(' ')[0],
+                  width: item.image.dimensions.width,
+                  height: item.image.dimensions.width
+                }
+              }, [item.image.url, [300, 400, [800, 'q_70']]]),
+              title: asText(item.title),
+              date: {
+                datetime: item.start,
+                text: html`<span class="u-textBold u-textUppercase">${date}</span>`
+              },
+              location: [item.city, item.country].filter(Boolean).join(', '),
+              link: {
+                href: item.link.url
+              }
+            })
+          })
+
+        return html`
+          <div>
+            ${state.cache(Hero, `hero-${doc.id}`).render({
+              title: asText(doc.data.title),
+              image: image
+            })}
+            <div class="u-container">
+              ${grid({ size: { md: '1of3', sm: '1of2' } }, events)}
+            </div>
+          </div>
+        `
+      })}
+    </main>
+  `
+}
+
+function meta (state) {
+  return state.prismic.getSingle('events', function (err, doc) {
+    if (err) throw err
+    if (!doc) return null
+    var props = {
+      title: asText(doc.data.title),
+      description: asText(doc.data.description)
+    }
+
+    var image = doc.data.featured_image
+    if (!image.url) image = doc.data.image
+    if (image.url) {
+      Object.assign(props, {
+        'og:image': image.url,
+        'og:image:width': image.dimensions.width,
+        'og:image:height': image.dimensions.height
+      })
+    }
+
+    return props
+  })
+}

@@ -21,6 +21,7 @@ app.use(require('choo-service-worker')('/sw.js'))
 
 app.route('/', require('./views/home'))
 app.route('/community', require('./views/community'))
+app.route('/events', require('./views/events'))
 app.route('/*', require('./views/catchall'))
 
 try {

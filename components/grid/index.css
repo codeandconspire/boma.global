@@ -1,5 +1,6 @@
 @import "../base";
 
+/* @define Grid */
 :root {
   --Grid-gutter: 1.5rem;
   --Grid-gutter-vertical: 2rem;
@@ -26,7 +27,6 @@
   }
 }
 
-/* @define Grid */
 .Grid {
   display: flex;
   flex-wrap: wrap;
