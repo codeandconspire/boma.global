@@ -62,7 +62,7 @@
   width: 18rem;
   max-width: 100%;
   margin-top: 1rem;
-  border: 1px solid #BBB8C9;
+  border: 1px solid #bbb8c9;
   line-height: normal;
   padding: 1.2rem 1.7rem;
   font-size: 1.125rem;
@@ -86,7 +86,6 @@
 .Connect-input:focus-within {
   outline: 0 !important;
 }
-
 
 .Connect-figure {
   display: block;

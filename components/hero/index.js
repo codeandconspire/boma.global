@@ -23,29 +23,23 @@ module.exports = class Hero extends Component {
     `
   }
 
-  moveContent (el) {
-    var speed = 0.06
+  moveContent (el, parent) {
+    var speed = 0.2
     var height, offset
 
     var onScroll = nanoraf(function () {
       var { scrollY } = window
-      if (
-        (scrollY > offset + height) || // Below element
-        (scrollY + vh() < offset) // Above element
-      ) return
-      el.style.setProperty('--Hero-scroll', `${Math.round((scrollY - offset) * speed)}px`)
+      if (scrollY > offset + height) return // after element
+      el.style.setProperty('--Hero-scroll', `${Math.round(scrollY * speed)}px`)
     })
 
     var onResize = nanoraf(function () {
       height = el.offsetHeight
-      offset = el.offsetTop
-      var parent = el
-      while ((parent = parent.offsetParent)) offset += parent.offsetTop
       onScroll()
     })
 
-    onScroll()
     onResize()
+    onScroll()
     window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
   }
@@ -93,7 +87,7 @@ module.exports = class Hero extends Component {
     var rotatingWords = Array.from(el.querySelectorAll('.js-rotate'))
 
     if (moveEl) {
-      this.moveContent(moveEl)
+      this.moveContent(moveEl, el)
     }
 
     if (this.local.words && rotatingWords.length) {
@@ -136,7 +130,7 @@ module.exports = class Hero extends Component {
 
     return html`
       <div ${attrs}>
-        <div class="Hero-content js-move">
+        <div class="Hero-content">
           <div class="Hero-container u-container">
             <h2 class="Hero-title">${titleElement}</h2>
             ${body ? html`<div class="Hero-text">${body}</div>` : null}
@@ -160,5 +154,5 @@ function getImage (props) {
   Object.keys(props).forEach(function (key) {
     if (key !== 'src') attrs[key] = props[key]
   })
-  return html`<img class="Hero-image" ${attrs} src="${props.src}" />`
+  return html`<div class="Hero-wrap"><img class="Hero-image js-move" ${attrs} src="${props.src}" /></div>`
 }
