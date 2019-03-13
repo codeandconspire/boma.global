@@ -27,10 +27,10 @@ function resolve (doc) {
   switch (doc.type) {
     case 'website':
     case 'homepage': return '/'
-    case 'landing': return `/${doc.uid}`
+    case 'discover': return '/discover'
     case 'events': return '/participate'
     case 'community': return '/community'
-    case 'discover': return '/discover'
+    case 'landing': return `/${doc.uid}`
     case 'article': return `/discover/${doc.uid}`
     case 'page': {
       var parent = doc.data && doc.data.parent

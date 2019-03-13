@@ -138,12 +138,12 @@ function branch (slice) {
   if (slice.slice_type !== 'menu_item') return null
   if (!primary.link.id || primary.link.isBroken) return null
   return {
-    label: primary.label || primary.link.data.call_to_action,
+    label: primary.label || asText(primary.link.data.title),
     href: resolve(primary.link),
     children: items.map(function (item) {
       if (!item.link.id || item.link.isBroken) return null
       return {
-        label: item.label || item.link.data.call_to_action,
+        label: item.label || asText(item.link.data.title),
         href: resolve(item.link),
         description: asText(item.description)
       }
