@@ -20,6 +20,10 @@ function ui (state, emitter) {
     emitter.emit('render')
   })
 
+  emitter.prependListener('navigate', function () {
+    state.ui.openNavigation = false
+  })
+
   var requests = 0
   emitter.on('prismic:request', start)
   emitter.on('prismic:response', end)
