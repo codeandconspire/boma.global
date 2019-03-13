@@ -57,7 +57,9 @@ function page (state, emit) {
               image: image,
               action: button
             })}
-            ${doc.data.body.map(asSlice)}
+            <div class="u-space2">
+              ${doc.data.body.map(asSlice)}
+            </div>
           </div>
         `
       })}
@@ -270,8 +272,10 @@ function page (state, emit) {
               var title = asText(item.heading)
               if (!title && item.link.id) title = asText(item.link.data.title)
 
-              var body = item.text.length && asElement(item.text, resolve, serialize)
+              var body = item.text.length ? asElement(item.text, resolve, serialize) : null
+
               if (!body && item.link.id) {
+                console.log(body, '123')
                 body = asElement(item.link.data.description, resolve, serialize)
               }
 
