@@ -73,8 +73,8 @@ function page (type) {
         }
         case 'image': {
           if (!slice.primary.image.url) return null
-          var size = slice.primary.width.toLowerCase()
-          var large = size === 'large'
+          let size = slice.primary.width.toLowerCase()
+          let large = size === 'large'
 
           let sources = srcset(slice.primary.image.url, [400, 600, 900, [1600, 'q_60'], [3000, 'q_35']])
           let attrs = Object.assign({
@@ -105,9 +105,13 @@ function page (type) {
           if (slice.primary.video.type !== 'video') return null
           let children = video(slice.primary.video)
           if (!children) return null
+
+          let size = slice.primary.width.toLowerCase()
+          let large = size === 'large'
+
           return html`
-            <div class="u-container">
-              <div class="Text u-medium">
+            <div class="${large ? 'u-md-container' : 'u-container'}">
+              <figure class="Text u-${size}">
                 <div class="u-space1">${children}</div>
               </div>
             </div>

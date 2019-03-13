@@ -18,7 +18,6 @@ function embed (props) {
   var src = props.src
   var attrs = pluck(props, 'width', 'height', 'srcset', 'sizes', 'alt')
   attrs.alt = attrs.alt || props.title || ''
-
   return html`
     <figure class="Embed">
       <a class="Embed-link" href="${props.url}" target="_blank" rel="noopener noreferrer" onclick=${onclick}>
@@ -31,6 +30,7 @@ function embed (props) {
         </svg>
       </a>
       <img class="Embed-image" ${attrs} src="${src}">
+      ${props.title ? html`<figcaption class="Embed-title">${props.title}</figcaption>` : null}
     </figure>
   `
 
