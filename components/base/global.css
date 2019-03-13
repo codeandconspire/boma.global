@@ -47,6 +47,12 @@
   }
 }
 
+@media (min-width: 600px) {
+  :root {
+    --document-margin: 2.5rem;
+  }
+}
+
 @media (min-width: 1000px) {
   :root {
     --document-margin: 3.5rem;

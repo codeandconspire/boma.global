@@ -10,6 +10,7 @@ var grid = require('../components/grid')
 var card = require('../components/card')
 var symbol = require('../components/base/symbol')
 var glocal = require('../components/glocal')
+var button = require('../components/button')
 var compass = require('../components/compass')
 var connect = require('../components/connect')
 var serialize = require('../components/text/serialize')
@@ -65,6 +66,11 @@ function home (state, emit) {
                 ${glocal(html`
                   <div class="Text">
                     ${asElement(doc.data.description, resolve, serialize)}
+                    ${doc.data.description_link ? html`
+                      <p>
+                        ${button({ href: doc.data.description_link.href, text: doc.data.description_link.data.call_to_action || asText(doc.data.description_link.data.title) })}
+                      </p>
+                    ` : null}
                   </div>
                 `)}
               </div>

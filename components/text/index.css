@@ -97,6 +97,10 @@
   text-align: left;
 }
 
+.Text .Button {
+  margin: 1rem 0;
+}
+
 /**
  * Lists
  */
