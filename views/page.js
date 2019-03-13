@@ -2,6 +2,8 @@ var html = require('choo/html')
 var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
+var card = require('../components/card')
+var compass = require('../components/compass')
 var embed = require('../components/embed')
 var serialize = require('../components/text/serialize')
 var { asText, resolve, srcset, HTTPError, memo } = require('../components/base')
@@ -115,6 +117,46 @@ function page (type) {
                 <div class="u-space1">${children}</div>
               </div>
             </div>
+          `
+        }
+        case 'compass': {
+          console.log(slice)
+          if (!slice.primary.heading || !slice.primary.image) return null
+          let props = {
+            title: asText(slice.primary.heading),
+            image: memo(function (url, sizes) {
+              if (!url) return null
+              var sources = srcset(url, sizes, {
+                transforms: 'c_thumb',
+                aspect: 1
+              })
+              return {
+                src: sources.split(' ')[0],
+                sizes: '(min-width: 1000px) 660px, (min-width: 600px) 400px, 320px',
+                srcset: sources,
+                alt: slice.primary.image.alt || '',
+                width: slice.primary.image.dimensions.width,
+                height: slice.primary.image.dimensions.width
+              }
+            }, [slice.primary.image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_60']]]),
+            children: slice.items.map(function (item) {
+              return card({
+                title: asText(item.heading),
+                body: asElement(item.description, resolve, serialize),
+                link: (item.link.url || item.link.id) && !item.link.isBroken ? {
+                  href: resolve(item.link),
+                  text: item.link.type === 'Document' ? item.link.data.call_to_action : null
+                } : null
+              })
+            })
+          }
+
+          return html`
+            <section class="View-section">
+              <div class="u-container">
+                ${compass(props)}
+              </div>
+            </section>
           `
         }
         default: return null
