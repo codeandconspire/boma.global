@@ -14,7 +14,7 @@ var REPOSITORY = 'https://bomaglobal.cdn.prismic.io/api/v2'
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  serve: process.env.NOW
+  serve: Boolean(process.env.NOW)
 })
 
 // proxy cloudinary on-demand-transform API
