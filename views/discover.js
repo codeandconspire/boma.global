@@ -92,7 +92,7 @@ function home (state, emit) {
                 width: image.dimensions.width,
                 height: image.dimensions.width
               }
-            }, [image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
+            }, [image && image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
           }
 
           return highlight(props)
