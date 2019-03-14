@@ -68,15 +68,29 @@
  */
 
 :root[scripting-enabled] .View-slide {
-  will-change: transform;
-  transition: 600ms var(--ease-out);
-  transition-property: transform, opacity;
-  transform: translateY(20vh);
   opacity: 0;
+  transform: translateY(20vh);
+  animation: View-slide--appear 600ms 3000ms forwards var(--ease-out);
+}
+
+:root[scripting-enabled] .View-slide.is-initialized {
+  animation: none;
 }
 
 :root[scripting-enabled] .View-slide.is-visible {
   will-change: transform;
-  transform: translateY(0vh);
+  animation: View-slide--appear 600ms forwards var(--ease-out);
+}
+
+@keyframes View-slide--appear {
+  to {
+    opacity: 1;
+    transform: translateY(0vh);
+  }
+}
+
+:root[scripting-enabled] .View-slide.is-immediate {
   opacity: 1;
+  transform: translateY(0vh);
+  animation: none;
 }

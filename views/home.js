@@ -14,49 +14,65 @@ var glocal = require('../components/glocal')
 var button = require('../components/button')
 var compass = require('../components/compass')
 var connect = require('../components/connect')
-var { i18n, asText, resolve, loader, srcset, HTTPError, memo } = require('../components/base')
+var { i18n, asText, resolve, loader, srcset, HTTPError, memo, vh } = require('../components/base')
 
 var text = i18n()
 
 class Home extends View {
   load (el) {
     var slides = Array.from(el.querySelectorAll('.js-slide')).map(set)
-    var onscroll = nanoraf(check)
+    var onscroll = nanoraf(function check () {
+      var { scrollY } = window
+      for (let i = 0, len = slides.length; i < len; i++) {
+        let item = slides[i]
+        if (item && (scrollY > (item.top - vh() + 100))) {
+          item.el.classList.add('is-visible')
+          slides.splice(i, 1, null)
+        }
+      }
+    })
+    var onresize = nanoraf(function () {
+      for (let i = 0, len = slides.length; i < len; i++) {
+        if (slides[i]) slides[i] = set(slides[i].el)
+      }
+      onscroll()
+    })
 
-    window.addEventListener('resize', onscroll, { passive: true })
+    var { scrollY } = window
+    for (let i = 0, len = slides.length; i < len; i++) {
+      let item = slides[i]
+      slides[i].el.classList.add('is-initialized')
+      if (scrollY > (item.top - vh() + 100)) {
+        slides[i].el.classList.add('is-immediate')
+        slides.splice(i, 1, null)
+      } else if (item.initial) {
+        item.el.classList.add('is-visible')
+      }
+    }
+
+    window.addEventListener('resize', onresize)
     window.addEventListener('scroll', onscroll, { passive: true })
     this.unload = function () {
-      window.removeEventListener('resize', onscroll)
+      window.removeEventListener('resize', onresize)
       window.removeEventListener('scroll', onscroll)
     }
 
-    check()
-
-    function set (item) {
-      var offset = item.offsetTop
-      var parent = item
+    function set (el) {
+      var offset = el.offsetTop
+      var parent = el
       while ((parent = parent.offsetParent)) offset += parent.offsetTop
       return {
-        el: item,
+        el: el,
         top: offset,
-        initial: item.classList.contains('js-slideInitial')
-      }
-    }
-
-    function check () {
-      var { scrollY } = window
-
-      for (let i = 0, len = slides.length; i < len; i++) {
-        if (slides[i] && ((scrollY > (slides[i].top - window.innerHeight + 100)) || slides[i].initial)) {
-          slides[i].el.classList.add('is-visible')
-          // slides.splice(i, 1)
-        }
+        initial: el.classList.contains('js-slideInitial')
       }
     }
   }
+
   update () {
     return true
   }
+
   createElement (state, emit) {
     return html`
       <main class="View-main">
@@ -154,48 +170,50 @@ class Home extends View {
                         date = format(item.start, 'D MMMM')
                       }
 
-                      return state.cache(Card, `${doc.id}-event-${index}`).render({
-                        background: memo(function (url, sizes) {
-                          if (!url) return () => html`<div class="u-aspect16-9 u-bgOrange"></div>`
-                          var sources = srcset(url, sizes, {
-                            aspect: 9 / 16,
-                            transforms: 'c_thumb'
-                          })
-                          return {
-                            srcset: sources,
-                            sizes: '(min-midth: 1000px) 50vw, 100vw',
-                            alt: item.image.alt || '',
-                            src: sources.split(' ')[0],
-                            width: item.image.dimensions.width,
-                            height: item.image.dimensions.width * 9 / 16
-                          }
-                        }, [item.image.url, [[800, 'q_40'], [1000, 'q_40'], [1200, 'q_30']]]),
-                        title: asText(item.title),
-                        date: {
-                          datetime: item.start,
-                          text: html`<span class="u-textBold u-textUppercase">${date}</span>`
-                        },
-                        location: [item.city, item.country].filter(Boolean).join(', '),
-                        link: {
-                          href: item.link.url
-                        }
-                      })
+                      return html`
+                        <div class="View-slide js-slide" style="animation-delay: ${index % 2 ? 100 : 0}ms;">
+                          ${state.cache(Card, `${doc.id}-event-${index}`).render({
+                            background: memo(function (url, sizes) {
+                              if (!url) return () => html`<div class="u-aspect16-9 u-bgOrange"></div>`
+                              var sources = srcset(url, sizes, {
+                                aspect: 9 / 16,
+                                transforms: 'c_thumb'
+                              })
+                              return {
+                                srcset: sources,
+                                sizes: '(min-midth: 1000px) 50vw, 100vw',
+                                alt: item.image.alt || '',
+                                src: sources.split(' ')[0],
+                                width: item.image.dimensions.width,
+                                height: item.image.dimensions.width * 9 / 16
+                              }
+                            }, [item.image.url, [[800, 'q_40'], [1000, 'q_40'], [1200, 'q_30']]]),
+                            title: asText(item.title),
+                            date: {
+                              datetime: item.start,
+                              text: html`<span class="u-textBold u-textUppercase">${date}</span>`
+                            },
+                            location: [item.city, item.country].filter(Boolean).join(', '),
+                            link: {
+                              href: item.link.url
+                            }
+                          })}
+                        </div>
+                      `
                     })
                   }
 
                   return html`
                     <section class="u-space2">
-                      <div class="View-slide js-slide">
-                        <header class="View-title">
-                          <h2>${text`Upcoming events`}</h2>
-                          ${doc ? html`
-                            <a class="u-textLink" href="${resolve(doc)}">
-                              ${symbol.arrow(text`Show more`)}
-                            </a>
-                          ` : null}
-                        </header>
-                        ${grid({ size: { lg: '1of2' }, slim: true }, items)}
-                      </div>
+                      <header class="View-title View-slide js-slide">
+                        <h2>${text`Upcoming events`}</h2>
+                        ${doc ? html`
+                          <a class="u-textLink" href="${resolve(doc)}">
+                            ${symbol.arrow(text`Show more`)}
+                          </a>
+                        ` : null}
+                      </header>
+                      ${grid({ size: { lg: '1of2' }, slim: true }, items)}
                     </section>
                   `
                 })}
@@ -250,57 +268,59 @@ class Home extends View {
                   if (!response) {
                     for (let i = 0; i < 4; i++) items.push(Card.loading())
                   } else {
-                    items = response.results.map(function (article) {
+                    items = response.results.map(function (article, index) {
                       var image = article.data.featured_image
                       if (!image.url) image = article.data.image
                       var date = parse(article.first_publication_date)
-                      return state.cache(Card, `${doc.id}-${article.id}`).render({
-                        image: memo(function (url, sizes) {
-                          if (!url) return null
-                          var sources = srcset(url, sizes, {
-                            transforms: 'c_thumb'
-                          })
-                          return Object.assign({
-                            srcset: sources,
-                            sizes: '(min-midth: 600px) 33vw, 80vw',
-                            alt: image.alt || '',
-                            src: sources.split(' ')[0]
-                          }, image.dimensions)
-                        }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40'], [1200, 'q_30']]]),
+                      return html`
+                        <div class="View-slide js-slide" style="animation-delay: ${index * 100}ms;">
+                          ${state.cache(Card, `${doc.id}-${article.id}`).render({
+                            image: memo(function (url, sizes) {
+                              if (!url) return null
+                              var sources = srcset(url, sizes, {
+                                transforms: 'c_thumb'
+                              })
+                              return Object.assign({
+                                srcset: sources,
+                                sizes: '(min-midth: 600px) 33vw, 80vw',
+                                alt: image.alt || '',
+                                src: sources.split(' ')[0]
+                              }, image.dimensions)
+                            }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40'], [1200, 'q_30']]]),
 
-                        title: asText(article.data.title),
-                        date: {
-                          datetime: date,
-                          text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
-                        },
-                        link: {
-                          onclick: partial(article),
-                          href: resolve(article),
-                          visible: false
-                        }
-                      })
+                            title: asText(article.data.title),
+                            date: {
+                              datetime: date,
+                              text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
+                            },
+                            link: {
+                              onclick: partial(article),
+                              href: resolve(article),
+                              visible: false
+                            }
+                          })}
+                        </div>
+                      `
                     })
                   }
 
                   return html`
                     <section class="u-space2">
-                      <div class="View-slide js-slide">
-                        <div class="u-container">
-                          <header class="View-title">
-                            <h2>${text`Ideas`}</h2>
-                            ${state.prismic.getSingle('discover', function (err, doc) {
-                              if (err || !doc) return null
-                              return html`
-                                <a class="u-textLink" href="${resolve(doc)}">
-                                  ${symbol.arrow(text`Show more`)}
-                                </a>
-                              `
-                            })}
-                          </header>
-                        </div>
-                        <div class="u-md-container">
-                          ${grid({ size: { md: '1of3' }, carousel: true }, items)}
-                        </div>
+                      <div class="u-container">
+                        <header class="View-title View-slide js-slide">
+                          <h2>${text`Ideas`}</h2>
+                          ${state.prismic.getSingle('discover', function (err, doc) {
+                            if (err || !doc) return null
+                            return html`
+                              <a class="u-textLink" href="${resolve(doc)}">
+                                ${symbol.arrow(text`Show more`)}
+                              </a>
+                            `
+                          })}
+                        </header>
+                      </div>
+                      <div class="u-md-container">
+                        ${grid({ size: { md: '1of3' }, carousel: true }, items)}
                       </div>
                     </section>
                   `
