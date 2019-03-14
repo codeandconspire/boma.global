@@ -7,7 +7,11 @@ var { className, loader, vh } = require('../base')
 module.exports = class Hero extends Component {
   constructor (id, state, emit) {
     super(id)
-    this.local = state.components[id] = { id }
+    this.local = state.components[id] = {
+      id,
+      moving: false,
+      rotating: false
+    }
   }
 
   static loading (opts = {}) {
@@ -27,21 +31,26 @@ module.exports = class Hero extends Component {
     var speed = 0.2
     var height, offset
 
-    var onScroll = nanoraf(function () {
+    var onscroll = nanoraf(function () {
       var { scrollY } = window
       if (scrollY > offset + height) return // after element
       el.style.setProperty('--Hero-scroll', `${Math.round(scrollY * speed)}px`)
     })
 
-    var onResize = nanoraf(function () {
+    var onresize = nanoraf(function () {
       height = el.offsetHeight
-      onScroll()
+      onscroll()
     })
 
-    onResize()
-    onScroll()
-    window.addEventListener('resize', onResize)
-    window.addEventListener('scroll', onScroll, { passive: true })
+    onresize()
+    onscroll()
+    window.addEventListener('resize', onresize)
+    window.addEventListener('scroll', onscroll, { passive: true })
+
+    return function () {
+      window.removeEventListener('resize', onresize)
+      window.removeEventListener('scroll', onscroll)
+    }
   }
 
   rotateWords (words) {
@@ -77,26 +86,40 @@ module.exports = class Hero extends Component {
 
     var changeTextInterval = setInterval(changeText, 2000)
 
-    this.unload = function () {
+    return function () {
       clearInterval(changeTextInterval)
     }
   }
 
   load (el) {
+    var callbacks = []
     var moveEl = el.querySelector('.js-move')
     var rotatingWords = Array.from(el.querySelectorAll('.js-rotate'))
 
-    if (moveEl) {
-      this.moveContent(moveEl, el)
+    if (!this.local.moving && moveEl) {
+      this.local.moving = true
+      callbacks.push(this.moveContent(moveEl, el))
     }
 
-    if (this.local.words && rotatingWords.length) {
-      this.rotateWords(rotatingWords)
+    if (!this.local.rotating && this.local.words && rotatingWords.length) {
+      this.local.rotating = true
+      callbacks.push(this.rotateWords(rotatingWords))
+    }
+
+    this.unload = function () {
+      this.local.moving = false
+      this.local.rotating = false
+      callbacks.forEach((fn) => fn())
     }
   }
 
-  update () {
-    return false
+  update (props) {
+    if (props.image && !this.local.image) return true
+    return props.image && props.image.src !== this.local.image.src
+  }
+
+  afterupdate (el) {
+    this.load(el)
   }
 
   createElement (props) {
@@ -127,6 +150,14 @@ module.exports = class Hero extends Component {
       })}
       </span> <span class="u-block">${parts[1]}</span>
     ` : title
+
+    if (body) {
+      if (typeof window === 'undefined') {
+        if (Array.isArray(body) || body[0] !== '<') body = html`<p>${body}</p>`
+      } else if (typeof body === 'string') {
+        body = html`<p>${body}</p>`
+      }
+    }
 
     return html`
       <div ${attrs}>
