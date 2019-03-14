@@ -23,9 +23,6 @@ app.route('/', require('./views/home'))
 app.route('/community', require('./views/community'))
 app.route('/participate', require('./views/events'))
 app.route('/discover', require('./views/discover'))
-app.route('/community/:slug', require('./views/catchall'))
-app.route('/participate/:slug', require('./views/catchall'))
-app.route('/discover/:slug', require('./views/catchall'))
 app.route('/*', require('./views/catchall'))
 
 try {
