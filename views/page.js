@@ -62,6 +62,7 @@ function page (state, emit) {
         if (action && action.id && !action.isBroken) {
           var button = {
             href: resolve(action),
+            onclick: partial(action),
             text: action.data.call_to_action ? action.data.call_to_action : asText(action.data.title)
           }
         }
@@ -165,6 +166,7 @@ function page (state, emit) {
           direction: slice.primary.direction.toLowerCase(),
           action: (slice.primary.link.url || slice.primary.link.id) && !slice.primary.link.isBroken ? {
             href: resolve(slice.primary.link),
+            onclick: slice.primary.link.id ? partial(slice.primary.link) : null,
             text: slice.primary.link.type === 'Document' ? slice.primary.link.data.call_to_action : text`Read more`
           } : null,
           image: memo(function (url, sizes) {
@@ -213,6 +215,7 @@ function page (state, emit) {
               body: asElement(item.description, resolve, state.serialize),
               link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                 href: resolve(item.link),
+                onclick: item.link.id ? partial(item.link) : null,
                 text: item.link.type === 'Document' ? item.link.data.call_to_action : null
               } : null
             })
@@ -340,12 +343,24 @@ function page (state, emit) {
                 external: item.link.target === '_blank'
               } : null
 
-              return card({ title, body, image, link })
+              var props = { title, body, image, link }
+              if (item.link.id) props.onclick = partial(item.link)
+
+              return card(props)
             }))}
           </div>
         `
       }
       default: return null
+    }
+  }
+
+  // create onclick handler which emits pushState w/ partial info
+  // obj -> fn
+  function partial (doc) {
+    return function (event) {
+      emit('pushState', event.currentTarget.href, doc)
+      event.preventDefault()
     }
   }
 }

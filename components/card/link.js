@@ -19,6 +19,7 @@ function link (opts = {}) {
     attrs.rel = 'noopener noreferrer'
     attrs.target = '_blank'
   }
+  if (typeof opts.onclick === 'function') attrs.onclick = opts.onclick
   if (opts.file) attrs.download = ''
   attrs.class = 'Card-link'
 

@@ -75,7 +75,11 @@ function home (state, emit) {
                     ${asElement(doc.data.description, resolve, state.serialize)}
                     ${doc.data.description_link ? html`
                       <p>
-                        ${button({ href: resolve(doc.data.description_link), text: doc.data.description_link.data.call_to_action || asText(doc.data.description_link.data.title) })}
+                        ${button({
+                          href: resolve(doc.data.description_link),
+                          onclick: partial(doc.data.description_link),
+                          text: doc.data.description_link.data.call_to_action || asText(doc.data.description_link.data.title)
+                        })}
                       </p>
                     ` : null}
                   </div>
@@ -183,6 +187,7 @@ function home (state, emit) {
                         body: asElement(item.description, resolve, state.serialize),
                         link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                           href: resolve(item.link),
+                          onclick: item.link.id ? partial(item.link) : null,
                           text: item.link.type === 'Document' ? item.link.data.call_to_action : null
                         } : null
                       })
@@ -229,6 +234,7 @@ function home (state, emit) {
                         text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
                       },
                       link: {
+                        onclick: partial(article),
                         href: resolve(article),
                         visible: false
                       }
@@ -287,6 +293,15 @@ function home (state, emit) {
       })}
     </main>
   `
+
+  // create onclick handler which emits pushState w/ partial info
+  // obj -> fn
+  function partial (doc) {
+    return function (event) {
+      emit('pushState', event.currentTarget.href, doc)
+      event.preventDefault()
+    }
+  }
 }
 
 function meta (state) {

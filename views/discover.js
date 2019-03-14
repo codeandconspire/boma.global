@@ -67,7 +67,8 @@ function home (state, emit) {
             body: asElement(item.link.data.description, resolve, state.serialize),
             action: {
               href: resolve(item.link),
-              text: text`Read more`
+              text: text`Read more`,
+              onclick: partial(item.link)
             },
             image: memo(function (url, sizes) {
               if (!url) return null
@@ -127,6 +128,7 @@ function home (state, emit) {
                 text: html`<span class="u-textBold u-textUppercase">${format(date, 'MMM D, YYYY')}</span>`
               },
               link: {
+                onclick: partial(article),
                 href: resolve(article),
                 visible: false
               }
@@ -151,6 +153,15 @@ function home (state, emit) {
       })}
     </main>
   `
+
+  // create onclick handler which emits pushState w/ partial info
+  // obj -> fn
+  function partial (doc) {
+    return function (event) {
+      emit('pushState', event.currentTarget.href, doc)
+      event.preventDefault()
+    }
+  }
 }
 
 function meta (state) {
