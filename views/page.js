@@ -2,7 +2,7 @@ var html = require('choo/html')
 var asElement = require('prismic-element')
 var view = require('../components/view')
 var Hero = require('../components/hero')
-var card = require('../components/card')
+var Card = require('../components/card')
 var grid = require('../components/grid')
 var embed = require('../components/embed')
 var person = require('../components/person')
@@ -210,7 +210,7 @@ function page (state, emit) {
             }
           }, [slice.primary.image && slice.primary.image.url, [[400, 'q_50'], [800, 'q_50'], [1200, 'q_40'], [1500, 'q_40']]]),
           children: slice.items.map(function (item) {
-            return card({
+            return Card({
               title: asText(item.heading),
               body: asElement(item.description, resolve, state.serialize),
               link: (item.link.url || item.link.id) && !item.link.isBroken ? {
@@ -303,7 +303,7 @@ function page (state, emit) {
                 <h1>${asText(slice.primary.heading)}</h1>
               </header>
             ` : null}
-            ${grid({ size: { md: '1of3', sm: '1of2' } }, blurbs.map(function (item) {
+            ${grid({ size: { md: '1of3', sm: '1of2' } }, blurbs.map(function (item, i) {
               var title = asText(item.heading)
               if (!title && item.link.id) title = asText(item.link.data.title)
 
@@ -343,10 +343,11 @@ function page (state, emit) {
                 external: item.link.target === '_blank'
               } : null
 
+              var id = `${state.href}-blurb-${index}-${i}`
               var props = { title, body, image, link }
               if (item.link.id) props.onclick = partial(item.link)
 
-              return card(props)
+              return state.cache(Card, id).render(props)
             }))}
           </div>
         `

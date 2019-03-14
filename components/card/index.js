@@ -1,12 +1,77 @@
 var html = require('choo/html')
+var nanoraf = require('nanoraf')
+var Component = require('choo/component')
 var link = require('./link')
 var figure = require('./figure')
 var { className, snippet, loader } = require('../base')
 
-module.exports = card
-card.loading = loading
+module.exports = Card
 
-function card (props = {}) {
+function Card (id, state, emit) {
+  if (!(this instanceof Card)) {
+    return Card.prototype.createElement.apply(undefined, arguments)
+  }
+  Component.call(this, id)
+  this.local = state.components[id] = { id }
+}
+
+Card.prototype = Object.create(Component.prototype)
+Card.prototype.constructor = Card
+
+Card.prototype.load = function (el) {
+  var width, height, offsetX, offsetY
+  var tilt = el.querySelector('.js-tilt')
+
+  var onmousemove = nanoraf(function (event) {
+    var { scrollY } = window
+    var minX = 0
+    var maxX = offsetX + width
+    var minY = 0
+    var maxY = offsetY + height
+    var x = Math.min(Math.max(minX, event.clientX - offsetX), maxX)
+    var y = Math.min(Math.max(minY, event.clientY + scrollY - offsetY), maxY)
+    el.style.setProperty('--Card-tiltX', (2 * (x / width) - 1).toFixed(3))
+    el.style.setProperty('--Card-tiltY', (2 * (y / height) - 1).toFixed(3))
+  })
+
+  var onresize = nanoraf(function () {
+    width = el.offsetWidth
+    height = el.offsetHeight
+    offsetX = el.offsetLeft
+    offsetY = el.offsetTop
+    var parent = el
+    while ((parent = parent.offsetParent)) {
+      offsetX += parent.offsetLeft
+      offsetY += parent.offsetTop
+    }
+  })
+
+  onresize()
+  window.addEventListener('resize', onresize)
+  el.addEventListener('mousemove', onmousemove, { passive: true })
+  el.addEventListener('mouseleave', onmouseleave)
+  this.unload = function () {
+    window.removeEventListener('resize', onresize)
+  }
+
+  function onmouseleave (event) {
+    tilt.addEventListener('transitionend', function ontransitionend () {
+      tilt.removeEventListener('transitionend', ontransitionend)
+      el.classList.remove('in-transition')
+    })
+    window.requestAnimationFrame(function () {
+      el.classList.add('in-transition')
+      el.style.removeProperty('--Card-tiltX')
+      el.style.removeProperty('--Card-tiltY')
+    })
+  }
+}
+
+Card.prototype.update = function () {
+  return false
+}
+
+Card.prototype.createElement = function (props = {}) {
   var body = props.body
   if (body) {
     if (typeof window === 'undefined') {
@@ -28,12 +93,13 @@ function card (props = {}) {
       'Card--interactive': props.link,
       'Card--image': props.image,
       'Card--video': props.video,
-      'Card--background': props.background
+      'Card--background': props.background,
+      'Card--title': this instanceof Card
     })
   }
 
   if (props.video && props.image) {
-    props.image.icon = html`<svg class="Card-figureIcon" width="67" height="67" xmlns="http://www.w3.org/2000/svg"><g transform="translate(1 1)" fill="none" fill-rule="evenodd"><circle stroke="#FFF" fill="#FFF" cx="32.5" cy="32.5" r="32.5"/><path fill="#201745" d="M41 33l-14 8V25z"/></g></svg>`
+    props.image.icon = html`<svg class="Card-figureIcon" width="67" height="67"><g transform="translate(1 1)" fill="none" fill-rule="evenodd"><circle stroke="#FFF" fill="#FFF" cx="32.5" cy="32.5" r="32.5"/><path fill="#201745" d="M41 33l-14 8V25z"/></g></svg>`
   }
 
   var image = props.image || props.background || null
@@ -42,6 +108,12 @@ function card (props = {}) {
 
   if (props.image && props.image.width && props.image.height) {
     attrs.style = `--Card-aspect: ${props.image.height / props.image.width};`
+  }
+
+  if (this instanceof Card) {
+    attrs.id = this.local.id
+    attrs.class += ' Card--tilt'
+    if (image) image = html`<div class="Card-tilt js-tilt">${image}</div>`
   }
 
   return html`
@@ -73,15 +145,7 @@ function card (props = {}) {
   `
 }
 
-function date (props) {
-  return html`
-    <time class="Card-meta" datetime="${JSON.stringify(props.datetime).replace(/"/g, '')}">
-      ${props.text}
-    </time>
-  `
-}
-
-function loading (props = {}) {
+Card.loading = function (props = {}) {
   var hasBody = !('body' in props) || props.body
   return html`
     <article class="${className('Card', { 'Card--background': props.background })}">
@@ -98,5 +162,13 @@ function loading (props = {}) {
         )}
       </div>
     </article>
+  `
+}
+
+function date (props) {
+  return html`
+    <time class="Card-meta" datetime="${JSON.stringify(props.datetime).replace(/"/g, '')}">
+      ${props.text}
+    </time>
   `
 }

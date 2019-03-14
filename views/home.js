@@ -7,7 +7,7 @@ var isSameMonth = require('date-fns/is_same_month')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
-var card = require('../components/card')
+var Card = require('../components/card')
 var symbol = require('../components/base/symbol')
 var glocal = require('../components/glocal')
 var button = require('../components/button')
@@ -94,7 +94,7 @@ function home (state, emit) {
                 var items = []
                 if (!doc) {
                   let opts = { background: true, location: true, date: true, body: false }
-                  for (let i = 0; i < 4; i++) items.push(card.loading(opts))
+                  for (let i = 0; i < 4; i++) items.push(Card.loading(opts))
                 } else {
                   let events = doc.data.events
                     .filter((item) => item.start && item.link.url)
@@ -103,7 +103,7 @@ function home (state, emit) {
                     })
                     .sort((a, b) => a.start < b.start ? -1 : 1)
 
-                  items = events.slice(0, 4).map(function (item) {
+                  items = events.slice(0, 4).map(function (item, index) {
                     var date
                     if (item.end) {
                       let end = parse(item.end)
@@ -116,7 +116,7 @@ function home (state, emit) {
                       date = format(item.start, 'D MMMM')
                     }
 
-                    return card({
+                    return state.cache(Card, `${doc.id}-event-${index}`).render({
                       background: memo(function (url, sizes) {
                         if (!url) return () => html`<div class="u-aspect16-9 u-bgOrange"></div>`
                         var sources = srcset(url, sizes, {
@@ -182,7 +182,7 @@ function home (state, emit) {
                       }
                     }, [doc.data.services_image && doc.data.services_image.url, [[400, 'q_50'], [800, 'q_50'], [1200, 'q_40'], [1500, 'q_40']]]),
                     children: doc.data.services.map(function (item) {
-                      return card({
+                      return Card({
                         title: asText(item.heading),
                         body: asElement(item.description, resolve, state.serialize),
                         link: (item.link.url || item.link.id) && !item.link.isBroken ? {
@@ -208,13 +208,13 @@ function home (state, emit) {
 
                 var items = []
                 if (!response) {
-                  for (let i = 0; i < 4; i++) items.push(card.loading())
+                  for (let i = 0; i < 4; i++) items.push(Card.loading())
                 } else {
                   items = response.results.map(function (article) {
                     var image = article.data.featured_image
                     if (!image.url) image = article.data.image
                     var date = parse(article.first_publication_date)
-                    return card({
+                    return state.cache(Card, doc.id + '-' + article.id).render({
                       image: memo(function (url, sizes) {
                         if (!url) return null
                         var sources = srcset(url, sizes, {

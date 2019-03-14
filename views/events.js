@@ -5,7 +5,7 @@ var isSameMonth = require('date-fns/is_same_month')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
-var card = require('../components/card')
+var Card = require('../components/card')
 var { asText, srcset, HTTPError, memo } = require('../components/base')
 
 module.exports = view(home, meta)
@@ -18,7 +18,7 @@ function home (state, emit) {
         if (!doc) {
           let items = []
           let opts = { location: true, date: true, body: false }
-          for (let i = 0; i < 6; i++) items.push(card.loading(opts))
+          for (let i = 0; i < 6; i++) items.push(Card.loading(opts))
           return html`
             <div>
               ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
@@ -67,7 +67,7 @@ function home (state, emit) {
               date = format(item.start, 'D MMMM')
             }
 
-            return card({
+            return Card({
               image: memo(function (url, sizes) {
                 if (!url) return () => html`<div class="u-aspect1-1 u-bgOrange"></div>`
                 var sources = srcset(url, sizes, {

@@ -3,11 +3,11 @@
 /* @define Hero */
 :root {
   --Hero-rotatingDelay: 450ms;
+  --Hero-scroll: 0;
+  --Hero-rotatingDelay: 450ms;
 }
 
 .Hero {
-  --Hero-scroll: 0;
-  --Hero-rotatingDelay: 450ms;
   position: relative;
   width: 100%;
 }
@@ -29,11 +29,20 @@
   }
 }
 
+.Hero-container {
+  perspective: 1000px;
+}
+
 .Hero-title {
+  display: inline-block;
   font-size: 2.25rem;
   line-height: 1.1;
   max-width: 35rem;
   font-weight: 600;
+}
+
+.Hero--image .Hero-title {
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
 }
 
 @media (min-width: 800px) and (min-height: 400px) {

@@ -6,7 +6,7 @@ var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
 var Hero = require('../components/hero')
 var grid = require('../components/grid')
-var card = require('../components/card')
+var Card = require('../components/card')
 var highlight = require('../components/highlight')
 var { i18n, asText, srcset, HTTPError, memo, resolve } = require('../components/base')
 
@@ -21,7 +21,7 @@ function home (state, emit) {
         if (err) throw HTTPError(404, err)
         if (!doc) {
           let items = []
-          for (let i = 0; i < 6; i++) items.push(card.loading({ date: true }))
+          for (let i = 0; i < 6; i++) items.push(Card.loading({ date: true }))
           return html`
             <div>
               ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
@@ -102,14 +102,15 @@ function home (state, emit) {
           if (err) return null
           if (!response) {
             let items = []
-            for (let i = 0; i < 6; i++) items.push(card.loading({ date: true }))
+            for (let i = 0; i < 6; i++) items.push(Card.loading({ date: true }))
             return articles
           }
           return response.results.map(function (article) {
             var image = article.data.featured_image
             if (!image.url) image = article.data.image
             var date = parse(article.first_publication_date)
-            return card({
+
+            return state.cache(Card, `${doc.id}-${article.id}`).render({
               image: memo(function (url, sizes) {
                 if (!url) return null
                 var sources = srcset(url, sizes, {

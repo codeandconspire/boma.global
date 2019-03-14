@@ -54,9 +54,15 @@ module.exports = class Hero extends Component {
   }
 
   rotateWords (words) {
-    var count = words.length
     var currentText = 0
+    var count = words.length
     var rotatingDelay = this.local.rotatingDelay
+
+    changeText()
+    var changeTextInterval = setInterval(changeText, 2000)
+    return function () {
+      clearInterval(changeTextInterval)
+    }
 
     function animateTextOut (el) {
       el.classList.remove('in')
@@ -75,19 +81,9 @@ module.exports = class Hero extends Component {
     function changeText () {
       var currentTextEl = words[currentText]
       var nextTextEl = currentText === words.length - 1 ? words[0] : words[currentText + 1]
-
       animateTextOut(currentTextEl)
       animateTextIn(nextTextEl)
-
       currentText = (currentText === count - 1) ? 0 : currentText + 1
-    }
-
-    changeText()
-
-    var changeTextInterval = setInterval(changeText, 2000)
-
-    return function () {
-      clearInterval(changeTextInterval)
     }
   }
 

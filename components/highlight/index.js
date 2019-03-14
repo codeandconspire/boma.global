@@ -19,7 +19,7 @@ function highlight (props) {
           ${props.body ? props.body : null}
           ${props.action ? html`
             <p>
-              ${button({ href: props.action.href, text: props.action.text })}
+              ${button(props.action)}
             </p>
           ` : null}
         </div>
