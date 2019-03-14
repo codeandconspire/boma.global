@@ -38,7 +38,8 @@ class Home extends View {
       while ((parent = parent.offsetParent)) offset += parent.offsetTop
       return {
         el: item,
-        top: offset
+        top: offset,
+        initial: item.classList.contains('js-slideInitial')
       }
     }
 
@@ -46,9 +47,9 @@ class Home extends View {
       var { scrollY } = window
 
       for (let i = 0, len = slides.length; i < len; i++) {
-        if (slides[i] && (scrollY > (slides[i].top - window.innerHeight + 100))) {
+        if (slides[i] && ((scrollY > (slides[i].top - window.innerHeight + 100)) || slides[i].initial)) {
           slides[i].el.classList.add('is-visible')
-          slides.splice(i, 1)
+          // slides.splice(i, 1)
         }
       }
     }
@@ -106,7 +107,7 @@ class Home extends View {
               })}
 
               <div class="u-space2">
-                <div class="u-container View-slide js-slide">
+                <div class="u-container View-slide js-slide js-slideInitial">
                   ${glocal(html`
                     <div class="Text">
                       ${asElement(doc.data.description, resolve, state.serialize)}

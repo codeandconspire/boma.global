@@ -170,7 +170,14 @@ module.exports = class Hero extends Component {
             ` : null}
           </div>
         </div>
-        ${image ? getImage(image) : null}
+        ${rotatingWords ? html`
+          <div class="Hero-wrap">
+            <video class="Hero-image js-video js-move" poster="//res.cloudinary.com/dykmd8idd/video/upload/ac_none,f_auto,q_50/v1552576734/loop_dtacud.jpg" autoplay="autoplay" loop="loop" preload="auto" playsinline="playsinline" muted="muted" width="1920" height="1080">
+              <source src="//res.cloudinary.com/dykmd8idd/video/upload/ac_none,q_50/v1552576734/loop_dtacud.webm" type="video/webm">
+              <source src="//res.cloudinary.com/dykmd8idd/video/upload/ac_none,q_50,vc_h264/v1552576734/loop_dtacud.mp4" type="video/mp4">
+            </video>
+          </div>
+        ` : (image ? getImage(image) : null)}
       </div>
     `
   }
@@ -183,5 +190,5 @@ function getImage (props) {
   Object.keys(props).forEach(function (key) {
     if (key !== 'src') attrs[key] = props[key]
   })
-  return html`<div class="Hero-wrap"><img class="Hero-image js-move js-load" ${attrs} src="${props.src}" /></div>`
+  return html`<div class="Hero-wrap"><img class="Hero-image js-move" ${attrs} src="${props.src}" /></div>`
 }

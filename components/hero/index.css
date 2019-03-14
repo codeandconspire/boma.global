@@ -31,10 +31,6 @@
   }
 }
 
-.Hero-container {
-  perspective: 1000px;
-}
-
 .Hero-title {
   display: inline-block;
   font-size: 2.25rem;
@@ -44,7 +40,7 @@
 }
 
 .Hero--image .Hero-title {
-  text-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 800px) and (min-height: 400px) {
@@ -110,7 +106,7 @@
 }
 
 .Hero--fill {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
 }
 
@@ -196,18 +192,6 @@
 .Hero-rotateText {
   position: absolute;
   white-space: nowrap;
-}
-
-.Hero-rotateText:nth-child(2n) {
-  color: rgb(var(--color-lavender));
-}
-
-.Hero-rotateText:nth-child(3n) {
-  color: rgb(var(--color-yellow));
-}
-
-.Hero-rotateText:nth-child(4n) {
-  color: rgb(var(--color-red));
 }
 
 .Hero-rotateText:not(:first-child) {
