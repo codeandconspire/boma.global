@@ -19,16 +19,20 @@ module.exports = class Header extends Component {
     return href !== this.local.href
   }
 
-  createElement (href, menu = []) {
+  createElement (href, props) {
     this.local.href = href.replace(/\/$/, '')
     var { id, state } = this.local
     var emit = this.emit
     var open = state.ui.openNavigation
+    var home = { href: (props.homepage && props.homepage.href) || '/' }
+    if (props.homepage && typeof props.homepage.onclick === 'function') {
+      home.onclick = props.homepage.onclick
+    }
 
     return html`
       <header class="Header ${open ? 'is-open' : ''}" id="${id}">
         <div class="Header-content u-container">
-          <a class="Header-home" href="/">
+          <a class="Header-home" ${home}>
             ${symbol.logo('Header-logo')}${symbol.global('Header-logotype')}
           </a>
           <div class="Header-menu">
@@ -37,16 +41,18 @@ module.exports = class Header extends Component {
               <div class="Header-figure"><div class="Header-lines"></div></div>
             </a>
             <ul class="Header-list">
-              ${menu.map(({ label, href, children }) => html`
+              ${props.menu.map(({ label, href, children, onclick }) => html`
                 <li class="${className('Header-item', { 'Header-item--dropdown': children.length })}">
-                  <a class="Header-link" href="${href}">
+                  <a class="Header-link" href="${href}" onclick=${onclick}>
                     ${children.length ? symbol.chevron(label) : label}
                   </a>
                   ${children.length ? html`
                     <ul class="Header-dropdown">
-                      ${children.map(({ label, href, description }) => html`
+                      ${children.map(({ label, href, description, onclick }) => html`
                         <li class="Header-item">
-                          <a class="Header-link" href="${href}"><div><strong class="Header-title">${label}</strong> <span class="u-hiddenVisually">–</span> ${description}</div></a>
+                          <a class="Header-link" href="${href}" onclick=${onclick}>
+                            <div><strong class="Header-title">${label}</strong> <span class="u-hiddenVisually">–</span> ${description}</div>
+                          </a>
                         </li>
                       `)}
                     </ul>

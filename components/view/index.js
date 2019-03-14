@@ -82,8 +82,15 @@ function createView (view, meta) {
       }
 
       var menu = memo(function () {
-        if (!doc) return []
-        return doc.data.main_menu.map(branch).filter(Boolean)
+        if (!doc) return { menu: [] }
+        var homepage = doc.data.homepage_link
+        return {
+          homepage: homepage.id && !homepage.isBroken ? {
+            href: resolve(homepage),
+            onclick: onclick(homepage)
+          } : null,
+          menu: doc.data.main_menu.map(branch).filter(Boolean)
+        }
       }, [doc && doc.id, 'menu'])
 
       var footer = memo(function () {
@@ -93,12 +100,14 @@ function createView (view, meta) {
             .filter((item) => item.link.url)
             .map((item) => ({
               type: item.type,
-              href: item.link.url
+              href: item.link.url,
+              onclick: onclick(item.link)
             })),
           legal: doc.data.legal_links
             .filter((item) => item.link.id && !item.link.isBroken)
             .map((item) => ({
               href: resolve(item.link),
+              onclick: onclick(item.link),
               label: item.link.data.call_to_action || asText(item.link.data.title)
             })),
           menu: doc.data.footer_menu.map(branch).filter(Boolean)
@@ -128,25 +137,34 @@ function createView (view, meta) {
         }
       }
     })
-  }
-}
 
-// construct menu branch
-// obj -> obj
-function branch (slice) {
-  var { primary, items } = slice
-  if (slice.slice_type !== 'menu_item') return null
-  if (!primary.link.id || primary.link.isBroken) return null
-  return {
-    label: primary.label || asText(primary.link.data.title),
-    href: resolve(primary.link),
-    children: items.map(function (item) {
-      if (!item.link.id || item.link.isBroken) return null
+    // construct menu branch
+    // obj -> obj
+    function branch (slice) {
+      var { primary, items } = slice
+      if (slice.slice_type !== 'menu_item') return null
+      if (!primary.link.id || primary.link.isBroken) return null
       return {
-        label: item.label || asText(item.link.data.title),
-        href: resolve(item.link),
-        description: asText(item.description)
+        label: primary.label || asText(primary.link.data.title),
+        href: resolve(primary.link),
+        onclick: onclick(primary.link),
+        children: items.map(function (item) {
+          if (!item.link.id || item.link.isBroken) return null
+          return {
+            label: item.label || asText(item.link.data.title),
+            href: resolve(item.link),
+            onclick: onclick(item.link),
+            description: asText(item.description)
+          }
+        }).filter(Boolean)
       }
-    }).filter(Boolean)
+    }
+
+    function onclick (doc) {
+      return function (event) {
+        emit('pushState', event.currentTarget.href, doc)
+        event.preventDefault()
+      }
+    }
   }
 }

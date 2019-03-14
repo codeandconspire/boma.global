@@ -13,7 +13,6 @@ var glocal = require('../components/glocal')
 var button = require('../components/button')
 var compass = require('../components/compass')
 var connect = require('../components/connect')
-var serialize = require('../components/text/serialize')
 var { i18n, asText, resolve, loader, srcset, HTTPError, memo } = require('../components/base')
 
 var text = i18n()
@@ -28,7 +27,15 @@ function home (state, emit) {
         if (!doc) {
           return html`
             <div>
-              ${Hero.loading({ image: true })}
+              ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+                image: memo(function (url, sizes) {
+                  if (!url) return null
+                  return Object.assign({
+                    alt: state.partial.data.image.alt || '',
+                    src: srcset(state.partial.data.image.url, sizes).split(' ')[0]
+                  }, state.partial.data.image.dimensions)
+                }, [state.partial.data.image && state.partial.data.image.url, [150]])
+              }) : Hero.loading({ image: true })}
               <div class="u-space2">
                 <div class="u-container">
                   ${glocal(html`
@@ -65,7 +72,7 @@ function home (state, emit) {
               <div class="u-container">
                 ${glocal(html`
                   <div class="Text">
-                    ${asElement(doc.data.description, resolve, serialize)}
+                    ${asElement(doc.data.description, resolve, state.serialize)}
                     ${doc.data.description_link ? html`
                       <p>
                         ${button({ href: resolve(doc.data.description_link), text: doc.data.description_link.data.call_to_action || asText(doc.data.description_link.data.title) })}
@@ -173,7 +180,7 @@ function home (state, emit) {
                     children: doc.data.services.map(function (item) {
                       return card({
                         title: asText(item.heading),
-                        body: asElement(item.description, resolve, serialize),
+                        body: asElement(item.description, resolve, state.serialize),
                         image: memo(function (url, sizes) {
                           if (!url) return null
                           var sources = srcset(url, sizes)
@@ -265,8 +272,8 @@ function home (state, emit) {
               <div class="u-space2">
                 <div class="Text">
                   <h1 class="u-textCenter">In good company (logos)</h1>
-                </div>    
-              </div>    
+                </div>
+              </div>
             </div>
 
             <aside class="u-space2">
@@ -278,7 +285,7 @@ function home (state, emit) {
                   },
                   newsletter: {
                     heading: asText(doc.data.newsletter_heading),
-                    text: asElement(doc.data.newsletter_text, resolve, serialize),
+                    text: asElement(doc.data.newsletter_text, resolve, state.serialize),
                     ref: doc.data.newsletter_ref
                   }
                 })}

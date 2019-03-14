@@ -21,7 +21,16 @@ function home (state, emit) {
           for (let i = 0; i < 6; i++) items.push(card.loading(opts))
           return html`
             <div>
-              ${Hero.loading({ center: true, image: true })}
+              ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+                title: asText(state.partial.data.title),
+                image: memo(function (url, sizes) {
+                  if (!url) return null
+                  return Object.assign({
+                    alt: state.partial.data.image.alt || '',
+                    src: srcset(state.partial.data.image.url, sizes).split(' ')[0]
+                  }, state.partial.data.image.dimensions)
+                }, [state.partial.data.image && state.partial.data.image.url, [150]])
+              }) : Hero.loading({ center: true, image: true })}
               <div class="u-container u-spaceB8">
                 ${grid({ size: { md: '1of3', sm: '1of2' } }, items)}
               </div>

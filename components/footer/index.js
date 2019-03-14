@@ -48,14 +48,16 @@ module.exports = class Footer extends Component {
 
           <nav>
             <ul class="Footer-menu">
-              ${props.menu.map(({ label, href, children }, index) => html`
+              ${props.menu.map(({ label, href, children, onclick }, index) => html`
                 <li class="Footer-section ${alt ? 'u-slideDown' : ''}" style="animation-delay: ${alt ? index * 150 : 0}ms">
                   <div class="Footer-item">
-                    <a class="Footer-link Footer-link--primary" href="${href}">${symbol.arrow(label)}</a>
+                    <a class="Footer-link Footer-link--primary" href="${href}" onclick=${onclick}>${symbol.arrow(label)}</a>
                   </div>
                   <ul class="Footer-list">
-                    ${children.map(({ label, href }) => html`
-                      <li class="Footer-item"><a class="Footer-link" href="${href}">${label}</a></li>
+                    ${children.map(({ label, href, onclick }) => html`
+                      <li class="Footer-item">
+                        <a class="Footer-link" href="${href}" onclick=${onclick}>${label}</a>
+                      </li>
                     `)}
                   </ul>
                 </li>
@@ -67,9 +69,9 @@ module.exports = class Footer extends Component {
             ${props.legal.length ? html`
               <div class="Footer-section Footer-section--inline">
                 <ul class="Footer-list">
-                  ${props.legal.map(({ label, href }) => html`
+                  ${props.legal.map(({ label, href, onclick }) => html`
                     <li class="Footer-item">
-                      <a class="Footer-link" href="${href}">${label}</a>
+                      <a class="Footer-link" href="${href}" onclick=${onclick}>${label}</a>
                     </li>
                   `)}
                 </ul>

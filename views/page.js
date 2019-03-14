@@ -5,11 +5,10 @@ var Hero = require('../components/hero')
 var card = require('../components/card')
 var grid = require('../components/grid')
 var embed = require('../components/embed')
-var principles = require('../components/principles')
 var person = require('../components/person')
 var compass = require('../components/compass')
 var highlight = require('../components/highlight')
-var serialize = require('../components/text/serialize')
+var principles = require('../components/principles')
 var { i18n, asText, resolve, srcset, HTTPError, memo } = require('../components/base')
 
 var text = i18n()
@@ -24,6 +23,23 @@ function page (state, emit) {
       ${state.prismic.getByUID(type, state.params.slug, (err, doc) => {
         if (err) throw HTTPError(404, err)
         if (!doc) {
+          if (state.partial) {
+            return html`
+              <div>
+                ${state.cache(Hero, `hero-${state.partial.id}`).render({
+                  title: asText(state.partial.data.title),
+                  body: asText(state.partial.data.description),
+                  image: memo(function (url, sizes) {
+                    if (!url) return null
+                    return Object.assign({
+                      alt: state.partial.data.image.alt || '',
+                      src: srcset(state.partial.data.image.url, sizes).split(' ')[0]
+                    }, state.partial.data.image.dimensions)
+                  }, [state.partial.data.image && state.partial.data.image.url, [150]])
+                })}
+              </div>
+            `
+          }
           return html`
             <div>
               ${Hero.loading({ center: true })}
@@ -54,7 +70,7 @@ function page (state, emit) {
           <div>
             ${state.cache(Hero, `hero-${doc.id}`).render({
               title: asText(doc.data.title),
-              body: asElement(doc.data.description, resolve, serialize),
+              body: asText(doc.data.description),
               image: image,
               action: button
             })}
@@ -76,7 +92,7 @@ function page (state, emit) {
         return html`
           <div class="u-container">
             <div class="Text">
-              ${asElement(slice.primary.text, resolve, serialize)}
+              ${asElement(slice.primary.text, resolve, state.serialize)}
             </div>
           </div>
         `
@@ -194,7 +210,7 @@ function page (state, emit) {
           children: slice.items.map(function (item) {
             return card({
               title: asText(item.heading),
-              body: asElement(item.description, resolve, serialize),
+              body: asElement(item.description, resolve, state.serialize),
               link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                 href: resolve(item.link),
                 text: item.link.type === 'Document' ? item.link.data.call_to_action : null
@@ -244,7 +260,7 @@ function page (state, emit) {
               }
               return person({
                 title: title,
-                body: asElement(item.text, resolve, serialize),
+                body: asElement(item.text, resolve, state.serialize),
                 link: (link.id || link.url) && !link.isBroken ? {
                   href: resolve(link),
                   text: linkText,
@@ -288,11 +304,10 @@ function page (state, emit) {
               var title = asText(item.heading)
               if (!title && item.link.id) title = asText(item.link.data.title)
 
-              var body = item.text.length ? asElement(item.text, resolve, serialize) : null
+              var body = item.text.length ? asElement(item.text, resolve, state.serialize) : null
 
               if (!body && item.link.id) {
-                console.log(body, '123')
-                body = asElement(item.link.data.description, resolve, serialize)
+                body = asElement(item.link.data.description, resolve, state.serialize)
               }
 
               var image = item.image

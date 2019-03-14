@@ -8,7 +8,6 @@ var Hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var highlight = require('../components/highlight')
-var serialize = require('../components/text/serialize')
 var { i18n, asText, srcset, HTTPError, memo, resolve } = require('../components/base')
 
 var text = i18n()
@@ -25,7 +24,16 @@ function home (state, emit) {
           for (let i = 0; i < 6; i++) items.push(card.loading({ date: true }))
           return html`
             <div>
-              ${Hero.loading({ center: true, image: true })}
+              ${state.partial ? state.cache(Hero, `hero-${state.partial.id}`).render({
+                title: asText(state.partial.data.title),
+                image: memo(function (url, sizes) {
+                  if (!url) return null
+                  return Object.assign({
+                    alt: state.partial.data.image.alt || '',
+                    src: srcset(state.partial.data.image.url, sizes).split(' ')[0]
+                  }, state.partial.data.image.dimensions)
+                }, [state.partial.data.image && state.partial.data.image.url, [150]])
+              }) : Hero.loading({ center: true, image: true })}
               <div class="u-container">
                 ${highlight.loading()}
                 <div class="u-space2">
@@ -56,7 +64,7 @@ function home (state, emit) {
           return highlight({
             direction: index % 2 ? 'right' : 'left',
             title: title,
-            body: asElement(item.link.data.description, resolve, serialize),
+            body: asElement(item.link.data.description, resolve, state.serialize),
             action: {
               href: resolve(item.link),
               text: text`Read more`
