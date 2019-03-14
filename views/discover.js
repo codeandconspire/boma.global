@@ -53,7 +53,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [[640, 'q_40'], [750, 'q_40'], [1125, 'q_40'], [1440, 'q_40'], [2880, 'q_30'], [3840, 'q_20']]])
+        }, [doc.data.image && doc.data.image.url, [[640, 'q_60'], [750, 'q_60'], [1125, 'q_60'], [1440, 'q_50'], [2880, 'q_40'], [3840, 'q_30']]])
 
         var featured = doc.data.featured_articles.map(function (item, index) {
           if (!item.link.id || item.link.isBroken) return null

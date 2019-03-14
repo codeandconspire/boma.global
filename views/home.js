@@ -58,7 +58,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [[640, 'q_30'], [750, 'q_30'], [1125, 'q_30'], [1440, 'q_30'], [2880, 'q_20'], [3840, 'q_10']]])
+        }, [doc.data.image && doc.data.image.url, [[640, 'q_60'], [750, 'q_60'], [1125, 'q_60'], [1440, 'q_50'], [2880, 'q_40'], [3840, 'q_30']]])
 
         return html`
           <div>
