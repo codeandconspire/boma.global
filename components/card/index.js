@@ -50,10 +50,17 @@ Card.prototype.load = function (el) {
   window.addEventListener('resize', onresize)
   el.addEventListener('mousemove', onmousemove, { passive: true })
   el.addEventListener('mouseleave', onmouseleave)
+  el.addEventListener('mouseenter', onmouseenter)
   this.unload = function () {
     window.removeEventListener('resize', onresize)
   }
 
+  // ensure cards is not in transition while tilting
+  function onmouseenter () {
+    el.classList.remove('in-transition')
+  }
+
+  // apply transition when resetting to initial un-tilted state
   function onmouseleave (event) {
     tilt.addEventListener('transitionend', function ontransitionend () {
       tilt.removeEventListener('transitionend', ontransitionend)
