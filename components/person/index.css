@@ -34,11 +34,13 @@
 
 .Person-link {
   color: rgb(var(--color-orange));
+  border-bottom: 1px solid rgba(var(--color-orange), 0);
+  transition: border-color 120ms var(--ease-out);
 }
 
 .Person-link:hover,
 .Person-link:active {
-  text-decoration: underline;
+  border-bottom-color: rgba(var(--color-orange), 1);
 }
 
 .Person-link::after {
@@ -48,4 +50,10 @@
   position: absolute;
   left: 0;
   top: 0;
+  opacity: 0;
+  background: rgb(255, 255, 255);
+}
+
+.Person-link:active::after {
+  opacity: 0.3;
 }

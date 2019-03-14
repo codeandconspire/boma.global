@@ -2,7 +2,7 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var nanoraf = require('nanoraf')
 var button = require('../button')
-var { className, loader, vh } = require('../base')
+var { className, loader } = require('../base')
 
 module.exports = class Hero extends Component {
   constructor (id, state, emit) {
@@ -34,7 +34,7 @@ module.exports = class Hero extends Component {
     var onscroll = nanoraf(function () {
       var { scrollY } = window
       if (scrollY > offset + height) return // after element
-      el.style.setProperty('--Hero-scroll', `${Math.round(scrollY * speed)}px`)
+      el.style.setProperty('--Hero-scroll', `${(scrollY * speed).toFixed(2)}px`)
     })
 
     var onresize = nanoraf(function () {

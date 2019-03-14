@@ -58,7 +58,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
+        }, [doc.data.image && doc.data.image.url, [[640, 'q_30'], [750, 'q_30'], [1125, 'q_30'], [1440, 'q_30'], [2880, 'q_20'], [3840, 'q_10']]])
 
         return html`
           <div>
@@ -121,13 +121,13 @@ function home (state, emit) {
                         })
                         return {
                           srcset: sources,
-                          sizes: '(min-midth: 900px) 50vw, 100vw',
+                          sizes: '(min-midth: 1000px) 50vw, 100vw',
                           alt: item.image.alt || '',
                           src: sources.split(' ')[0],
                           width: item.image.dimensions.width,
                           height: item.image.dimensions.width * 9 / 16
                         }
-                      }, [item.image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
+                      }, [item.image.url, [[800, 'q_40'], [1000, 'q_40'], [1200, 'q_30']]]),
                       title: asText(item.title),
                       date: {
                         datetime: item.start,
@@ -146,7 +146,7 @@ function home (state, emit) {
                     <header class="View-title">
                       <h2>${text`Upcoming events`}</h2>
                       ${doc ? html`
-                        <a href="${resolve(doc)}">
+                        <a class="u-textLink" href="${resolve(doc)}">
                           ${symbol.arrow(text`Show more`)}
                         </a>
                       ` : null}
@@ -170,27 +170,17 @@ function home (state, emit) {
                       })
                       return {
                         src: sources.split(' ')[0],
-                        sizes: '(min-width: 1000px) 660px, (min-width: 600px) 400px, 320px',
+                        sizes: '(min-width: 1000px) 660px, 400px',
                         srcset: sources,
                         alt: doc.data.services_image.alt || '',
                         width: doc.data.services_image.dimensions.width,
                         height: doc.data.services_image.dimensions.width
                       }
-                    }, [doc.data.services_image && doc.data.services_image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_70']]]),
+                    }, [doc.data.services_image && doc.data.services_image.url, [[400, 'q_50'], [800, 'q_50'], [1200, 'q_40'], [1500, 'q_40']]]),
                     children: doc.data.services.map(function (item) {
                       return card({
                         title: asText(item.heading),
                         body: asElement(item.description, resolve, state.serialize),
-                        image: memo(function (url, sizes) {
-                          if (!url) return null
-                          var sources = srcset(url, sizes)
-                          return Object.assign({
-                            sizes: '33vw',
-                            srcset: sources,
-                            alt: item.image.alt || '',
-                            src: sources.split(' ')[0]
-                          }, item.image.dimensions)
-                        }, [item.image && item.image.url, [400, [800, 'q_70']]]),
                         link: (item.link.url || item.link.id) && !item.link.isBroken ? {
                           href: resolve(item.link),
                           text: item.link.type === 'Document' ? item.link.data.call_to_action : null
@@ -227,11 +217,12 @@ function home (state, emit) {
                         })
                         return Object.assign({
                           srcset: sources,
-                          sizes: '(min-midth: 600px) 33vw, 100vw',
+                          sizes: '(min-midth: 600px) 33vw, 80vw',
                           alt: image.alt || '',
                           src: sources.split(' ')[0]
                         }, image.dimensions)
-                      }, [image && image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
+                      }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40'], [1200, 'q_30']]]),
+
                       title: asText(article.data.title),
                       date: {
                         datetime: date,
@@ -253,7 +244,7 @@ function home (state, emit) {
                         ${state.prismic.getSingle('discover', function (err, doc) {
                           if (err || !doc) return null
                           return html`
-                            <a href="${resolve(doc)}">
+                            <a class="u-textLink" href="${resolve(doc)}">
                               ${symbol.arrow(text`Show more`)}
                             </a>
                           `

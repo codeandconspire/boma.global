@@ -123,8 +123,8 @@
   object-position: 50% 50%;
   display: block;
   transition: transform 50ms ease;
-  transform-origin: bottom;
-  transform: scale(1.02) translate3d(0, var(--Hero-scroll), 0);
+  transform-origin: center;
+  transform: scale(1.05) translate3d(0, var(--Hero-scroll), 0);
 }
 
 .Hero--image .Hero-content {

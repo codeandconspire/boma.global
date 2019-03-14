@@ -219,9 +219,9 @@ exports.srcset = srcset
 function srcset (uri, sizes, opts = {}) {
   var type = opts.type || 'fetch'
   var transforms = opts.transforms
-  if (!transforms) transforms = 'c_fill,f_auto,q_auto'
+  if (!transforms) transforms = 'c_fill,f_jpg,q_auto'
   if (!/c_/.test(transforms)) transforms += ',c_fill'
-  if (!/f_/.test(transforms)) transforms += ',f_auto'
+  if (!/f_/.test(transforms)) transforms += ',f_jpg'
   if (!/q_/.test(transforms)) transforms += ',q_auto'
 
   // trim prismic domain from uri
@@ -231,9 +231,9 @@ function srcset (uri, sizes, opts = {}) {
   return sizes.map(function (size) {
     var transform = transforms
     if (Array.isArray(size)) {
-      transform = size[1] + ',' + transforms
+      transform = opts.transform ? size[1] + ',' + opts.transforms : size[1]
       if (!/c_/.test(transform)) transform += ',c_fill'
-      if (!/f_/.test(transform)) transform += ',f_auto'
+      if (!/f_/.test(transform)) transform += ',f_jpg'
       if (!/q_/.test(transform)) transform += ',q_auto'
       size = size[0]
     }

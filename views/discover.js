@@ -53,7 +53,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
+        }, [doc.data.image && doc.data.image.url, [[640, 'q_40'], [750, 'q_40'], [1125, 'q_40'], [1440, 'q_40'], [2880, 'q_30'], [3840, 'q_20']]])
 
         var featured = doc.data.featured_articles.map(function (item, index) {
           if (!item.link.id || item.link.isBroken) return null
@@ -116,11 +116,11 @@ function home (state, emit) {
                 })
                 return Object.assign({
                   srcset: sources,
-                  sizes: '(min-midth: 600px) 33vw, 100vw',
+                  sizes: '(min-midth: 600px) 33vw, (min-midth: 400px) 50vw, 100vw',
                   alt: image.alt || '',
                   src: sources.split(' ')[0]
                 }, image.dimensions)
-              }, [image && image.url, [400, [800, 'q_70'], [1200, 'q_50']]]),
+              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40']]]),
               title: asText(article.data.title),
               date: {
                 datetime: date,

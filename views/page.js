@@ -56,7 +56,7 @@ function page (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_50']]])
+        }, [doc.data.image && doc.data.image.url, [[640, 'q_30'], [750, 'q_30'], [1125, 'q_30'], [1440, 'q_30'], [2880, 'q_20'], [3840, 'q_10']]])
 
         var action = doc.data.action
         if (action && action.id && !action.isBroken) {
@@ -175,13 +175,13 @@ function page (state, emit) {
             })
             return {
               src: sources.split(' ')[0],
-              sizes: '(min-width: 1000px) 660px, (min-width: 600px) 400px, 320px',
+              sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
               srcset: sources,
               alt: slice.primary.image.alt || '',
               width: slice.primary.image.dimensions.width,
               height: slice.primary.image.dimensions.width
             }
-          }, [slice.primary.image && slice.primary.image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_60']]])
+          }, [slice.primary.image && slice.primary.image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
         }
 
         return html`
@@ -200,13 +200,13 @@ function page (state, emit) {
             })
             return {
               src: sources.split(' ')[0],
-              sizes: '(min-width: 1000px) 660px, (min-width: 600px) 400px, 320px',
+              sizes: '(min-width: 1000px) 660px, 400px',
               srcset: sources,
               alt: slice.primary.image.alt || '',
               width: slice.primary.image.dimensions.width,
               height: slice.primary.image.dimensions.width
             }
-          }, [slice.primary.image && slice.primary.image.url, [320, 400, 800, [1200, 'q_70'], [1600, 'q_60']]]),
+          }, [slice.primary.image && slice.primary.image.url, [[400, 'q_50'], [800, 'q_50'], [1200, 'q_40'], [1500, 'q_40']]]),
           children: slice.items.map(function (item) {
             return card({
               title: asText(item.heading),
@@ -327,7 +327,7 @@ function page (state, emit) {
                   width: image.dimensions.width,
                   height: image.dimensions.width * 9 / 16
                 }
-              }, [image && image.url, [300, 400, [600, 'q_70'], [900, 'q_50']]])
+              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40']]])
 
               var linkText = item.link_text
               if (!linkText) {

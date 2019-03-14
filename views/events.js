@@ -31,7 +31,7 @@ function home (state, emit) {
                   }, state.partial.data.image.dimensions)
                 }, [state.partial.data.image && state.partial.data.image.url, [150]])
               }) : Hero.loading({ center: true, image: true })}
-              <div class="u-container u-spaceB8">
+              <div class="u-container u-space2">
                 ${grid({ size: { md: '1of3', sm: '1of2' } }, items)}
               </div>
             </div>
@@ -82,7 +82,7 @@ function home (state, emit) {
                   width: item.image.dimensions.width,
                   height: item.image.dimensions.width
                 }
-              }, [item.image.url, [300, 400, [800, 'q_70']]]),
+              }, [item.image && item.image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40'], [1200, 'q_30']]]),
               title: asText(item.title),
               date: {
                 datetime: item.start,
@@ -101,7 +101,7 @@ function home (state, emit) {
               title: asText(doc.data.title),
               image: image
             })}
-            <div class="u-container">
+            <div class="u-container u-space2">
               ${grid({ size: { md: '1of3', sm: '1of2' } }, events)}
             </div>
           </div>
