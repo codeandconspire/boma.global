@@ -19,15 +19,13 @@
 }
 
 .u-space2 {
-  margin-top: 4.5rem !important;
-  margin-bottom: 4.5rem !important;
+  margin-top: 13vh !important;
+  margin-bottom: 13vh !important;
 }
 
-@media (min-width: 800px) and (min-height: 400px) {
-  .u-space2 {
-    margin-top: 6.5rem !important;
-    margin-bottom: 6.5rem !important;
-  }
+.u-space3 {
+  margin-top: 25vh !important;
+  margin-bottom: 23vh !important;
 }
 
 /**

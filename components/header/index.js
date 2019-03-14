@@ -29,8 +29,10 @@ module.exports = class Header extends Component {
       home.onclick = props.homepage.onclick
     }
 
+    var animate = (state.href === '/' || state.href === '')
+
     return html`
-      <header class="Header ${open ? 'is-open' : ''}" id="${id}">
+      <header class="Header ${animate ? 'is-animate' : ''} ${open ? 'is-open' : ''}" id="${id}">
         <div class="Header-content u-container">
           <a class="Header-home" ${home}>
             ${symbol.logo('Header-logo')}${symbol.global('Header-logotype')}

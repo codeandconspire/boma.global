@@ -88,6 +88,11 @@
   transition-property: transform, background;
 }
 
+.Footer-social .Footer-section {
+  padding-right: 3rem;
+  padding-left: 3rem;
+}
+
 .Footer-section--social .Footer-icon:hover,
 .Footer-section--social .Footer-icon:active {
   transform: scale(1.12);
@@ -99,6 +104,11 @@
 }
 
 @media (min-width: 350px) {
+  .Footer-social .Footer-section {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   .Footer-section--social .Footer-icon {
     width: 3rem;
     height: 3rem;

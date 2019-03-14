@@ -62,3 +62,21 @@
     min-height: 8rem;
   }
 }
+
+/**
+ * Slide in things
+ */
+
+:root[scripting-enabled] .View-slide {
+  will-change: transform;
+  transition: 600ms var(--ease-out);
+  transition-property: transform, opacity;
+  transform: translateY(20vh);
+  opacity: 0;
+}
+
+:root[scripting-enabled] .View-slide.is-visible {
+  will-change: transform;
+  transform: translateY(0vh);
+  opacity: 1;
+}

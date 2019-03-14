@@ -66,6 +66,7 @@ module.exports = class Hero extends Component {
 
     function animateTextOut (el) {
       el.classList.remove('in')
+      el.classList.remove('first')
       el.classList.add('out')
 
       setTimeout(function () {
@@ -135,14 +136,15 @@ module.exports = class Hero extends Component {
       id: this.local.id,
       class: className('Hero', {
         'Hero--center': !rotatingWords,
-        'Hero--image': image
+        'Hero--image': image,
+        'Hero--fill': rotatingWords
       })
     }
 
     var titleElement = rotatingWords ? html`
       ${parts[0]} <span class="Hero-rotateWrap">
-      ${words.map(function (title) {
-        return html`<span class="Hero-rotateText js-rotate" style="--Hero-rotatingDelay: ${rotatingDelay}ms">${title}</span>`
+      ${words.map(function (title, index) {
+        return html`<span class="Hero-rotateText js-rotate ${index === 0 ? 'first' : ''}" style="--Hero-rotatingDelay: ${rotatingDelay}ms">${title}</span>`
       })}
       </span> <span class="u-block">${parts[1]}</span>
     ` : title
@@ -159,7 +161,7 @@ module.exports = class Hero extends Component {
       <div ${attrs}>
         <div class="Hero-content">
           <div class="Hero-container u-container">
-            <h2 class="Hero-title">${titleElement}</h2>
+            <h1 class="Hero-title ${rotatingWords ? 'Hero-title--rotating js-title' : ''}">${titleElement}</h1>
             ${body ? html`<div class="Hero-text">${body}</div>` : null}
             ${action ? html`
               <div class="Hero-action">
@@ -181,5 +183,5 @@ function getImage (props) {
   Object.keys(props).forEach(function (key) {
     if (key !== 'src') attrs[key] = props[key]
   })
-  return html`<div class="Hero-wrap"><img class="Hero-image js-move" ${attrs} src="${props.src}" /></div>`
+  return html`<div class="Hero-wrap"><img class="Hero-image js-move js-load" ${attrs} src="${props.src}" /></div>`
 }

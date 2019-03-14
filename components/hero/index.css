@@ -1,4 +1,5 @@
 @import "../base";
+@import "../header";
 
 /* @define Hero */
 :root {
@@ -10,6 +11,7 @@
 .Hero {
   position: relative;
   width: 100%;
+  padding-top: var(--Header-height);
 }
 
 .Hero--image.is-loading {
@@ -104,7 +106,12 @@
 .Hero--image {
   background: rgb(var(--color-royal));
   color: rgb(255, 255, 255);
-  margin-bottom: 3.4rem;
+  margin-bottom: 15vh;
+}
+
+.Hero--fill {
+  min-height: 100vh;
+  display: flex;
 }
 
 .Hero-wrap,
@@ -143,21 +150,26 @@
   margin: 0;
 }
 
-@media (min-width: 800px) and (min-height: 400px) {
-  .Hero--image {
-    margin-bottom: 5rem;
+@media (min-width: 500px) {
+  .Hero--fill {
+    min-height: 80vh;
   }
+}
 
+@media (min-width: 800px) {
+  .Hero--fill {
+    min-height: auto;
+    display: block;
+  }
+}
+
+@media (min-width: 800px) and (min-height: 400px) {
   .Hero--image .Hero-content {
     min-height: 35rem;
   }
 }
 
 @media (min-width: 1000px) and (min-height: 400px) {
-  .Hero--image {
-    margin-bottom: 7rem;
-  }
-
   .Hero--image .Hero-content {
     min-height: 75vh;
   }
@@ -187,7 +199,7 @@
 }
 
 .Hero-rotateText:nth-child(2n) {
-  color: rgb(var(--color-red));
+  color: rgb(var(--color-lavender));
 }
 
 .Hero-rotateText:nth-child(3n) {
@@ -195,7 +207,7 @@
 }
 
 .Hero-rotateText:nth-child(4n) {
-  color: rgb(var(--color-lavender));
+  color: rgb(var(--color-red));
 }
 
 .Hero-rotateText:not(:first-child) {
@@ -214,7 +226,29 @@
   opacity: 0;
 }
 
-:root[scripting-enabled] .Hero-rotateText.in {
+:root[scripting-enabled] .Hero-rotateText.in,
+:root[scripting-enabled] .Hero-rotateText.first {
   transform: translateX(0px);
   opacity: 1;
 }
+
+@supports (animation: auto) {
+  .Hero-title--rotating {
+    transform: translateY(20%);
+    opacity: 0;
+    animation: Hero-slide 400ms 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+}
+
+@keyframes Hero-slide {
+  0% {
+    transform: translateY(-3rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+}
+
