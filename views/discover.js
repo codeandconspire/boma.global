@@ -56,36 +56,46 @@ function home (state, emit) {
         }, [doc.data.image && doc.data.image.url, [[640, 'q_60'], [750, 'q_60'], [1125, 'q_60'], [1440, 'q_50'], [2880, 'q_40'], [3840, 'q_30']]])
 
         var featured = doc.data.featured_articles.map(function (item, index) {
-          if (!item.link.id || item.link.isBroken) return null
-          var title = asText(item.link.data.title)
-          var image = item.link.data.featured_image
-          if (!image || !image.url) image = item.link.data.image
+          let title = asText(item.heading)
+          if (!title && item.link.id) title = asText(item.link.data.title)
 
-          return highlight({
-            direction: index % 2 ? 'right' : 'left',
+          let body = null
+          if (item.body.length) body = asElement(item.body)
+          else if (item.link.id) body = asElement(item.link.data.description)
+
+          let image = item.image
+          if (!image || (!image.url && item.link.id)) {
+            image = item.link.data.featured_image
+            if (!image || !image.url) image = item.link.data.image
+          }
+
+          let props = {
             title: title,
-            body: asElement(item.link.data.description, resolve, state.serialize),
-            action: {
+            body: body,
+            direction: index % 2 ? 'right' : 'left',
+            action: (item.link.url || item.link.id) && !item.link.isBroken ? {
               href: resolve(item.link),
-              text: text`Read more`,
-              onclick: partial(item.link)
-            },
+              onclick: item.link.id ? partial(item.link) : null,
+              text: item.link.type === 'Document' ? item.link.data.call_to_action : text`Read more`
+            } : null,
             image: memo(function (url, sizes) {
               if (!url) return null
               var sources = srcset(url, sizes, {
-                aspect: 1,
-                transforms: 'c_thumb'
+                transforms: 'c_thumb',
+                aspect: 1
               })
               return {
-                srcset: sources,
-                sizes: '(min-width: 600px) 50vw, 100vw',
-                alt: image.alt || '',
                 src: sources.split(' ')[0],
+                sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
+                srcset: sources,
+                alt: image.alt || '',
                 width: image.dimensions.width,
                 height: image.dimensions.width
               }
-            }, [image.url, [300, 400, 600, [900, 'q_70'], [1200, 'q_50']]])
-          })
+            }, [image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
+          }
+
+          return highlight(props)
         }).filter(Boolean)
 
         var opts = {

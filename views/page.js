@@ -160,9 +160,27 @@ function page (state, emit) {
         `
       }
       case 'highlight': {
+        let title = asText(slice.primary.heading)
+        if (!title && slice.primary.link.id) {
+          title = asText(slice.primary.link.data.title)
+        }
+
+        let body = null
+        if (slice.primary.highlight_body.length) {
+          body = asElement(slice.primary.highlight_body)
+        } else if (slice.primary.link.id) {
+          body = asElement(slice.primary.link.data.description)
+        }
+
+        let image = slice.primary.image
+        if (!image || (!image.url && slice.primary.link.id)) {
+          image = slice.primary.link.data.featured_image
+          if (!image || !image.url) image = slice.primary.link.data.image
+        }
+
         let props = {
-          title: slice.primary.heading ? asText(slice.primary.heading) : null,
-          body: slice.primary.highlight_body ? asElement(slice.primary.highlight_body) : null,
+          title: title,
+          body: body,
           direction: slice.primary.direction.toLowerCase(),
           action: (slice.primary.link.url || slice.primary.link.id) && !slice.primary.link.isBroken ? {
             href: resolve(slice.primary.link),
@@ -179,11 +197,11 @@ function page (state, emit) {
               src: sources.split(' ')[0],
               sizes: '(min-width: 1000px) 35vw, (min-width: 600px) 200px, 100vw',
               srcset: sources,
-              alt: slice.primary.image.alt || '',
-              width: slice.primary.image.dimensions.width,
-              height: slice.primary.image.dimensions.width
+              alt: image.alt || '',
+              width: image.dimensions.width,
+              height: image.dimensions.width
             }
-          }, [slice.primary.image && slice.primary.image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
+          }, [image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
         }
 
         return html`
