@@ -56,7 +56,7 @@ function page (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [[640, 'q_60'], [750, 'q_60'], [1125, 'q_60'], [1440, 'q_50'], [2880, 'q_40'], [3840, 'q_30']]])
+        }, [doc.data.image && doc.data.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]])
 
         var action = doc.data.action
         if (action && action.id && !action.isBroken) {
@@ -103,7 +103,7 @@ function page (state, emit) {
         let size = slice.primary.width.toLowerCase()
         let large = size === 'large'
 
-        let sources = srcset(slice.primary.image.url, [400, 600, 900, [1600, 'q_60'], [3000, 'q_35']])
+        let sources = srcset(slice.primary.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']])
         let attrs = Object.assign({
           sizes: large ? '100vw' : '(min-width: 800px) 43rem, 100vw',
           srcset: sources,
@@ -191,7 +191,7 @@ function page (state, emit) {
             if (!url) return null
             var sources = srcset(url, sizes, {
               transforms: 'c_thumb',
-              aspect: 1
+              aspect: 10 / 12
             })
             return {
               src: sources.split(' ')[0],
@@ -199,9 +199,9 @@ function page (state, emit) {
               srcset: sources,
               alt: image.alt || '',
               width: image.dimensions.width,
-              height: image.dimensions.width
+              height: image.dimensions.width * 10 / 12
             }
-          }, [image && image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
+          }, [image && image.url, [720, 400, 800, 1200]])
         }
 
         return html`
@@ -226,7 +226,7 @@ function page (state, emit) {
               width: slice.primary.image.dimensions.width,
               height: slice.primary.image.dimensions.width
             }
-          }, [slice.primary.image && slice.primary.image.url, [[400, 'q_50'], [800, 'q_50'], [1200, 'q_40'], [1500, 'q_40']]]),
+          }, [slice.primary.image && slice.primary.image.url, [400, 800, 1200, [1500, 'q_50']]]),
           children: slice.items.map(function (item) {
             return Card({
               title: asText(item.heading),
@@ -321,7 +321,7 @@ function page (state, emit) {
                 <h1>${asText(slice.primary.heading)}</h1>
               </header>
             ` : null}
-            ${grid({ size: { md: '1of3', sm: '1of2' } }, blurbs.map(function (item, i) {
+            ${grid({ size: { md: '1of2', lg: '1of3' } }, blurbs.map(function (item, i) {
               var title = asText(item.heading)
               if (!title && item.link.id) title = asText(item.link.data.title)
 
@@ -348,7 +348,7 @@ function page (state, emit) {
                   width: image.dimensions.width,
                   height: image.dimensions.width * 9 / 16
                 }
-              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40']]])
+              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_50']]])
 
               var linkText = item.link_text
               if (!linkText) {
@@ -398,7 +398,7 @@ function video (props) {
     width: props.thumbnail_width,
     height: props.thumbnail_height,
     sizes: '100vw',
-    srcset: srcset(id, [400, 900, 1800, [2600, 'q_50'], [3600, 'q_30']], { type: provider })
+    srcset: srcset(id, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']], { type: provider })
   })
 }
 

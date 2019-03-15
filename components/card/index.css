@@ -2,7 +2,7 @@
 
 /* @define Card */
 :root {
-  --Card-aspect: calc(67 / 74);
+  --Card-aspect: calc(10 / 12);
   --Card-tiltX: 0;
   --Card-tiltY: 0;
 }

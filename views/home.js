@@ -112,7 +112,7 @@ class Home extends View {
               alt: doc.data.image.alt || '',
               src: sources.split(' ')[0]
             }, doc.data.image.dimensions)
-          }, [doc.data.image && doc.data.image.url, [[640, 'q_60'], [750, 'q_60'], [1125, 'q_60'], [1440, 'q_50'], [2880, 'q_40'], [3840, 'q_30']]])
+          }, [doc.data.image && doc.data.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]])
 
           return html`
             <div>
@@ -187,7 +187,7 @@ class Home extends View {
                                 width: item.image.dimensions.width,
                                 height: item.image.dimensions.width * 9 / 16
                               }
-                            }, [item.image.url, [[800, 'q_40'], [1000, 'q_40'], [1200, 'q_30']]]),
+                            }, [item.image.url, [520, 700, 900, 1200]]),
                             title: asText(item.title),
                             date: {
                               datetime: item.start,
@@ -238,7 +238,7 @@ class Home extends View {
                           width: doc.data.services_image.dimensions.width,
                           height: doc.data.services_image.dimensions.width
                         }
-                      }, [doc.data.services_image && doc.data.services_image.url, [[400, 'q_50'], [800, 'q_50'], [1200, 'q_40'], [1500, 'q_40']]]),
+                      }, [doc.data.services_image && doc.data.services_image.url, [520, 700, 900, 1200, [1500, 'q_50']]]),
                       children: doc.data.services.map(function (item) {
                         return Card({
                           title: asText(item.heading),
@@ -278,15 +278,18 @@ class Home extends View {
                             image: memo(function (url, sizes) {
                               if (!url) return null
                               var sources = srcset(url, sizes, {
-                                transforms: 'c_thumb'
+                                transforms: 'c_thumb',
+                                aspect: 10 / 12
                               })
-                              return Object.assign({
+                              return {
                                 srcset: sources,
                                 sizes: '(min-midth: 600px) 33vw, 80vw',
                                 alt: image.alt || '',
-                                src: sources.split(' ')[0]
-                              }, image.dimensions)
-                            }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40'], [1200, 'q_30']]]),
+                                src: sources.split(' ')[0],
+                                width: image.dimensions.width,
+                                height: image.dimensions.width * 10 / 12
+                              }
+                            }, [image && image.url, [520, 700, 900, 1200]]),
 
                             title: asText(article.data.title),
                             date: {
@@ -320,7 +323,7 @@ class Home extends View {
                         </header>
                       </div>
                       <div class="u-md-container">
-                        ${grid({ size: { md: '1of3' }, carousel: true }, items)}
+                        ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, items)}
                       </div>
                     </section>
                   `

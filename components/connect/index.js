@@ -15,7 +15,7 @@ function connect (props) {
           <h3 class="u-spaceT0">${text`On Instagram`} <a class="Connect-link" href="${instagram.link}">@bomaglobal</a></h3>
         </div>
         <div class="u-md-uncontain">
-          ${grid({ size: { md: '1of3' }, carousel: true, slim: true }, instagram.images.map(function (embed) {
+          ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true, slim: true }, instagram.images.map(function (embed) {
             return html`
               <a href="${embed.embed_url}" class="Connect-figure" target="_blank" rel="noopener noreferrer">
                 <img ${attrs(embed)} class="Connect-post" />
@@ -55,5 +55,5 @@ function attrs (image) {
       width: image.width,
       height: image.width
     }
-  }, [image.thumbnail_url, [250, 400, [600, 'q_50']]])
+  }, [image.thumbnail_url, [250, 400, 600, 800]])
 }

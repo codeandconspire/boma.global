@@ -32,7 +32,7 @@ function home (state, emit) {
                 }, [state.partial.data.image && state.partial.data.image.url, [150]])
               }) : Hero.loading({ center: true, image: true })}
               <div class="u-container u-space2">
-                ${grid({ size: { md: '1of3', sm: '1of2' } }, items)}
+                ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
               </div>
             </div>
           `
@@ -47,7 +47,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image.url, [400, 600, 900, 1400, 1800, [2600, 'q_70']]])
+        }, [doc.data.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]])
 
         var events = doc.data.events
           .filter((item) => item.start && item.link.url)
@@ -71,7 +71,7 @@ function home (state, emit) {
               image: memo(function (url, sizes) {
                 if (!url) return () => html`<div class="u-aspect1-1 u-bgOrange"></div>`
                 var sources = srcset(url, sizes, {
-                  aspect: 1,
+                  aspect: 10 / 12,
                   transforms: 'c_thumb'
                 })
                 return {
@@ -80,9 +80,9 @@ function home (state, emit) {
                   alt: item.image.alt || '',
                   src: sources.split(' ')[0],
                   width: item.image.dimensions.width,
-                  height: item.image.dimensions.width
+                  height: item.image.dimensions.width * 10 / 12
                 }
-              }, [item.image && item.image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40'], [1200, 'q_30']]]),
+              }, [item.image && item.image.url, [520, 700, 900, 1200]]),
               title: asText(item.title),
               date: {
                 datetime: item.start,
@@ -102,7 +102,7 @@ function home (state, emit) {
               image: image
             })}
             <div class="u-container u-space2">
-              ${grid({ size: { md: '1of3', sm: '1of2' } }, events)}
+              ${grid({ size: { md: '1of2', lg: '1of3' } }, events)}
             </div>
           </div>
         `

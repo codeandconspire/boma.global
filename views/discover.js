@@ -37,7 +37,7 @@ function home (state, emit) {
               <div class="u-container">
                 ${highlight.loading()}
                 <div class="u-space2">
-                  ${grid({ size: { md: '1of3', sm: '1of2' } }, items)}
+                  ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@ function home (state, emit) {
             alt: doc.data.image.alt || '',
             src: sources.split(' ')[0]
           }, doc.data.image.dimensions)
-        }, [doc.data.image && doc.data.image.url, [[640, 'q_60'], [750, 'q_60'], [1125, 'q_60'], [1440, 'q_50'], [2880, 'q_40'], [3840, 'q_30']]])
+        }, [doc.data.image && doc.data.image.url, [640, 750, 1125, 1440, [2880, 'q_50'], [3840, 'q_50']]])
 
         var featured = doc.data.featured_articles.map(function (item, index) {
           let title = asText(item.heading)
@@ -82,7 +82,7 @@ function home (state, emit) {
               if (!url) return null
               var sources = srcset(url, sizes, {
                 transforms: 'c_thumb',
-                aspect: 1
+                aspect: 10 / 12
               })
               return {
                 src: sources.split(' ')[0],
@@ -90,9 +90,9 @@ function home (state, emit) {
                 srcset: sources,
                 alt: image.alt || '',
                 width: image.dimensions.width,
-                height: image.dimensions.width
+                height: image.dimensions.width * 10 / 12
               }
-            }, [image && image.url, [[720, 'q_50'], [400, 'q_60'], [800, 'q_40'], [1200, 'q_30']]])
+            }, [image && image.url, [400, 800, 1200, [1500, 'q_50']]])
           }
 
           return highlight(props)
@@ -132,7 +132,7 @@ function home (state, emit) {
                   alt: image.alt || '',
                   src: sources.split(' ')[0]
                 }, image.dimensions)
-              }, [image && image.url, [[520, 'q_50'], [700, 'q_50'], [900, 'q_40']]]),
+              }, [image && image.url, [520, 700, 900]]),
               title: asText(article.data.title),
               date: {
                 datetime: date,
@@ -156,7 +156,7 @@ function home (state, emit) {
             <div class="u-container">
               ${featured}
               <div class="u-space2">
-                ${articles ? grid({ size: { md: '1of3', sm: '1of2' } }, articles) : null}
+                ${articles ? grid({ size: { md: '1of2', lg: '1of3' } }, articles) : null}
               </div>
             </section>
           </div>

@@ -137,7 +137,7 @@ module.exports = class Hero extends Component {
       class: className('Hero', {
         'Hero--center': !rotatingWords,
         'Hero--image': image,
-        'Hero--fill': rotatingWords
+        'Hero--rotating': rotatingWords
       })
     }
 
