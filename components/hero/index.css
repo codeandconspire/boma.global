@@ -129,7 +129,7 @@
 }
 
 .Hero--rotating .Hero-wrap::after {
-  background: rgba(var(--color-royal), 0.6);
+  background: rgba(var(--color-royal), 0.8);
 }
 
 .Hero-image {
