@@ -21,8 +21,8 @@ function button (props) {
     [props.class]: props.class,
     'Button--primary': props.primary
   })
-  if (attrs.href) return html`<a ${attrs}>${props.text}</a>`
-  return html`<button ${attrs}>${props.text}</button>`
+  if (attrs.href) return html`<a ${attrs}><div class="Button-background"></div><span class="Button-text">${props.text}</span>></a>`
+  return html`<button ${attrs}><div class="Button-background"></div><span class="Button-text">${props.text}</span></button>`
 }
 
 // check if str is applicable element attribute
