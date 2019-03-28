@@ -1,10 +1,7 @@
 /* eslint-env serviceworker */
 
 var CACHE_KEY = getCacheKey()
-var FILES = [
-  '/',
-  '/manifest.json'
-].concat(process.env.ASSET_LIST).filter(Boolean)
+var FILES = ['/'].concat(process.env.ASSET_LIST).filter(Boolean)
 
 self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
